@@ -1,0 +1,13 @@
+
+.site-index {
+	margin-top: 100px;
+}
+.site-index .box {
+	height: 500px;
+}
+.site-index .box h3 {
+	margin: 80px 0;
+}
+.site-index .box p {
+	padding-left: 100px;
+}
