@@ -95,11 +95,10 @@ class ProjectAdviserSearch extends ProjectAdviser
             'id' => $this->id,
             'project_id' => $this->project_id,
             'adviser_id' => $this->adviser_id,
-            'state' => $this->state,
+            'state' => 5,
             'date' => $this->date,
             'referee_pay' => $this->referee_pay,
             'adviser_pay' => $this->adviser_pay,
-            't0.status' => 4,
         ]);
 
         $query->andFilterWhere(['like', 't0.name', $this->project_name]);

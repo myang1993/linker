@@ -134,6 +134,7 @@ class ProjectAdviserController extends Controller
                 $adviser = $model->adviser;
                 $adviser->setAttribute('times', $adviser->times + 1);
                 $adviser->save(false);
+                $model->customer_fee = $model->hour * $model->project->unit_price;
             }
             if ($model->save()) {
                 return $this->redirect(['project/update', 'id' => $id]);

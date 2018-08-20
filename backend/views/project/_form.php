@@ -504,6 +504,30 @@ $customer = new Customer();
                 ],
                 [
                     'contentOptions' => ['style'=>'overflow:hidden;text-overflow:ellipsis;white-space:nowrap'],
+                    'headerOptions' => ['width' => '6%'],
+                    'label' => Yii::t('app', '访谈时长(分钟)'),
+                    'value' => function ($model) {
+                        return $model->duration;
+                    }
+                ],
+                [
+                    'contentOptions' => ['style'=>'overflow:hidden;text-overflow:ellipsis;white-space:nowrap'],
+                    'headerOptions' => ['width' => '6%'],
+                    'label' => Yii::t('app', '访谈时长(小时)'),
+                    'value' => function ($model) {
+                        return $model->hour;
+                    }
+                ],
+                [
+                    'contentOptions' => ['style'=>'overflow:hidden;text-overflow:ellipsis;white-space:nowrap'],
+                    'headerOptions' => ['width' => '6%'],
+                    'label' => Yii::t('app', '专家成本'),
+                    'value' => function ($model) {
+                        return $model->cost;
+                    }
+                ],
+                [
+                    'contentOptions' => ['style'=>'overflow:hidden;text-overflow:ellipsis;white-space:nowrap'],
                     'headerOptions' => ['width' => '2%'],
                     'class' => 'yii\grid\ActionColumn',
                     'template' => '{update}',

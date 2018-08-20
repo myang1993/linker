@@ -93,7 +93,7 @@ class ProjectSearch extends Project
         $query->andFilterWhere(['<', 'project.status', 10]);
         $query->andFilterWhere(['like', 'c.name', $this->customer_name]);
         $query->andFilterWhere(['like', 'participants', $this->participants]);
-        $query->andFilterWhere(['like', 'adviser.name_zh', $this->adviser_name]);
+        $query->andFilterWhere(['like', 'a.name_zh', $this->adviser_name]);
         $query->andFilterWhere(['like', 'b.name_zh', $this->boffin_name]);
 
         if (!empty($this->start)) {
