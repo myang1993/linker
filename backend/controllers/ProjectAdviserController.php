@@ -9,6 +9,7 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use conquer\helpers\Json;
+
 /**
  * ProjectAdviserController implements the CRUD actions for ProjectAdviser model.
  */
@@ -54,26 +55,26 @@ class ProjectAdviserController extends Controller
 
             // load model like any single model validation
             if ($model->load($post)) {
-            // can save model or do something before saving model
+                // can save model or do something before saving model
                 $model->save();
 
-            // custom output to return to be displayed as the editable grid cell
-            // data. Normally this is empty - whereby whatever value is edited by
-            // in the input by user is updated automatically.
+                // custom output to return to be displayed as the editable grid cell
+                // data. Normally this is empty - whereby whatever value is edited by
+                // in the input by user is updated automatically.
                 $output = '';
 
-            // specific use case where you need to validate a specific
-            // editable column posted when you have more than one
-            // EditableColumn in the grid view. We evaluate here a
-            // check to see if buy_amount was posted for the Book model
-            // if (isset($posted['buy_amount'])) {
-            // $output = Yii::$app->formatter->asDecimal($model->buy_amount, 2);
-            // }
+                // specific use case where you need to validate a specific
+                // editable column posted when you have more than one
+                // EditableColumn in the grid view. We evaluate here a
+                // check to see if buy_amount was posted for the Book model
+                // if (isset($posted['buy_amount'])) {
+                // $output = Yii::$app->formatter->asDecimal($model->buy_amount, 2);
+                // }
 
-            // similarly you can check if the name attribute was posted as well
-            // if (isset($posted['name'])) {
-            // $output = ''; // process as you need
-            // }
+                // similarly you can check if the name attribute was posted as well
+                // if (isset($posted['name'])) {
+                // $output = ''; // process as you need
+                // }
                 $out = Json::encode(['output' => $output, 'message' => '保存成功']);
             }
             // return ajax json encoded response and exit
@@ -152,7 +153,7 @@ class ProjectAdviserController extends Controller
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionDelete($id,$project_id)
+    public function actionDelete($id, $project_id)
     {
         $post = Yii::$app->request->queryParams;
 
@@ -185,5 +186,36 @@ class ProjectAdviserController extends Controller
         }
 
         throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
+    }
+
+    public function actionTest()
+    {
+
+        $filePath = "project_list.csv"; // 要读取的文件的路径
+        $PHPReader = new \PHPExcel_Reader_Excel2007(); // Reader很关键，用来读excel文件
+        if (!$PHPReader->canRead($filePath)) { // 这里是用Reader尝试去读文件，07不行用05，05不行就报错。注意，这里的return是Yii框架的方式。
+            $PHPReader = new \PHPExcel_Reader_Excel5();
+            if (!$PHPReader->canRead($filePath)) {
+                echo 1221;
+                exit;
+            }
+        }
+        $PHPExcel = $PHPReader->load($filePath); // Reader读出来后，加载给Excel实例
+        $currentSheet = $PHPExcel->getSheet(0); // 拿到第一个sheet（工作簿？）
+        $result= array();
+        $projectAdviser = new ProjectAdviser();
+        foreach ($currentSheet->getRowIterator() as $key=>$row) { // 行迭代器
+            if ($key > 1) {//去掉表头
+                $cellIterator = $row->getCellIterator(); // 拿到行中的cell迭代器
+                $cellIterator->setIterateOnlyExistingCells(false); // 设置cell迭代器，遍历所有cell，哪怕cell没有值
+                $lineVal = [];
+                foreach ($cellIterator as $cell) {
+                    $lineVal[] = $cell->getValue();
+                }
+//                print_r($lineVal);exit;
+                $projectAdviser->id = $lineVal[0];
+                $projectAdviser->id = $lineVal[0];
+            }
+        }
     }
 }

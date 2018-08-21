@@ -1469,7 +1469,7 @@ HTML;
                 'filename' => Yii::t('kvgrid', 'grid-export'),
                 'alertMsg' => Yii::t('kvgrid', 'The EXCEL export file will be generated for download.'),
                 'options' => ['title' => Yii::t('kvgrid', 'Microsoft Excel 95+')],
-                'mime' => 'application/vnd.ms-excel',
+                'mime' => 'application/vnd.ms-excel;charset=GB2312',
                 'config' => [
                     'worksheet' => Yii::t('kvgrid', 'ExportWorksheet'),
                     'cssFile' => '',

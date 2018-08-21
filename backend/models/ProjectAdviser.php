@@ -24,6 +24,7 @@ use Yii;
  * @property double $fee_rate 顾问倍率
  * @property int $adviser_pay 专家成本是否已支出
  * @property int $referee_pay 推荐费是否已支出
+ * @property int $bill_out 账单是否已出
  * @property string $customer_fee 收客户费用
  *
  * @property Project $project
@@ -49,7 +50,7 @@ class ProjectAdviser extends \yii\db\ActiveRecord
             ['date', 'filter', 'filter' => function () {
                 return strtotime($this->date);
             }],
-            [['project_id','selector_id', 'adviser_id', 'state', 'duration', 'fee', 'fee_type', 'adviser_pay', 'referee_pay'], 'integer'],
+            [['project_id','selector_id', 'adviser_id', 'state', 'duration', 'fee', 'fee_type', 'adviser_pay', 'referee_pay','bill_out'], 'integer'],
             [['fee_rate'], 'number'],
             [['remark'], 'string', 'max' => 1024],
             [['pay_remark'], 'string', 'max' => 256],
@@ -85,6 +86,7 @@ class ProjectAdviser extends \yii\db\ActiveRecord
             'fee_rate' => Yii::t('app', '顾问倍率'),
             'adviser_pay' => Yii::t('app', '专家成本是否已支出'),
             'referee_pay' => Yii::t('app', '推荐费是否已支出'),
+            'bill_out' => Yii::t('app', '账单是否已出'),
             'customer_fee' => Yii::t('app', '收客户费用'),
         ];
     }

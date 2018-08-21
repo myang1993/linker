@@ -137,7 +137,19 @@ $this->params['breadcrumbs'][] = Yii::t('app', '财务');
                 },
             ],
             [
+                'class' => 'kartik\grid\EditableColumn',
                 'label' => Yii::t('app', '是否已出账单'),
+                'attribute' => 'bill_out',
+                'value' => function ($model) {
+                    return $model->bill_out == 1 ? 'false' : 'true';
+                },
+                'editableOptions' => function ($model, $key, $index) {
+                    return [
+                        'asPopover' => false,
+                        'data' => [1 => 'false', 2 => 'true'],
+                        'inputType' => \kartik\editable\Editable::INPUT_DROPDOWN_LIST,
+                    ];
+                }
             ],
             [
                 'label' => Yii::t('app', '项目类型'),
@@ -151,13 +163,6 @@ $this->params['breadcrumbs'][] = Yii::t('app', '财务');
                 'attribute' => 'project_manager',
                 'value' => function ($model) {
                     return Admin::findById($model->selector_id) ? Admin::findById($model->selector_id)->username : '';
-//                    $tmp = '';
-//                    foreach ($model->project->projectAdvisers as $adviser) {
-//                        if($adviser->adviser_id == $model->adviser->id){
-//                            $tmp = Admin::findById($adviser->selector_id) ? Admin::findById($adviser->selector_id)->username : '';
-//                        }
-//                    }
-//                    return $tmp;
                 },
             ],
             [
@@ -208,12 +213,12 @@ $this->params['breadcrumbs'][] = Yii::t('app', '财务');
                 'attribute' => 'adviser_pay',
                 'vAlign' => 'middle',
                 'value' => function ($model) {
-                    return $model->adviser_pay == 1 ? 'true' : 'false';
+                    return $model->adviser_pay == 1 ? 'false' : 'true';
                 },
                 'editableOptions' => function ($model, $key, $index) {
                     return [
                         'asPopover' => false,
-                        'data' => [0 => 'false', 1 => 'true'],
+                        'data' => [1 => 'false', 2 => 'true'],
                         'inputType' => \kartik\editable\Editable::INPUT_DROPDOWN_LIST,
                     ];
                 }
@@ -259,7 +264,7 @@ $this->params['breadcrumbs'][] = Yii::t('app', '财务');
                 'attribute' => 'referee_pay',
                 'vAlign' => 'middle',
                 'value' => function ($model) {
-                    return $model->adviser_pay == 1 ? 'true' : 'false';
+                    return $model->adviser_pay == 1 ? 'false' : 'true';
                 },
                 'editableOptions' => function ($model, $key, $index) {
                     return [
@@ -269,7 +274,7 @@ $this->params['breadcrumbs'][] = Yii::t('app', '财务');
                             'action' => ['prject-adviser/update', 'id' => $model->id]
                         ],
                         'asPopover' => false,
-                        'data' => [0 => 'false', 1 => 'true'],
+                        'data' => [1 => 'false', 2 => 'true'],
                         'inputType' => \kartik\editable\Editable::INPUT_DROPDOWN_LIST,
                         'options' => ['class' => 'form-control', 'placeholder' => 'Enter person name...'],
                     ];
@@ -288,7 +293,10 @@ $this->params['breadcrumbs'][] = Yii::t('app', '财务');
         ],
         'exportConfig' => [
             GridView::EXCEL => [
-                'filename' => 'project_list'
+                'filename' => 'project_list',
+                'config' => [
+                    'mode'=>'GB2312',
+                ]
             ],
         ],
         'pjax' => true,
