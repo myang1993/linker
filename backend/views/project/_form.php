@@ -32,199 +32,199 @@ $adviser = new Adviser();
 $customer = new Customer();
 ?>
 
-    <div class="project-form cu">
+<div class="project-form cu">
 
-        <?= DetailView::widget([
+    <?= DetailView::widget([
+        'options' => [
+            'class' => 'form-inline form',
+            'id' => 'project_info'
+        ],
+        'model' => $model,
+        'condensed' => true,
+        'hover' => true,
+        'mode' => DetailView::MODE_VIEW,
+        'panel' => [
+            'heading' => Yii::t('app', 'Customers') . '：' . $model->name,
+            'type' => DetailView::TYPE_INFO,
+        ],
+        'attributes' => [
+            [
+                'attribute' => 'name',
+                'valueColOptions' => [
+                    'maxlength' => true,
+                ],
+            ],
+            [
+                'attribute' => 'type',
+                'format' => 'raw',
+                'value' => $model->type > 0 ? $model->projectType($model->type) : null,
+                'type' => DetailView::INPUT_SELECT2,
+                'widgetOptions' => [
+                    'data' => $model->projectType(),
+                    'pluginOptions' => ['allowClear' => true, 'width' => '100%'],
+                ],
+                'valueColOptions' => ['style' => 'width:60%']
+            ],
+            [
+                'attribute' => 'head',
+                'format' => 'raw',
+                'type' => DetailView::INPUT_SELECT2,
+                'widgetOptions' => [
+                    'data' => $admin->getAdminList(),
+                    'options' => ['placeholder' => '-- ' . Yii::t('app', 'Please select')],
+                    'pluginOptions' => [
+                        'allowClear' => true,
+                        'width' => '100%',
+                    ],
+                ],
+                'valueColOptions' => ['style' => 'width:60%']
+            ],
+            [
+                'attribute' => 'participants',
+                'format' => 'raw',
+                'type' => DetailView::INPUT_SELECT2,
+                'widgetOptions' => [
+                    'data' => $admin->getAdminList(),
+                    'options' => ['placeholder' => '-- ' . Yii::t('app', 'Please select')],
+                    'pluginOptions' => [
+                        'allowClear' => true,
+                        'width' => '100%',
+                        'tags' => false,
+                        'multiple' => true,
+                    ],
+                ],
+                'valueColOptions' => ['style' => 'width:60%']
+            ],
+            [
+                'attribute' => 'customer_id',
+                'value' => $model->customer ? $model->customer->name : null,
+                'format' => 'raw',
+                'type' => DetailView::INPUT_SELECT2,
+                'widgetOptions' => [
+                    'data' => $customer->getCustomers(),
+                    'options' => ['placeholder' => '-- ' . Yii::t('app', 'Please select')],
+                    'pluginOptions' => ['allowClear' => true, 'width' => '100%'],
+                ],
+                'valueColOptions' => ['style' => 'width:60%']
+            ],
+            [
+                'attribute' => 'status',
+                'value' => $model->status ? $model->statusType($model->status) : null,
+                'format' => 'raw',
+                'type' => DetailView::INPUT_SELECT2,
+                'widgetOptions' => [
+                    'data' => $model->statusType(),
+                    'options' => ['placeholder' => '-- ' . Yii::t('app', 'Please select')],
+                    'pluginOptions' => ['allowClear' => true, 'width' => '100%'],
+                ],
+                'valueColOptions' => ['style' => 'width:60%']
+            ],
+            [
+                'columns' => [
+                    [
+                        'attribute' => 'unit_price',
+                        'format' => 'raw',
+                        'type' => DetailView::INPUT_SELECT2,
+                        'options' => ['id' => 'customer-price'],
+                        'labelColOptions' => ['style' => "width: 25%;text-align: right;"],
+                        'widgetOptions' => [
+                            'data' => [],
+                            'options' => ['placeholder' => '-- ' . Yii::t('app', 'Please select')],
+                            'pluginOptions' => ['allowClear' => true, 'width' => '100%'],
+                        ],
+                        'valueColOptions' => ['style' => 'width:35%']
+                    ],
+                    [
+                        'attribute' => 'unit_type',
+                        'value' => $model->unit_type ? $model->unitType($model->unit_type) : '',
+                        'options' => ['id' => 'customer-unit_type'],
+                        'labelColOptions' => ['hidden' => true],
+                        'type' => DetailView::INPUT_SELECT2,
+                        'widgetOptions' => [
+                            'data' => $model->unitType(0),
+                            'options' => ['placeholder' => '-- ' . Yii::t('app', 'Please select'), 'disabled' => true],
+                            'pluginOptions' => ['allowClear' => true, 'width' => '100%'],
+                        ],
+                        'valueColOptions' => ['style' => 'width:35%']
+                    ],
+                    [
+                        'label' => Yii::t('app', 'Tax Type'),
+                        'format' => 'raw',
+                        'labelColOptions' => ['hidden' => true],
+                        'value' => ''
+                    ]
+                ]
+            ],
+            [
+                'attribute' => 'start_time',
+                'type' => DetailView::INPUT_DATETIME,
+                'widgetOptions' => [
+                    'type' => DateTimePicker::TYPE_COMPONENT_APPEND,
+                    'convertFormat' => true,
+                    'language' => 'zh-CN',
+                    'pluginOptions' => [
+                        'autoclose' => true,
+                        'format' => 'yyyy-MM-dd HH:mm',
+                        'todayHighlight' => true,
+                    ]
+                ],
+                'valueColOptions' => ['style' => 'width:60%']
+            ],
+            [
+                'attribute' => 'create_time',
+                'type' => DetailView::INPUT_DATETIME,
+                'widgetOptions' => [
+                    'type' => DateTimePicker::TYPE_COMPONENT_APPEND,
+                    'language' => 'zh-CN',
+                    'convertFormat' => true,
+                    'pluginOptions' => [
+                        'autoclose' => true,
+                        'format' => 'yyyy-MM-dd HH:mm',
+                        'todayHighlight' => true,
+                    ]
+                ],
+                'valueColOptions' => ['style' => 'width:60%']
+            ],
+            'second',
+            'fee_time',
+        ],
+    ]); ?>
+    <?php if (!$model->id) {
+        echo Html::tag('p', '请先保存项目信息，再添加研究员和顾问信息', ['class' => 'note bg-danger']);
+    } ?>
+    <div class="hr"></div>
+    <h3 class="title">研究员</h3>
+    <?php foreach ($model->projectBoffins as $index => $boffin) {
+        echo DetailView::widget([
             'options' => [
                 'class' => 'form-inline form',
-                'id' => 'project_info'
             ],
-            'model' => $model,
+            'model' => $boffin,
             'condensed' => true,
             'hover' => true,
             'mode' => DetailView::MODE_VIEW,
             'panel' => [
-                'heading' => Yii::t('app', 'Customers') . '：' . $model->name,
+                'heading' => Yii::t('app', 'projectBoffins') . '：' . $boffin->boffin->name_zh,
                 'type' => DetailView::TYPE_INFO,
             ],
             'attributes' => [
                 [
-                    'attribute' => 'name',
-                    'valueColOptions' => [
-                        'maxlength' => true,
-                    ],
+                    'attribute' => 'boffin_id',
+                    'type' => DetailView::INPUT_HIDDEN,
                 ],
                 [
-                    'attribute' => 'type',
+                    'label' => Yii::t('app', 'customerBoffins'),
+                    'attribute' => 'boffin_id',
+                    'value' => $boffin->boffin->name_zh,
                     'format' => 'raw',
-                    'value' => $model->type > 0 ? $model->projectType($model->type) : null,
+                    'options' => ['id' => 'boffin-id' . $index],
                     'type' => DetailView::INPUT_SELECT2,
                     'widgetOptions' => [
-                        'data' => $model->projectType(),
-                        'pluginOptions' => ['allowClear' => true, 'width' => '100%'],
-                    ],
-                    'valueColOptions' => ['style' => 'width:60%']
-                ],
-                [
-                    'attribute' => 'head',
-                    'format' => 'raw',
-                    'type' => DetailView::INPUT_SELECT2,
-                    'widgetOptions' => [
-                        'data' => $admin->getAdminList(),
-                        'options' => ['placeholder' => '-- ' . Yii::t('app', 'Please select')],
-                        'pluginOptions' => [
-                            'allowClear' => true,
-                            'width' => '100%',
-                        ],
-                    ],
-                    'valueColOptions' => ['style' => 'width:60%']
-                ],
-                [
-                    'attribute' => 'participants',
-                    'format' => 'raw',
-                    'type' => DetailView::INPUT_SELECT2,
-                    'widgetOptions' => [
-                        'data' => $admin->getAdminList(),
-                        'options' => ['placeholder' => '-- ' . Yii::t('app', 'Please select')],
-                        'pluginOptions' => [
-                            'allowClear' => true,
-                            'width' => '100%',
-                            'tags' => false,
-                            'multiple' => true,
-                        ],
-                    ],
-                    'valueColOptions' => ['style' => 'width:60%']
-                ],
-                [
-                    'attribute' => 'customer_id',
-                    'value' => $model->customer ? $model->customer->name : null,
-                    'format' => 'raw',
-                    'type' => DetailView::INPUT_SELECT2,
-                    'widgetOptions' => [
-                        'data' => $customer->getCustomers(),
+                        'data' => $customerBoffin->getCustomerBoffins($model->customer_id),
                         'options' => ['placeholder' => '-- ' . Yii::t('app', 'Please select')],
                         'pluginOptions' => ['allowClear' => true, 'width' => '100%'],
-                    ],
-                    'valueColOptions' => ['style' => 'width:60%']
-                ],
-                [
-                    'attribute' => 'status',
-                    'value' => $model->status ? $model->statusType($model->status) : null,
-                    'format' => 'raw',
-                    'type' => DetailView::INPUT_SELECT2,
-                    'widgetOptions' => [
-                        'data' => $model->statusType(),
-                        'options' => ['placeholder' => '-- ' . Yii::t('app', 'Please select')],
-                        'pluginOptions' => ['allowClear' => true, 'width' => '100%'],
-                    ],
-                    'valueColOptions' => ['style' => 'width:60%']
-                ],
-                [
-                    'columns' => [
-                        [
-                            'attribute' => 'unit_price',
-                            'format' => 'raw',
-                            'type' => DetailView::INPUT_SELECT2,
-                            'options' => ['id' => 'customer-price'],
-                            'labelColOptions' => ['style' => "width: 25%;text-align: right;"],
-                            'widgetOptions' => [
-                                'data' => [],
-                                'options' => ['placeholder' => '-- ' . Yii::t('app', 'Please select')],
-                                'pluginOptions' => ['allowClear' => true, 'width' => '100%'],
-                            ],
-                            'valueColOptions' => ['style' => 'width:35%']
-                        ],
-                        [
-                            'attribute' => 'unit_type',
-                            'value' => $model->unit_type ? $model->unitType($model->unit_type) : '',
-                            'options' => ['id' => 'customer-unit_type'],
-                            'labelColOptions' => ['hidden' => true],
-                            'type' => DetailView::INPUT_SELECT2,
-                            'widgetOptions' => [
-                                'data' => $model->unitType(0),
-                                'options' => ['placeholder' => '-- ' . Yii::t('app', 'Please select'), 'disabled' => true],
-                                'pluginOptions' => ['allowClear' => true, 'width' => '100%'],
-                            ],
-                            'valueColOptions' => ['style' => 'width:35%']
-                        ],
-                        [
-                            'label' => Yii::t('app', 'Tax Type'),
-                            'format' => 'raw',
-                            'labelColOptions' => ['hidden' => true],
-                            'value' => ''
-                        ]
-                    ]
-                ],
-                [
-                    'attribute' => 'start_time',
-                    'type' => DetailView::INPUT_DATETIME,
-                    'widgetOptions' => [
-                        'type' => DateTimePicker::TYPE_COMPONENT_APPEND,
-                        'convertFormat' => true,
-                        'language' => 'zh-CN',
-                        'pluginOptions' => [
-                            'autoclose' => true,
-                            'format' => 'yyyy-MM-dd HH:mm',
-                            'todayHighlight' => true,
-                        ]
-                    ],
-                    'valueColOptions' => ['style' => 'width:60%']
-                ],
-                [
-                    'attribute' => 'create_time',
-                    'type' => DetailView::INPUT_DATETIME,
-                    'widgetOptions' => [
-                        'type' => DateTimePicker::TYPE_COMPONENT_APPEND,
-                        'language' => 'zh-CN',
-                        'convertFormat' => true,
-                        'pluginOptions' => [
-                            'autoclose' => true,
-                            'format' => 'yyyy-MM-dd HH:mm',
-                            'todayHighlight' => true,
-                        ]
-                    ],
-                    'valueColOptions' => ['style' => 'width:60%']
-                ],
-                'second',
-                'fee_time',
-            ],
-        ]); ?>
-        <?php if (!$model->id) {
-            echo Html::tag('p', '请先保存项目信息，再添加研究员和顾问信息', ['class' => 'note bg-danger']);
-        } ?>
-        <div class="hr"></div>
-        <h3 class="title">研究员</h3>
-        <?php foreach ($model->projectBoffins as $index => $boffin) {
-            echo DetailView::widget([
-                'options' => [
-                    'class' => 'form-inline form',
-                ],
-                'model' => $boffin,
-                'condensed' => true,
-                'hover' => true,
-                'mode' => DetailView::MODE_VIEW,
-                'panel' => [
-                    'heading' => Yii::t('app', 'projectBoffins') . '：' . $boffin->boffin->name_zh,
-                    'type' => DetailView::TYPE_INFO,
-                ],
-                'attributes' => [
-                    [
-                        'attribute' => 'boffin_id',
-                        'type' => DetailView::INPUT_HIDDEN,
-                    ],
-                    [
-                        'label' => Yii::t('app', 'customerBoffins'),
-                        'attribute' => 'boffin_id',
-                        'value' => $boffin->boffin->name_zh,
-                        'format' => 'raw',
-                        'options' => ['id' => 'boffin-id' . $index],
-                        'type' => DetailView::INPUT_SELECT2,
-                        'widgetOptions' => [
-                            'data' => $customerBoffin->getCustomerBoffins($model->customer_id),
-                            'options' => ['placeholder' => '-- ' . Yii::t('app', 'Please select')],
-                            'pluginOptions' => ['allowClear' => true, 'width' => '100%'],
-                            'pluginEvents' => [
-                                'change' => 'function() {
+                        'pluginEvents' => [
+                            'change' => 'function() {
                                 var boffin_id = $("#projectboffin-boffin_id");
                                 var parent = $(this).parents("tr").siblings();
                                 var boffin_name_en  = parent.eq(1).find(".kv-form-attribute");
@@ -238,7 +238,7 @@ $customer = new Customer();
                                 if(val){
                                     boffin_id.val(val);
                                     $.ajax({
-                                        url: "index.php?r=customer-boffin/info",
+                                        url: "/customer-boffin/info",
                                         dataType: "json",
                                         method: "GET",
                                         data: "id="+val,
@@ -254,181 +254,183 @@ $customer = new Customer();
                                     });
                                 }
                             }',
-                            ],
                         ],
-                        'valueColOptions' => ['style' => 'width:60%']
-                    ],
-                    [
-                        'label' => Yii::t('app', 'English Name'),
-                        'value' => $boffin->boffin->name_en,
-                        'displayOnly' => true,
-                    ],
-                    [
-                        'label' => Yii::t('app', 'Position'),
-                        'value' => $boffin->boffin->position,
-                        'displayOnly' => true,
-                    ],
-                    [
-                        'label' => Yii::t('app', 'E-mail'),
-                        'value' => $boffin->boffin->email,
-                        'displayOnly' => true,
-                    ],
-                    [
-                        'label' => Yii::t('app', 'Mobile Phone'),
-                        'value' => $boffin->boffin->mobile_phone,
-                        'displayOnly' => true,
-                    ],
-                    [
-                        'label' => Yii::t('app', 'Tele Phone'),
-                        'value' => $boffin->boffin->tele_phone,
-                        'displayOnly' => true,
-                    ],
-                    [
-                        'label' => Yii::t('app', 'Wechat'),
-                        'value' => $boffin->boffin->wechat,
-                        'displayOnly' => true,
-                    ],
-                    [
-                        'label' => Yii::t('app', 'Linkedin'),
-                        'value' => $boffin->boffin->linkedin,
-                        'displayOnly' => true,
-                    ],
-                ],
-                'deleteOptions' => [
-                    'params' => ['id' => $boffin->id, 'delete' => true],
-                    'url' => Url::toRoute(['project-boffin/delete', 'id' => $model->id]),
-                ],
-                'formOptions' => [
-                    'action' => Url::toRoute(['project-boffin/update', 'id' => $model->id]),
-                ],
-            ]);
-        } ?>
-
-        <?php
-        $projectBoffin = new ProjectBoffin();
-        $projectBoffin->project_id = $model->id;
-        ?>
-
-        <?php Modal::begin([
-            'header' => '<h4 class="modal-title">' . Yii::t('app', 'Add Participants') . '</h4>',
-            'toggleButton' => ['label' => '<i class="glyphicon glyphicon-plus"></i>' . Yii::t('app', 'Add Participants'), 'class' => 'btn btn-primary', 'disabled' => $projectBoffin->project_id ? false : true],
-            'options' => ['tabindex' => false]
-        ]); ?>
-
-        <?= DetailView::widget([
-            'model' => $projectBoffin,
-            'condensed' => true,
-            'hover' => true,
-            'mode' => DetailView::MODE_EDIT,
-            'container' => ['id' => 'kv-demo'],
-            'panel' => [
-                'heading' => '',
-                'type' => DetailView::TYPE_PRIMARY,
-            ],
-            'attributes' => [
-                [
-                    'attribute' => 'project_id',
-                    'type' => DetailView::INPUT_HIDDEN,
-                ],
-                [
-                    'label' => Yii::t('app', 'customerBoffins'),
-                    'attribute' => 'boffin_id',
-                    'format' => 'raw',
-                    'type' => DetailView::INPUT_SELECT2,
-                    'options' => ['id' => 'modal1-boffin-id', 'placeholder' => 'Please select'],
-                    'widgetOptions' => [
-                        'data' => $customerBoffin->getCustomerBoffins($model->customer_id),
-                        'options' => ['placeholder' => '-- ' . Yii::t('app', 'Please select')],
-                        'pluginOptions' => ['allowClear' => true, 'width' => '100%'],
                     ],
                     'valueColOptions' => ['style' => 'width:60%']
                 ],
                 [
                     'label' => Yii::t('app', 'English Name'),
-                    'value' => '',
-                    'options' => ['id' => 'modal1-boffin-name_en'],
+                    'value' => $boffin->boffin->name_en,
                     'displayOnly' => true,
                 ],
                 [
                     'label' => Yii::t('app', 'Position'),
-                    'options' => ['id' => 'modal1-boffin-position'],
-                    'value' => '',
+                    'value' => $boffin->boffin->position,
                     'displayOnly' => true,
                 ],
                 [
                     'label' => Yii::t('app', 'E-mail'),
-                    'options' => ['id' => 'modal1-boffin-email'],
-                    'value' => '',
+                    'value' => $boffin->boffin->email,
                     'displayOnly' => true,
                 ],
                 [
                     'label' => Yii::t('app', 'Mobile Phone'),
-                    'options' => ['id' => 'modal1-boffin-mobile'],
-                    'value' => '',
+                    'value' => $boffin->boffin->mobile_phone,
                     'displayOnly' => true,
                 ],
                 [
                     'label' => Yii::t('app', 'Tele Phone'),
-                    'options' => ['id' => 'modal1-boffin-tele'],
-                    'value' => '',
+                    'value' => $boffin->boffin->tele_phone,
                     'displayOnly' => true,
                 ],
                 [
                     'label' => Yii::t('app', 'Wechat'),
-                    'value' => '',
-                    'options' => ['id' => 'modal1-boffin-wechat'],
+                    'value' => $boffin->boffin->wechat,
                     'displayOnly' => true,
                 ],
                 [
                     'label' => Yii::t('app', 'Linkedin'),
-                    'options' => ['id' => 'modal1-boffin-link'],
-                    'value' => '',
+                    'value' => $boffin->boffin->linkedin,
                     'displayOnly' => true,
                 ],
             ],
-            'formOptions' => [
-                'action' => Url::toRoute(['project-boffin/create', 'id' => $model->id]),
+            'deleteOptions' => [
+                'params' => ['id' => $boffin->id, 'delete' => true],
+                'url' => Url::toRoute(['project-boffin/delete', 'id' => $model->id]),
             ],
-        ]); ?>
+            'formOptions' => [
+                'action' => Url::toRoute(['project-boffin/update', 'id' => $model->id]),
+            ],
+        ]);
+    } ?>
 
-        <?php Modal::end(); ?>
+    <?php
+    $projectBoffin = new ProjectBoffin();
+    $projectBoffin->project_id = $model->id;
+    ?>
 
-        <div class="hr"></div>
-        <h3 class="title">顾问
-            <?php
-            echo Html::a('<i class="glyphicon glyphicon-envelope"></i>' . Yii::t('app', 'Create Email'), '#', [
-                'class' => 'btn btn-success create-email',
-                'id' => 'Create-Email',
-                'data-toggle' => 'modal',
-                'data-target' => '#create-email',
-                'style' => 'float:right',
-            ]);
-            ?>
-        </h3>
-        <?= \yii\grid\GridView::widget([
+    <?php Modal::begin([
+        'header' => '<h4 class="modal-title">' . Yii::t('app', 'Add Participants') . '</h4>',
+        'toggleButton' => ['label' => '<i class="glyphicon glyphicon-plus"></i>' . Yii::t('app', 'Add Participants'), 'class' => 'btn btn-primary', 'disabled' => $projectBoffin->project_id ? false : true],
+        'options' => ['tabindex' => false]
+    ]); ?>
+
+    <?= DetailView::widget([
+        'model' => $projectBoffin,
+        'condensed' => true,
+        'hover' => true,
+        'mode' => DetailView::MODE_EDIT,
+        'container' => ['id' => 'kv-demo'],
+        'panel' => [
+            'heading' => '',
+            'type' => DetailView::TYPE_PRIMARY,
+        ],
+        'attributes' => [
+            [
+                'attribute' => 'project_id',
+                'type' => DetailView::INPUT_HIDDEN,
+            ],
+            [
+                'label' => Yii::t('app', 'customerBoffins'),
+                'attribute' => 'boffin_id',
+                'format' => 'raw',
+                'type' => DetailView::INPUT_SELECT2,
+                'options' => ['id' => 'modal1-boffin-id', 'placeholder' => 'Please select'],
+                'widgetOptions' => [
+                    'data' => $customerBoffin->getCustomerBoffins($model->customer_id),
+                    'options' => ['placeholder' => '-- ' . Yii::t('app', 'Please select')],
+                    'pluginOptions' => ['allowClear' => true, 'width' => '100%'],
+                ],
+                'valueColOptions' => ['style' => 'width:60%']
+            ],
+            [
+                'label' => Yii::t('app', 'English Name'),
+                'value' => '',
+                'options' => ['id' => 'modal1-boffin-name_en'],
+                'displayOnly' => true,
+            ],
+            [
+                'label' => Yii::t('app', 'Position'),
+                'options' => ['id' => 'modal1-boffin-position'],
+                'value' => '',
+                'displayOnly' => true,
+            ],
+            [
+                'label' => Yii::t('app', 'E-mail'),
+                'options' => ['id' => 'modal1-boffin-email'],
+                'value' => '',
+                'displayOnly' => true,
+            ],
+            [
+                'label' => Yii::t('app', 'Mobile Phone'),
+                'options' => ['id' => 'modal1-boffin-mobile'],
+                'value' => '',
+                'displayOnly' => true,
+            ],
+            [
+                'label' => Yii::t('app', 'Tele Phone'),
+                'options' => ['id' => 'modal1-boffin-tele'],
+                'value' => '',
+                'displayOnly' => true,
+            ],
+            [
+                'label' => Yii::t('app', 'Wechat'),
+                'value' => '',
+                'options' => ['id' => 'modal1-boffin-wechat'],
+                'displayOnly' => true,
+            ],
+            [
+                'label' => Yii::t('app', 'Linkedin'),
+                'options' => ['id' => 'modal1-boffin-link'],
+                'value' => '',
+                'displayOnly' => true,
+            ],
+        ],
+        'formOptions' => [
+            'action' => Url::toRoute(['project-boffin/create', 'id' => $model->id]),
+        ],
+    ]); ?>
+
+    <?php Modal::end(); ?>
+
+    <div class="hr"></div>
+    <h3 class="title">顾问
+        <?php
+        echo Html::a('<i class="glyphicon glyphicon-envelope"></i>' . Yii::t('app', 'Create Email'), '#', [
+            'class' => 'btn btn-success create-email',
+            'id' => 'Create-Email',
+            'data-toggle' => 'modal',
+            'data-target' => '#create-email',
+            'style' => 'float:right',
+        ]);
+        ?>
+    </h3>
+    <?php
+    if(Yii::$app->controller->action->id == 'update') {
+        echo \yii\grid\GridView::widget([
             'dataProvider' => $dataProvider,
-            'tableOptions' => ['style' => 'table-layout: fixed;word-wrap: break-word;word-break:break-all','class'=>'table table-striped table-bordered'],
+            'tableOptions' => ['style' => 'table-layout: fixed;word-wrap: break-word;word-break:break-all', 'class' => 'table table-striped table-bordered'],
             'columns' => [
                 [
                     'class' => 'yii\grid\SerialColumn',
                     'visible' => true,
-                    'headerOptions' => ['style'=>'width:2%;'],
+                    'headerOptions' => ['style' => 'width:2%;'],
                 ],
                 [
                     'label' => Yii::t('app', 'ID'),
                     'attribute' => 'id',
-                    'headerOptions' => ['style'=>'width:2%;'],
+                    'headerOptions' => ['style' => 'width:2%;'],
                 ],
                 [
                     'label' => Yii::t('app', 'Chinese Name'),
                     'value' => function ($data) {
                         return $data->adviser->name_zh;
                     },
-                     'contentOptions' => ['style'=>'overflow:hidden;text-overflow:ellipsis;white-space:nowrap'],
+                    'contentOptions' => ['style' => 'overflow:hidden;text-overflow:ellipsis;white-space:nowrap'],
                     'headerOptions' => ['width' => '4%'],
                 ],
                 [
-                    'contentOptions' => ['style'=>'overflow:hidden;text-overflow:ellipsis;white-space:nowrap'],
+                    'contentOptions' => ['style' => 'overflow:hidden;text-overflow:ellipsis;white-space:nowrap'],
                     'headerOptions' => ['width' => '5%'],
                     'label' => Yii::t('app', 'Company'),
                     'value' => function ($data) {
@@ -436,7 +438,7 @@ $customer = new Customer();
                     }
                 ],
                 [
-                    'contentOptions' => ['style'=>'overflow:hidden;text-overflow:ellipsis;white-space:nowrap'],
+                    'contentOptions' => ['style' => 'overflow:hidden;text-overflow:ellipsis;white-space:nowrap'],
                     'headerOptions' => ['width' => '5%'],
                     'label' => Yii::t('app', 'Position'),
                     'value' => function ($data) {
@@ -445,7 +447,7 @@ $customer = new Customer();
                 ],
                 [
                     'format' => 'raw',
-                    'contentOptions' => ['style'=>'overflow:hidden;text-overflow:ellipsis;white-space:nowrap'],
+                    'contentOptions' => ['style' => 'overflow:hidden;text-overflow:ellipsis;white-space:nowrap'],
                     'headerOptions' => ['width' => '28%'],
                     'label' => Yii::t('app', 'Background'),
                     'value' => function ($data) {
@@ -453,7 +455,7 @@ $customer = new Customer();
                     }
                 ],
                 [
-                    'contentOptions' => ['style'=>'overflow:hidden;text-overflow:ellipsis;white-space:nowrap'],
+                    'contentOptions' => ['style' => 'overflow:hidden;text-overflow:ellipsis;white-space:nowrap'],
                     'headerOptions' => ['width' => '5%'],
                     'label' => Yii::t('app', '安排人员'),
                     'value' => function ($data) {
@@ -461,7 +463,7 @@ $customer = new Customer();
                     }
                 ],
                 [
-                    'contentOptions' => ['style'=>'overflow:hidden;text-overflow:ellipsis;white-space:nowrap'],
+                    'contentOptions' => ['style' => 'overflow:hidden;text-overflow:ellipsis;white-space:nowrap'],
                     'headerOptions' => ['width' => '6%'],
                     'label' => Yii::t('app', '状态'),
                     'value' => function ($data) {
@@ -469,19 +471,19 @@ $customer = new Customer();
                     }
                 ],
                 [
-                    'contentOptions' => ['style'=>'overflow:hidden;text-overflow:ellipsis;white-space:nowrap'],
+                    'contentOptions' => ['style' => 'overflow:hidden;text-overflow:ellipsis;white-space:nowrap'],
                     'headerOptions' => ['width' => '9%'],
                     'label' => Yii::t('app', '备注'),
                     'value' => 'remark'
                 ],
                 [
-                    'contentOptions' => ['style'=>'overflow:hidden;text-overflow:ellipsis;white-space:nowrap'],
+                    'contentOptions' => ['style' => 'overflow:hidden;text-overflow:ellipsis;white-space:nowrap'],
                     'headerOptions' => ['width' => '3%'],
                     'label' => Yii::t('app', '顾问倍率'),
                     'value' => 'fee_rate'
                 ],
                 [
-                    'contentOptions' => ['style'=>'overflow:hidden;text-overflow:ellipsis;white-space:nowrap'],
+                    'contentOptions' => ['style' => 'overflow:hidden;text-overflow:ellipsis;white-space:nowrap'],
                     'headerOptions' => ['width' => '14%'],
                     'label' => Yii::t('app', '访谈费率'),
                     'value' => function ($data) {
@@ -489,21 +491,21 @@ $customer = new Customer();
                     }
                 ],
                 [
-                    'contentOptions' => ['style'=>'overflow:hidden;text-overflow:ellipsis;white-space:nowrap'],
+                    'contentOptions' => ['style' => 'overflow:hidden;text-overflow:ellipsis;white-space:nowrap'],
                     'headerOptions' => ['width' => '9%'],
                     'label' => Yii::t('app', '访谈日期'),
                     'value' => function ($data) {
-                        return date('Y-m-d H:i:s',$data->date);
+                        return date('Y-m-d H:i:s', $data->date);
                     }
                 ],
                 [
-                    'contentOptions' => ['style'=>'overflow:hidden;text-overflow:ellipsis;white-space:nowrap'],
+                    'contentOptions' => ['style' => 'overflow:hidden;text-overflow:ellipsis;white-space:nowrap'],
                     'headerOptions' => ['width' => '6%'],
                     'label' => Yii::t('app', '支付备注'),
                     'value' => 'pay_remark'
                 ],
                 [
-                    'contentOptions' => ['style'=>'overflow:hidden;text-overflow:ellipsis;white-space:nowrap'],
+                    'contentOptions' => ['style' => 'overflow:hidden;text-overflow:ellipsis;white-space:nowrap'],
                     'headerOptions' => ['width' => '6%'],
                     'label' => Yii::t('app', '访谈时长(分钟)'),
                     'value' => function ($model) {
@@ -511,7 +513,7 @@ $customer = new Customer();
                     }
                 ],
                 [
-                    'contentOptions' => ['style'=>'overflow:hidden;text-overflow:ellipsis;white-space:nowrap'],
+                    'contentOptions' => ['style' => 'overflow:hidden;text-overflow:ellipsis;white-space:nowrap'],
                     'headerOptions' => ['width' => '6%'],
                     'label' => Yii::t('app', '访谈时长(小时)'),
                     'value' => function ($model) {
@@ -519,7 +521,7 @@ $customer = new Customer();
                     }
                 ],
                 [
-                    'contentOptions' => ['style'=>'overflow:hidden;text-overflow:ellipsis;white-space:nowrap'],
+                    'contentOptions' => ['style' => 'overflow:hidden;text-overflow:ellipsis;white-space:nowrap'],
                     'headerOptions' => ['width' => '6%'],
                     'label' => Yii::t('app', '专家成本'),
                     'value' => function ($model) {
@@ -527,7 +529,7 @@ $customer = new Customer();
                     }
                 ],
                 [
-                    'contentOptions' => ['style'=>'overflow:hidden;text-overflow:ellipsis;white-space:nowrap'],
+                    'contentOptions' => ['style' => 'overflow:hidden;text-overflow:ellipsis;white-space:nowrap'],
                     'headerOptions' => ['width' => '2%'],
                     'class' => 'yii\grid\ActionColumn',
                     'template' => '{update}',
@@ -545,211 +547,77 @@ $customer = new Customer();
                     ],
                 ],
                 [
-                    'contentOptions' => ['style'=>'overflow:hidden;text-overflow:ellipsis;white-space:nowrap'],
+                    'contentOptions' => ['style' => 'overflow:hidden;text-overflow:ellipsis;white-space:nowrap'],
                     'headerOptions' => ['width' => '2%'],
                     'class' => 'yii\grid\ActionColumn',
                     'template' => '{delete}',
                     'buttons' => [
                         'delete' => function ($url, $model, $key) {
-                            $url = Url::toRoute(['project-adviser/delete', 'id' => $model->id,'project_id'=>$model->project_id]);
+                            $url = Url::toRoute(['project-adviser/delete', 'id' => $model->id, 'project_id' => $model->project_id]);
                             return Html::a('<span class="glyphicon glyphicon-trash"></span>', $url, ['data-confirm' => 'Are you sure you want to delete this item?', 'title' => 'Delete', 'data-method' => 'post']);
                         },
                     ],
                 ],
             ],
-        ]); ?>
+        ]);
+    }
+    ?>
 
-        <?php
-        $projectAdviser = new ProjectAdviser();
-        $projectAdviser->project_id = $model->id;
-        $projectAdviser->date = $projectAdviser->date ? date("Y-m-d H:i", $projectAdviser->date) : date('Y-m-d H:i');
-        ?>
+    <?php
+    $projectAdviser = new ProjectAdviser();
+    $projectAdviser->project_id = $model->id;
+    $projectAdviser->date = $projectAdviser->date ? date("Y-m-d H:i", $projectAdviser->date) : date('Y-m-d H:i');
+    ?>
 
-        <?php
-        //编辑顾问信息
-        ?>
-        <!-- // Url::toRoute(['adviser/info', 'id' => '']) -->
-        <?php
-        foreach ($model->projectAdvisers as $index => $projectAdviser) {
-            Modal::begin([
-                'header' => '<h4 class="modal-title">' . Yii::t('app', 'Update Adviser') . '</h4>',
-                'id' => 'update-advisers'.($index+1),
-                'options' => ['tabindex' => false]
-            ]);
-            $projectAdviser->date = ($projectAdviser->date > 0) ? date("Y-m-d H:i", $projectAdviser->date) : date('Y-m-d H:i');
-            echo DetailView::widget([
-                'options' => [
-                    'class' => 'form-inline form',
-                ],
-                'model' => $projectAdviser,
-                'condensed' => true,
-                'hover' => true,
-                'mode' => DetailView::MODE_EDIT,
-                'panel' => [
-                    'heading' => '<i id="icon_triangle' . $index . '" class="glyphicon glyphicon-triangle-top"></i>' . Yii::t('app', 'projectAdviser') . '：' . $projectAdviser->adviser->name_zh,
-                    'type' => DetailView::TYPE_INFO,
-                ],
-                'attributes' => [
-                    [
-                        'attribute' => 'id',
-                        'type' => DetailView::INPUT_HIDDEN,
-                    ],
-                    [
-                        'attribute' => 'adviser_id',
-                        'value' => $projectAdviser->adviser->name_zh,
-                        'format' => 'raw',
-                        'options' => ['id' => 'adviser-id' . $index],
-                        'type' => DetailView::INPUT_SELECT2,
-                        'displayOnly' => true,
-                        'widgetOptions' => [
-                            'data' => $adviser->getAdviser(),
-                            'options' => ['placeholder' => '-- ' . Yii::t('app', 'Please select')],
-                            'pluginOptions' => ['allowClear' => true, 'width' => '100%'],
-                        ],
-                        'valueColOptions' => ['style' => 'width:60%']
-                    ],
-                    [
-                        'attribute' => 'selector_id',
-                        'value' => !is_object($projectAdviser->admin) ? null : $projectAdviser->admin->username,
-                        'format' => 'raw',
-                        'options' => ['id' => 'selector-id' . $index],
-                        'type' => DetailView::INPUT_SELECT2,
-                        'widgetOptions' => [
-                            'data' => $admin->getAdminIdList(),
-                            'pluginOptions' => ['allowClear' => true, 'width' => '100%'],
-                        ],
-                        'valueColOptions' => ['style' => 'width:60%']
-                    ],
-                    [
-                        'attribute' => 'state',
-                        'value' => $projectAdviser->state == 0 ? '' : $projectAdviser->stateType($projectAdviser->state),
-                        'format' => 'raw',
-                        'options' => ['id' => 'state' . $index],
-                        'type' => DetailView::INPUT_SELECT2,
-                        'widgetOptions' => [
-                            'data' => $projectAdviser->stateType(),
-                            'options' => ['placeholder' => '-- ' . Yii::t('app', 'Please select')],
-                            'pluginOptions' => ['allowClear' => true, 'width' => '100%'],
-                        ],
-                        'valueColOptions' => ['style' => 'width:60%']
-                    ],
-                    [
-                        'attribute' => 'remark',
-                        'value' => $projectAdviser->adviser->remark,
-                    ],
-                    'duration',
-                    'hour',
-                    [
-                        'attribute' => 'fee_rate',
-                        'format' => 'raw',
-                        'value' => $projectAdviser->fee_rate,
-                        'type' => DetailView::INPUT_SELECT2,
-                        'options' => ['id' => 'modal2-fee-rate-update-' . $index],
-                        'widgetOptions' => [
-                            'data' => $projectAdviser->feeRate(),
-                            'pluginOptions' => ['allowClear' => true, 'width' => '100%'],
-                        ],
-                        'valueColOptions' => ['style' => 'width:60%']
-                    ],
-                    'cost',
-                    [
-                        'attribute' => Yii::t('app', 'fee'),
-                        'value' => $projectAdviser->adviser->taxType($projectAdviser->adviser->tax_type) . ' ' . $projectAdviser->adviser->payType($projectAdviser->pay_type) . ' ' . $projectAdviser->fee . '（' . $projectAdviser->adviser->priceType($projectAdviser->fee_type) . '）',
-                        'type' => DetailView::INPUT_TEXT,
-                        'options' => ['placeholder' => '-- ' . Yii::t('app', 'Please select')],
-                        'displayOnly' => true,
-                        'widgetOptions' => [
-                            'data' => [],
-                            'pluginOptions' => ['allowClear' => true, 'width' => '100%'],
-                        ],
-                    ],
-                    [
-                        'attribute' => 'date',
-                        'type' => DetailView::INPUT_DATETIME,
-                        'options' => ['id' => 'date' . $index],
-                        'widgetOptions' => [
-                            'type' => DateTimePicker::TYPE_COMPONENT_PREPEND,
-                            'language' => 'zh-CN',
-                            'convertFormat' => true,
-                            'pluginOptions' => [
-                                'autoclose' => true,
-                                'format' => 'yyyy-MM-dd HH:mm',
-                                'todayHighlight' => true,
-                            ]
-                        ],
-                        'valueColOptions' => ['style' => 'width:60%']
-                    ],
-                    [
-                        'attribute' => 'pay_remark',
-                        'value' => $projectAdviser->adviser->pay_remark,
-                        'displayOnly' => true,
-                    ]
-                ],
-                'deleteOptions' => [
-                    'params' => ['id' => $projectAdviser->id, 'delete' => true],
-                    'url' => Url::toRoute(['project-adviser/delete', 'id' => $model->id]),
-                ],
-                'formOptions' => [
-                    'action' => Url::toRoute(['project-adviser/update', 'id' => $model->id]),
-                ],
-            ]);
-            Modal::end();
-        } ?>
-
-        <?php Modal::begin([
-            'header' => '<h4 class="modal-title">' . Yii::t('app', 'Add Adviser') . '</h4>',
-            'id' => 'add-advisers',
-            'toggleButton' => ['label' => '<i class="glyphicon glyphicon-plus"></i>' . Yii::t('app', 'Add Adviser'), 'class' => 'btn btn-primary', 'disabled' => $projectAdviser->project_id ? false : true],
+    <?php
+    //编辑顾问信息
+    ?>
+    <!-- // Url::toRoute(['adviser/info', 'id' => '']) -->
+    <?php
+    foreach ($model->projectAdvisers as $index => $projectAdviser) {
+        Modal::begin([
+            'header' => '<h4 class="modal-title">' . Yii::t('app', 'Update Adviser') . '</h4>',
+            'id' => 'update-advisers' . ($index + 1),
             'options' => ['tabindex' => false]
-        ]); ?>
-        <!-- // Url::toRoute(['adviser/info', 'id' => '']) -->
-        <?= DetailView::widget([
+        ]);
+        $projectAdviser->date = ($projectAdviser->date > 0) ? date("Y-m-d H:i", $projectAdviser->date) : date('Y-m-d H:i');
+        echo DetailView::widget([
+            'options' => [
+                'class' => 'form-inline form',
+            ],
             'model' => $projectAdviser,
             'condensed' => true,
             'hover' => true,
             'mode' => DetailView::MODE_EDIT,
-            'container' => ['id' => 'kv-demo2'],
             'panel' => [
-                'heading' => '',
-                'type' => DetailView::TYPE_PRIMARY,
+                'heading' => '<i id="icon_triangle' . $index . '" class="glyphicon glyphicon-triangle-top"></i>' . Yii::t('app', 'projectAdviser') . '：' . $projectAdviser->adviser->name_zh,
+                'type' => DetailView::TYPE_INFO,
             ],
             'attributes' => [
                 [
-                    'attribute' => 'project_id',
+                    'attribute' => 'id',
                     'type' => DetailView::INPUT_HIDDEN,
                 ],
                 [
                     'attribute' => 'adviser_id',
+                    'value' => $projectAdviser->adviser->name_zh,
                     'format' => 'raw',
+                    'options' => ['id' => 'adviser-id' . $index],
                     'type' => DetailView::INPUT_SELECT2,
-                    'options' => ['id' => 'modal2-adviser-id', 'placeholder' => '-- ' . Yii::t('app', 'Please select')],
+                    'displayOnly' => true,
                     'widgetOptions' => [
                         'data' => $adviser->getAdviser(),
+                        'options' => ['placeholder' => '-- ' . Yii::t('app', 'Please select')],
                         'pluginOptions' => ['allowClear' => true, 'width' => '100%'],
                     ],
                     'valueColOptions' => ['style' => 'width:60%']
                 ],
                 [
-                    'label' => Yii::t('app', 'Company'),
-                    'contentOptions' => ['id' => 'modal2-adviser_company', 'readonly' => 'readonly'],
-                    'value' => '',
-
-                ],
-                [
-                    'label' => Yii::t('app', 'Position'),
-                    'contentOptions' => ['id' => 'modal2-adviser_position', 'readonly' => 'readonly'],
-                    'value' => '',
-                ],
-                [
-                    'label' => Yii::t('app', 'Background'),
-                    'contentOptions' => ['id' => 'modal2-adviser_describe', 'readonly' => 'readonly'],
-                    'value' => '',
-                ],
-                [
                     'attribute' => 'selector_id',
+                    'value' => !is_object($projectAdviser->admin) ? null : $projectAdviser->admin->username,
                     'format' => 'raw',
+                    'options' => ['id' => 'selector-id' . $index],
                     'type' => DetailView::INPUT_SELECT2,
-                    'options' => ['id' => 'modal2-selector-id', 'placeholder' => '-- ' . Yii::t('app', 'Please select')],
                     'widgetOptions' => [
                         'data' => $admin->getAdminIdList(),
                         'pluginOptions' => ['allowClear' => true, 'width' => '100%'],
@@ -758,101 +626,237 @@ $customer = new Customer();
                 ],
                 [
                     'attribute' => 'state',
+                    'value' => $projectAdviser->state == 0 ? '' : $projectAdviser->stateType($projectAdviser->state),
                     'format' => 'raw',
+                    'options' => ['id' => 'state' . $index],
                     'type' => DetailView::INPUT_SELECT2,
-                    'options' => ['id' => 'modal2-state', 'placeholder' => '-- ' . Yii::t('app', 'Please select')],
                     'widgetOptions' => [
                         'data' => $projectAdviser->stateType(),
+                        'options' => ['placeholder' => '-- ' . Yii::t('app', 'Please select')],
                         'pluginOptions' => ['allowClear' => true, 'width' => '100%'],
                     ],
                     'valueColOptions' => ['style' => 'width:60%']
                 ],
                 [
                     'attribute' => 'remark',
-                    'options' => ['id' => 'modal2-remark'],
+                    'value' => $projectAdviser->adviser->remark,
                 ],
                 'duration',
+                'hour',
                 [
                     'attribute' => 'fee_rate',
                     'format' => 'raw',
+                    'value' => $projectAdviser->fee_rate,
                     'type' => DetailView::INPUT_SELECT2,
-                    'options' => ['id' => 'modal2-fee-rate-id'],
+                    'options' => ['id' => 'modal2-fee-rate-update-' . $index],
                     'widgetOptions' => [
                         'data' => $projectAdviser->feeRate(),
                         'pluginOptions' => ['allowClear' => true, 'width' => '100%'],
                     ],
                     'valueColOptions' => ['style' => 'width:60%']
                 ],
+                'cost',
                 [
-                    'attribute' => 'fee',
-                    'format' => 'raw',
-                    'type' => DetailView::INPUT_SELECT2,
-                    'options' => ['id' => 'modal2-fee', 'placeholder' => '-- ' . Yii::t('app', 'Please select'), 'readonly' => 'readonly'],
+                    'attribute' => Yii::t('app', 'fee'),
+                    'value' => $projectAdviser->adviser->taxType($projectAdviser->adviser->tax_type) . ' ' . $projectAdviser->adviser->payType($projectAdviser->pay_type) . ' ' . $projectAdviser->fee . '（' . $projectAdviser->adviser->priceType($projectAdviser->fee_type) . '）',
+                    'type' => DetailView::INPUT_TEXT,
+                    'options' => ['placeholder' => '-- ' . Yii::t('app', 'Please select')],
+                    'displayOnly' => true,
                     'widgetOptions' => [
                         'data' => [],
                         'pluginOptions' => ['allowClear' => true, 'width' => '100%'],
                     ],
-                    'valueColOptions' => ['style' => 'width:60%']
-                ],
-                [
-                    'attribute' => 'fee_type',
-                    'options' => ['id' => 'modal2-fee_type'],
-                    'type' => DetailView::INPUT_HIDDEN,
-                ],
-                [
-                    'attribute' => 'pay_type',
-                    'options' => ['id' => 'modal2-pay_type'],
-                    'type' => DetailView::INPUT_HIDDEN,
                 ],
                 [
                     'attribute' => 'date',
                     'type' => DetailView::INPUT_DATETIME,
-                    'options' => ['id' => 'modal2-date'],
+                    'options' => ['id' => 'date' . $index],
                     'widgetOptions' => [
                         'type' => DateTimePicker::TYPE_COMPONENT_PREPEND,
                         'language' => 'zh-CN',
-                        'id' => 'pay_date',
                         'convertFormat' => true,
                         'pluginOptions' => [
                             'autoclose' => true,
                             'format' => 'yyyy-MM-dd HH:mm',
                             'todayHighlight' => true,
-                            'id' => 'pay_date',
                         ]
                     ],
                     'valueColOptions' => ['style' => 'width:60%']
                 ],
                 [
                     'attribute' => 'pay_remark',
-                    'options' => ['id' => 'modal2-pay_remark', 'readonly' => 'readonly'],
-                ],
+                    'value' => $projectAdviser->adviser->pay_remark,
+                    'displayOnly' => true,
+                ]
+            ],
+            'deleteOptions' => [
+                'params' => ['id' => $projectAdviser->id, 'delete' => true],
+                'url' => Url::toRoute(['project-adviser/delete', 'id' => $model->id]),
             ],
             'formOptions' => [
-                'action' => Url::toRoute(['project-adviser/create', 'id' => $model->id]),
+                'action' => Url::toRoute(['project-adviser/update', 'id' => $model->id]),
             ],
-        ]); ?>
-        <?php Modal::end(); ?>
+        ]);
+        Modal::end();
+    } ?>
 
-        <?php
-        if (!empty($model->projectBoffins[0])) {
-            Modal::begin([
-                'header' => '<h4 class="modal-title">' . Yii::t('app', 'Create Email') . '</h4>',
-                'id' => 'create-email',
-                'footer' => '<a href="#" class="btn btn-primary" data-dismiss="modal">Close</a>',
-            ]);
-            echo $model->projectBoffins[0]->boffin->name_zh . '你好：<br>&nbsp;&nbsp;&nbsp;&nbsp;我是Linker的' . Yii::$app->user->identity->username
-                . '，下面几位专家您看是否合适，如果有需要约访的，欢迎您随时联系我，谢谢。<br>';
+    <?php Modal::begin([
+        'header' => '<h4 class="modal-title">' . Yii::t('app', 'Add Adviser') . '</h4>',
+        'id' => 'add-advisers',
+        'toggleButton' => ['label' => '<i class="glyphicon glyphicon-plus"></i>' . Yii::t('app', 'Add Adviser'), 'class' => 'btn btn-primary', 'disabled' => $projectAdviser->project_id ? false : true],
+        'options' => ['tabindex' => false]
+    ]); ?>
+    <!-- // Url::toRoute(['adviser/info', 'id' => '']) -->
+    <?= DetailView::widget([
+        'model' => $projectAdviser,
+        'condensed' => true,
+        'hover' => true,
+        'mode' => DetailView::MODE_EDIT,
+        'container' => ['id' => 'kv-demo2'],
+        'panel' => [
+            'heading' => '',
+            'type' => DetailView::TYPE_PRIMARY,
+        ],
+        'attributes' => [
+            [
+                'attribute' => 'project_id',
+                'type' => DetailView::INPUT_HIDDEN,
+            ],
+            [
+                'attribute' => 'adviser_id',
+                'format' => 'raw',
+                'type' => DetailView::INPUT_SELECT2,
+                'options' => ['id' => 'modal2-adviser-id', 'placeholder' => '-- ' . Yii::t('app', 'Please select')],
+                'widgetOptions' => [
+                    'data' => $adviser->getAdviser(),
+                    'pluginOptions' => ['allowClear' => true, 'width' => '100%'],
+                ],
+                'valueColOptions' => ['style' => 'width:60%']
+            ],
+            [
+                'label' => Yii::t('app', 'Company'),
+                'contentOptions' => ['id' => 'modal2-adviser_company', 'readonly' => 'readonly'],
+                'value' => '',
 
-            foreach ($model->projectAdvisers as $index => $projectAdviser) {
-                echo '<div class="row" style="padding: 15px 15px 5px;"><div class="col-md-12" style="">ID:' . ($index + 1) . '</div><div class="col-md-12" style="line-height:20px; font-weight: bold;">' . $projectAdviser->adviser->company . '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' . $projectAdviser->adviser->position . '</div><div class="col-md-12"><span style="font-weight:bold;">Experience:&nbsp;&nbsp;</span>' . $projectAdviser->adviser->describe . '</div><div class="col-md-12"><span style="font-weight:bold;">Comments:&nbsp;&nbsp;</span>' . $projectAdviser->adviser->remark . '</div><div class="col-md-12" style="height:10px;">&nbsp;&nbsp;</div></div>';
-            }
+            ],
+            [
+                'label' => Yii::t('app', 'Position'),
+                'contentOptions' => ['id' => 'modal2-adviser_position', 'readonly' => 'readonly'],
+                'value' => '',
+            ],
+            [
+                'label' => Yii::t('app', 'Background'),
+                'contentOptions' => ['id' => 'modal2-adviser_describe', 'readonly' => 'readonly'],
+                'value' => '',
+            ],
+            [
+                'attribute' => 'selector_id',
+                'format' => 'raw',
+                'type' => DetailView::INPUT_SELECT2,
+                'options' => ['id' => 'modal2-selector-id', 'placeholder' => '-- ' . Yii::t('app', 'Please select')],
+                'widgetOptions' => [
+                    'data' => $admin->getAdminIdList(),
+                    'pluginOptions' => ['allowClear' => true, 'width' => '100%'],
+                ],
+                'valueColOptions' => ['style' => 'width:60%']
+            ],
+            [
+                'attribute' => 'state',
+                'format' => 'raw',
+                'type' => DetailView::INPUT_SELECT2,
+                'options' => ['id' => 'modal2-state', 'placeholder' => '-- ' . Yii::t('app', 'Please select')],
+                'widgetOptions' => [
+                    'data' => $projectAdviser->stateType(),
+                    'pluginOptions' => ['allowClear' => true, 'width' => '100%'],
+                ],
+                'valueColOptions' => ['style' => 'width:60%']
+            ],
+            [
+                'attribute' => 'remark',
+                'options' => ['id' => 'modal2-remark'],
+            ],
+            'duration',
+            [
+                'attribute' => 'fee_rate',
+                'format' => 'raw',
+                'type' => DetailView::INPUT_SELECT2,
+                'options' => ['id' => 'modal2-fee-rate-id'],
+                'widgetOptions' => [
+                    'data' => $projectAdviser->feeRate(),
+                    'pluginOptions' => ['allowClear' => true, 'width' => '100%'],
+                ],
+                'valueColOptions' => ['style' => 'width:60%']
+            ],
+            [
+                'attribute' => 'fee',
+                'format' => 'raw',
+                'type' => DetailView::INPUT_SELECT2,
+                'options' => ['id' => 'modal2-fee', 'placeholder' => '-- ' . Yii::t('app', 'Please select'), 'readonly' => 'readonly'],
+                'widgetOptions' => [
+                    'data' => [],
+                    'pluginOptions' => ['allowClear' => true, 'width' => '100%'],
+                ],
+                'valueColOptions' => ['style' => 'width:60%']
+            ],
+            [
+                'attribute' => 'fee_type',
+                'options' => ['id' => 'modal2-fee_type'],
+                'type' => DetailView::INPUT_HIDDEN,
+            ],
+            [
+                'attribute' => 'pay_type',
+                'options' => ['id' => 'modal2-pay_type'],
+                'type' => DetailView::INPUT_HIDDEN,
+            ],
+            [
+                'attribute' => 'date',
+                'type' => DetailView::INPUT_DATETIME,
+                'options' => ['id' => 'modal2-date'],
+                'widgetOptions' => [
+                    'type' => DateTimePicker::TYPE_COMPONENT_PREPEND,
+                    'language' => 'zh-CN',
+                    'id' => 'pay_date',
+                    'convertFormat' => true,
+                    'pluginOptions' => [
+                        'autoclose' => true,
+                        'format' => 'yyyy-MM-dd HH:mm',
+                        'todayHighlight' => true,
+                        'id' => 'pay_date',
+                    ]
+                ],
+                'valueColOptions' => ['style' => 'width:60%']
+            ],
+            [
+                'attribute' => 'pay_remark',
+                'options' => ['id' => 'modal2-pay_remark', 'readonly' => 'readonly'],
+            ],
+        ],
+        'formOptions' => [
+            'action' => Url::toRoute(['project-adviser/create', 'id' => $model->id]),
+        ],
+    ]); ?>
+    <?php Modal::end(); ?>
 
-            Modal::end();
+    <?php
+    if (!empty($model->projectBoffins[0])) {
+        Modal::begin([
+            'header' => '<h4 class="modal-title">' . Yii::t('app', 'Create Email') . '</h4>',
+            'id' => 'create-email',
+            'footer' => '<a href="#" class="btn btn-primary" data-dismiss="modal">Close</a>',
+        ]);
+        echo $model->projectBoffins[0]->boffin->name_zh . '你好：<br>&nbsp;&nbsp;&nbsp;&nbsp;我是Linker的' . Yii::$app->user->identity->username
+            . '，下面几位专家您看是否合适，如果有需要约访的，欢迎您随时联系我，谢谢。<br>';
+
+        foreach ($model->projectAdvisers as $index => $projectAdviser) {
+            echo '<div class="row" style="padding: 15px 15px 5px;"><div class="col-md-12" style="">ID:' . ($index + 1) . '</div><div class="col-md-12" style="line-height:20px; font-weight: bold;">' . $projectAdviser->adviser->company . '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' . $projectAdviser->adviser->position . '</div><div class="col-md-12"><span style="font-weight:bold;">Experience:&nbsp;&nbsp;</span>' . $projectAdviser->adviser->describe . '</div><div class="col-md-12"><span style="font-weight:bold;">Comments:&nbsp;&nbsp;</span>' . $projectAdviser->adviser->remark . '</div><div class="col-md-12" style="height:10px;">&nbsp;&nbsp;</div></div>';
         }
 
-        ?>
+        Modal::end();
+    }
 
-    </div>
+    ?>
+
+</div>
 <?php
 $this->registerJs(
     '$(document).ready(function(){
@@ -868,7 +872,7 @@ $this->registerJs(
             var cell = $("tr.kv-child-table-row").find(".kv-attribute");
             function init_ajax(v){
                 $.ajax({
-                    url: "index.php?r=customer/info",
+                    url: "/customer/info",
                     dataType: "json",
                     method: "GET",
                     data: "id="+v,
@@ -929,10 +933,10 @@ $this->registerJs(
                 console.log(val);
                 if(val){
                     $.ajax({
-                        url: "index.php?r=adviser/info",
+                        url: "/adviser/info",
                         dataType: "json",
                         method: "GET",
-                        data: "id="+val,
+                        data: {id:val},
                         success: function(data){
                             data = data;
                             $("#modal2-remark").val(data.remark);
@@ -998,7 +1002,7 @@ $this->registerJs(
                 var v = $(this).val();
                 if(v){
                     $.ajax({
-                        url: "index.php?r=customer-boffin/info",
+                        url: "/customer-boffin/info",
                         dataType: "json",
                         method: "GET",
                         data: "id="+v,

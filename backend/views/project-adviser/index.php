@@ -287,6 +287,11 @@ $this->params['breadcrumbs'][] = Yii::t('app', '财务');
         'filterRowOptions' => ['class' => 'kartik-sheet-style'],
         'toolbar' => [
             ['content' =>
+               '<form id="import_xls" action="/project-adviser/import" method="post" enctype="multipart/form-data">
+                <input type="file" name="file" id="file" accept="application/vnd.ms-excel"><br>
+                </form>'
+            ],
+            ['content' =>
                 Html::a('<i class="glyphicon glyphicon-repeat"></i>', ['index'], ['data-pjax' => 0, 'class' => 'btn btn-default', 'title' => Yii::t('app', '刷新')])],
             '{export}',
             '{toggleData}'
@@ -320,3 +325,14 @@ $this->params['breadcrumbs'][] = Yii::t('app', '财务');
     // ]);
     ?>
 </div>
+
+<?php
+
+$js = <<<JS
+$('#file').change(function(){
+    $("#import_xls").submit();
+});
+
+JS;
+$this->registerJs($js);
+?>

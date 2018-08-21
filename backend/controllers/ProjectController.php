@@ -95,7 +95,7 @@ class ProjectController extends Controller
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['project/update', 'id' => $model->id]);
         }
-
+//        echo Yii::$app->controller->action->id;exit;
         return $this->render('update', [
             'model' => $model,
             'dataProvider' => $dataProvider,
