@@ -6,6 +6,7 @@ use yii\helpers\Url;
 use yii\widgets\Pjax;
 use yii\widgets\LinkPager;
 use backend\models\Admin;
+
 /* @var $this yii\web\View */
 /* @var $searchModel backend\models\ProjectAdviserSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -23,12 +24,13 @@ $this->params['breadcrumbs'][] = Yii::t('app', '财务');
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
-            ['class' => 'kartik\grid\SerialColumn'],
+//            ['class' => 'kartik\grid\SerialColumn'],
+            'id',
             [
                 'label' => Yii::t('app', '日期'),
                 'attribute' => 'project_date',
-                'value' => function($data){
-                    return date('Y-m-d H:i', $data->project->start_time);
+                'value' => function ($data) {
+                    return date('Y-m-d', $data->project->start_time);
                 },
             ],
             [
@@ -64,7 +66,7 @@ $this->params['breadcrumbs'][] = Yii::t('app', '财务');
                 'value' => function ($model) {
                     $time = 0;
                     foreach ($model->project->projectAdvisers as $adviser) {
-                        $time += $adviser->duration;
+                        $time += $adviser->hour;
                     }
                     return $time;
                 },
@@ -79,12 +81,26 @@ $this->params['breadcrumbs'][] = Yii::t('app', '财务');
                 'value' => function ($model) {
                     $time = 0;
                     foreach ($model->project->projectAdvisers as $adviser) {
-                        $time += $adviser->duration * $adviser->fee_rate;
+                        $time += $adviser->hour * $adviser->fee_rate;
                     }
                     return $time;
                 },
             ],
-            'customer_fee',
+            [
+                'label' => Yii::t('app', '收客户费用'),
+                'attribute' => 'customer_fee',
+                'value' => function ($model) {
+                    if ($model->project->status == 4) {
+                        $time = 0;
+                        foreach ($model->project->projectAdvisers as $adviser) {
+                            $time += $adviser->customer_fee;
+                        }
+                        return $time;
+                    } else {
+                        return '';
+                    }
+                },
+            ],
             [
                 'label' => Yii::t('app', '专家姓名'),
                 'attribute' => 'adviser_name',
@@ -134,7 +150,7 @@ $this->params['breadcrumbs'][] = Yii::t('app', '财务');
                 'label' => Yii::t('app', '项目经理'),
                 'attribute' => 'project_manager',
                 'value' => function ($model) {
-                      return  Admin::findById($model->selector_id) ? Admin::findById($model->selector_id)->username : '';
+                    return Admin::findById($model->selector_id) ? Admin::findById($model->selector_id)->username : '';
 //                    $tmp = '';
 //                    foreach ($model->project->projectAdvisers as $adviser) {
 //                        if($adviser->adviser_id == $model->adviser->id){

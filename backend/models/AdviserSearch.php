@@ -27,7 +27,7 @@ class AdviserSearch extends Adviser
     {
         return [
             [['id', 'source_type', 'fee_phone_type', 'fee_road_type', 'fee_face_type', 'update_time'], 'integer'],
-            [['name_zh', 'name_en', 'mobile_phone', 'tele_phone', 'email', 'wechat', 'linkedin', 'company', 'position', 'describe', 'expertise', 'bank_card_name', 'bank_card_addr', 'bank_card_no', 'remark'], 'safe'],
+            [['name_zh', 'name_en', 'mobile_phone', 'tele_phone', 'email', 'wechat', 'linkedin', 'company', 'position', 'describe', 'expertise', 'bank_card_name', 'bank_card_addr', 'bank_card_no', 'remark','province','city','trade','child_trade'], 'safe'],
             [['fee_phone', 'fee_road', 'fee_face'], 'number'],
         ];
     }
@@ -77,6 +77,10 @@ class AdviserSearch extends Adviser
             'fee_face' => $this->fee_face,
             'fee_face_type' => $this->fee_face_type,
             'update_time' => $this->update_time,
+            'province' => $this->province,
+            'city' => $this->city,
+            'trade' => $this->trade,
+            'child_trade'=>$this->child_trade
         ]);
 
         $query->andFilterWhere(['like', 'name_zh', $this->name_zh])
@@ -98,7 +102,7 @@ class AdviserSearch extends Adviser
             ->andFilterWhere(['like', 'province', $this->province])
             ->andFilterWhere(['like', 'city', $this->city])
             ->andFilterWhere(['like', 'remark', $this->remark]);
-
+//        echo $query->createCommand()->getRawSql();exit;
         return $dataProvider;
     }
 }
