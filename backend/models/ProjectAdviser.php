@@ -48,14 +48,18 @@ class ProjectAdviser extends \yii\db\ActiveRecord
     {
         return [
             ['date', 'filter', 'filter' => function () {
-                return strtotime($this->date);
+                if (is_numeric($this->date)) {
+                    return $this->date;
+                } else {
+                    return strtotime($this->date);
+                }
             }],
-            [['project_id','selector_id', 'adviser_id', 'state', 'duration', 'fee', 'fee_type', 'adviser_pay', 'referee_pay','bill_out'], 'integer'],
+            [['project_id', 'selector_id', 'adviser_id', 'state', 'duration', 'fee', 'fee_type', 'adviser_pay', 'referee_pay', 'bill_out'], 'integer'],
             [['fee_rate'], 'number'],
             [['remark'], 'string', 'max' => 1024],
             [['pay_remark'], 'string', 'max' => 256],
             [['pay_type'], 'string', 'max' => 50],
-            [['hour','cost','customer_fee'],'safe'],
+            [['hour', 'cost', 'customer_fee'], 'safe'],
             // [['project_id', 'adviser_id'], 'unique', 'targetAttribute' => ['project_id', 'adviser_id']],
             // [['project_id'], 'exist', 'skipOnError' => true, 'targetClass' => Project::className(), 'targetAttribute' => ['project_id' => 'id']],
             // [['adviser_id'], 'exist', 'skipOnError' => true, 'targetClass' => Adviser::className(), 'targetAttribute' => ['adviser_id' => 'id']],
