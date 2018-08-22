@@ -141,12 +141,12 @@ $this->params['breadcrumbs'][] = Yii::t('app', '财务');
                 'label' => Yii::t('app', '是否已出账单'),
                 'attribute' => 'bill_out',
                 'value' => function ($model) {
-                    return $model->bill_out == 1 ? 'false' : 'true';
+                    return $model->bill_out == 1 ? '否' : '是';
                 },
                 'editableOptions' => function ($model, $key, $index) {
                     return [
                         'asPopover' => false,
-                        'data' => [1 => 'false', 2 => 'true'],
+                        'data' => [1 => '否', 2 => '是'],
                         'inputType' => \kartik\editable\Editable::INPUT_DROPDOWN_LIST,
                     ];
                 }
@@ -213,12 +213,12 @@ $this->params['breadcrumbs'][] = Yii::t('app', '财务');
                 'attribute' => 'adviser_pay',
                 'vAlign' => 'middle',
                 'value' => function ($model) {
-                    return $model->adviser_pay == 1 ? 'false' : 'true';
+                    return $model->adviser_pay == 1 ? '否' : '是';
                 },
                 'editableOptions' => function ($model, $key, $index) {
                     return [
                         'asPopover' => false,
-                        'data' => [1 => 'false', 2 => 'true'],
+                        'data' => [1 => '否', 2 => '是'],
                         'inputType' => \kartik\editable\Editable::INPUT_DROPDOWN_LIST,
                     ];
                 }
@@ -264,7 +264,7 @@ $this->params['breadcrumbs'][] = Yii::t('app', '财务');
                 'attribute' => 'referee_pay',
                 'vAlign' => 'middle',
                 'value' => function ($model) {
-                    return $model->adviser_pay == 1 ? 'false' : 'true';
+                    return $model->adviser_pay == 1 ? '否' : '是';
                 },
                 'editableOptions' => function ($model, $key, $index) {
                     return [
@@ -274,7 +274,7 @@ $this->params['breadcrumbs'][] = Yii::t('app', '财务');
                             'action' => ['prject-adviser/update', 'id' => $model->id]
                         ],
                         'asPopover' => false,
-                        'data' => [1 => 'false', 2 => 'true'],
+                        'data' => [1 => '否', 2 => '是'],
                         'inputType' => \kartik\editable\Editable::INPUT_DROPDOWN_LIST,
                         'options' => ['class' => 'form-control', 'placeholder' => 'Enter person name...'],
                     ];
