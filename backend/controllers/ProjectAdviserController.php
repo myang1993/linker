@@ -6,6 +6,7 @@ use common\models\UploadForm;
 use Yii;
 use backend\models\ProjectAdviser;
 use backend\models\ProjectAdviserSearch;
+use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -29,6 +30,15 @@ class ProjectAdviserController extends Controller
                 'class' => VerbFilter::className(),
                 'actions' => [
                     'delete' => ['POST'],
+                ],
+            ],
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
                 ],
             ],
         ];
@@ -213,6 +223,11 @@ class ProjectAdviserController extends Controller
                 }
                 $PHPExcel = $PHPReader->load($destination); // Reader读出来后，加载给Excel实例
                 $currentSheet = $PHPExcel->getSheet(0); // 拿到第一个sheet（工作簿？）
+                $allColumn = $currentSheet->getHighestColumn();
+                if (strtoupper($allColumn) != 'AG') {
+                    Yii::$app->session->setFlash('error', '文件列数错误，请先确定与导出的excel列数是否一致');
+                    return $this->redirect(['project-adviser/index']);
+                }
                 foreach ($currentSheet->getRowIterator() as $key => $row) { // 行迭代器
                     if ($key > 1) {//去掉表头
                         $cellIterator = $row->getCellIterator(); // 拿到行中的cell迭代器
