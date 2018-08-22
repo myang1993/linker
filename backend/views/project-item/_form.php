@@ -24,7 +24,7 @@ $status = new backend\models\ProjectStatus();
         [
             'prompt' => '-- ' . Yii::t('app', 'Please select') . " --",
             'onchange' => '
-                $.post("' . yii::$app->urlManager->createUrl('trade/list') . '&typeid=1&pid="+$(this).val(),function(data){
+                $.post("' . yii::$app->urlManager->createUrl('trade/list') . '?typeid=1&pid="+$(this).val(),function(data){
                     $("select#projectitem-trade_id").html(data);
                 });',
         ]

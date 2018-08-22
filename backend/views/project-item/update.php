@@ -36,7 +36,7 @@ $this->params['breadcrumbs'][] = Yii::t('app', 'Update');
         [
             'prompt' => '-- ' . Yii::t('app', 'Please select') . " --",
             'onchange' => '
-                $.post("' . yii::$app->urlManager->createUrl('trade/list') . '&typeid=1&pid="+$(this).val(),function(data){
+                $.post("' . yii::$app->urlManager->createUrl('trade/list') . '?typeid=1&pid="+$(this).val(),function(data){
                     $("select#projectitem-trade_id").html(data);
                 });',
         ]

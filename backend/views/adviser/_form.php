@@ -44,7 +44,7 @@ $trade = new Trade();
             if(tmp_arr.indexOf(val) > -1){
                 val = +val + 100 + "";
             }
-            $.post("' . yii::$app->urlManager->createUrl('adviser/site') . '&typeId=1&pid="+val,function(data){
+            $.post("' . yii::$app->urlManager->createUrl('adviser/site') . '?typeId=1&pid="+val,function(data){
                 $("select#adviser-city").html(data);
             });',
         ]
@@ -56,7 +56,7 @@ $trade = new Trade();
             'prompt' => '--请选择市区--',
             'onchange' => '
                 $(".form-group.field-adviser-district").show();
-                $.post("' . yii::$app->urlManager->createUrl('adviser/site') . '&typeId=2&pid="+$(this).val(),function(data){
+                $.post("' . yii::$app->urlManager->createUrl('adviser/site') . '?typeId=2&pid="+$(this).val(),function(data){
                     $("select#adviser-district").html(data);
                 });',
         ]
@@ -69,7 +69,7 @@ $trade = new Trade();
         'options' => ['placeholder' => 'Please select ...', 'id' => 'select_trade'],
         'pluginEvents' => [
             'change' => 'function(){
-                $.post("' . yii::$app->urlManager->createUrl('trade/list') . '&typeid=0&pid="+$(this).val(),function(data){
+                $.post("' . yii::$app->urlManager->createUrl('trade/list') . '?typeid=0&pid="+$(this).val(),function(data){
                     console.log(data);
                     $("select#select_child_trade").html(data);
                 })
