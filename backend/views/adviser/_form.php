@@ -265,7 +265,7 @@ $this->registerJs(
 
             //ajax获取数据
             function ajaxData(target, url, params){
-                $.post("index.php?r="+url+"&"+params,function(data){
+                $.post("/"+url+"?"+params,function(data){
                     if(data){
                         if(data.indexOf('.$model->city.') > -1) {
                             var pos = data.indexOf('.$model->city.') + 6 + 1;

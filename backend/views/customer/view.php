@@ -12,7 +12,7 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="customer-view view">
     <div class="box highlight">
-        <h3 class="title"><?= Html::encode($this->title) ?></h1>
+        <h3 class="title"><?= Html::encode($this->title) ?></h3>
 
         <p>
             <?= Html::a(Yii::t('app', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
@@ -39,7 +39,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'value' => function($data) {
                         $result = '';
                         foreach ($data['projects'] as $key => $value) {
-                            $result .= '<div>'.Html::a($value['name'], 'index.php?r=project/view&id='.$value['id']).'</div>';
+                            $result .= '<div>'.Html::a($value['name'], '/project/view&id='.$value['id']).'</div>';
                         }
                         return $result;
                     }
@@ -50,7 +50,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'value' => function($data) {
                         $result = '';
                         foreach ($data['customerBoffins'] as $key => $value) {
-                            $result .= Html::a($value['name_zh'], 'index.php?r=customer-boffin/view&id='.$value['id']);
+                            $result .= Html::a($value['name_zh'], '/customer-boffin/view&id='.$value['id']);
                         }
                         return $result;
                     }

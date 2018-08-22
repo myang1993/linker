@@ -40,7 +40,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'format' => 'raw',
                 'value'=> function($data){
                     //超链接
-                    return Html::a(count($data['projects']), "index.php?r=project&id=".$data->id);
+                    return Html::a(count($data['projects']), "/project?id=".$data->id);
                 },
                 'contentOptions' => [
                     'style' => 'min-width: 80px;'
@@ -51,7 +51,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'format' => 'raw',
                 'value'=> function($data){
                     //超链接
-                    return Html::a(count($data['customerBoffins']), "index.php?r=customer-boffin&id=".$data->id);
+                    return Html::a(count($data['customerBoffins']), "/customer-boffin?id=".$data->id);
                 },
                 'contentOptions' => [
                     'style' => 'min-width: 100px;'

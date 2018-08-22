@@ -36,7 +36,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'attribute' => 'customer_name',
                 'format' => 'raw',
                 'value' => function($data){
-                    return Html::a($data->customer->name, "index.php?r=customer/update&id=".$data->customer_id);
+                    return Html::a($data->customer->name, "/customer/update?id=".$data->customer_id);
                 },
             ],
             [

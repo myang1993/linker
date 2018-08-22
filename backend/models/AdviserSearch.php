@@ -12,6 +12,10 @@ use backend\models\Adviser;
  */
 class AdviserSearch extends Adviser
 {
+    public $province_name;
+    public $city_name;
+    public $trade_name;
+    public $child_trade_name;
     /**
      * {@inheritdoc}
      */
@@ -27,7 +31,7 @@ class AdviserSearch extends Adviser
     {
         return [
             [['id', 'source_type', 'fee_phone_type', 'fee_road_type', 'fee_face_type', 'update_time'], 'integer'],
-            [['name_zh', 'name_en', 'mobile_phone', 'tele_phone', 'email', 'wechat', 'linkedin', 'company', 'position', 'describe', 'expertise', 'bank_card_name', 'bank_card_addr', 'bank_card_no', 'remark','province','city','trade','child_trade'], 'safe'],
+            [['name_zh', 'name_en', 'mobile_phone', 'tele_phone', 'email', 'wechat', 'linkedin', 'company', 'position', 'describe', 'expertise', 'bank_card_name', 'bank_card_addr', 'bank_card_no', 'remark','province_name','city_name','province','city','trade_name','child_trade_name','trade','child_trade','city_name'], 'safe'],
             [['fee_phone', 'fee_road', 'fee_face'], 'number'],
         ];
     }
@@ -50,7 +54,7 @@ class AdviserSearch extends Adviser
      */
     public function search($params)
     {
-        $query = Adviser::find();
+        $query = Adviser::find()->joinWith('area as t_province', true, 'LEFT JOIN')->joinWith('areaCity as t_city', true, 'LEFT JOIN')->joinWith('trade as t_trade', true, 'LEFT JOIN')->joinWith('childTrade as t_child_trade', true, 'LEFT JOIN');
 
         // add conditions that should always apply here
 
@@ -80,7 +84,7 @@ class AdviserSearch extends Adviser
             'province' => $this->province,
             'city' => $this->city,
             'trade' => $this->trade,
-            'child_trade'=>$this->child_trade
+            'child_trade'=>$this->child_trade,
         ]);
 
         $query->andFilterWhere(['like', 'name_zh', $this->name_zh])
@@ -97,11 +101,32 @@ class AdviserSearch extends Adviser
             ->andFilterWhere(['like', 'bank_card_name', $this->bank_card_name])
             ->andFilterWhere(['like', 'bank_card_addr', $this->bank_card_addr])
             ->andFilterWhere(['like', 'bank_card_no', $this->bank_card_no])
-            ->andFilterWhere(['like', 'trade', $this->trade])
-            ->andFilterWhere(['like', 'child_trade', $this->child_trade])
-            ->andFilterWhere(['like', 'province', $this->province])
-            ->andFilterWhere(['like', 'city', $this->city])
+            ->andFilterWhere(['like', 't_province.name', $this->province_name])
+            ->andFilterWhere(['like', 't_city.name', $this->city_name])
+            ->andFilterWhere(['like', 't_trade.name', $this->trade_name])
+            ->andFilterWhere(['like', 't_child_trade.name', $this->child_trade_name])
             ->andFilterWhere(['like', 'remark', $this->remark]);
+
+        $dataProvider->setSort([
+            'attributes' => [
+                'province_name' => [
+                    'asc' => ['province' => SORT_ASC],
+                    'desc' => ['province' => SORT_DESC],
+                ],
+                'city_name' => [
+                    'asc' => ['city' => SORT_ASC],
+                    'desc' => ['city' => SORT_DESC],
+                ],
+                'trade_name' => [
+                    'asc' => ['trade' => SORT_ASC],
+                    'desc' => ['trade' => SORT_DESC],
+                ],
+                'child_trade_name' => [
+                    'asc' => ['child_trade' => SORT_ASC],
+                    'desc' => ['child_trade' => SORT_DESC],
+                ],
+            ]
+        ]);
 //        echo $query->createCommand()->getRawSql();exit;
         return $dataProvider;
     }

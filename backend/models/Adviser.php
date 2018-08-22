@@ -201,9 +201,22 @@ class Adviser extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
+    public function getAreaCity()
+    {
+        return $this->hasOne(Area::className(), ['id' => 'city']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
     public function getTrade()
     {
         return $this->hasOne(Trade::className(), ['id' => 'trade']);
+    }
+
+    public function getChildTrade()
+    {
+        return $this->hasOne(Trade::className(), ['id' => 'child_trade']);
     }
 
     /**

@@ -49,7 +49,7 @@ class TradeController extends Controller
         } else {
             $aa = "";
         }
-        echo Html::tag('option', $aa, ['value' => 'empty']);
+        echo Html::tag('option', $aa, ['value' => '']);
         foreach ($model as $value => $name) {
             echo Html::tag('option', Html::encode($name), array('value' => $value));
         }

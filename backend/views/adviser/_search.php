@@ -52,44 +52,6 @@ $trade = new Trade();
         ]
     ) ?>
 
-    <?php // echo $form->field($model, 'tele_phone') ?>
-
-    <?php // echo $form->field($model, 'email') ?>
-
-    <?php // echo $form->field($model, 'wechat') ?>
-
-    <?php // echo $form->field($model, 'linkedin') ?>
-
-    <?php // echo $form->field($model, 'fee_phone') ?>
-
-    <?php // echo $form->field($model, 'fee_phone_type') ?>
-
-    <?php // echo $form->field($model, 'fee_road') ?>
-
-    <?php // echo $form->field($model, 'fee_road_type') ?>
-
-    <?php // echo $form->field($model, 'fee_face') ?>
-
-    <?php // echo $form->field($model, 'fee_face_type') ?>
-
-    <?php // echo $form->field($model, 'company') ?>
-
-    <?php // echo $form->field($model, 'position') ?>
-
-    <?php // echo $form->field($model, 'describe') ?>
-
-    <?php // echo $form->field($model, 'expertise') ?>
-
-    <?php // echo $form->field($model, 'bank_card_name') ?>
-
-    <?php // echo $form->field($model, 'bank_card_addr') ?>
-
-    <?php // echo $form->field($model, 'bank_card_no') ?>
-
-    <?php // echo $form->field($model, 'remark') ?>
-
-    <?php // echo $form->field($model, 'update_time') ?>
-
     <div class="form-group" style="vertical-align: top;">
         <?= Html::submitButton(Yii::t('app', 'Search'), ['class' => 'btn btn-primary']) ?>
         <?= Html::resetButton(Yii::t('app', 'Reset'), ['class' => 'btn btn-default']) ?>
@@ -109,7 +71,7 @@ $this->registerJs(
 
             //ajax获取数据
             function ajaxData(target, url, params){
-                $.post("index.php?r="+url+"&"+params,function(data){
+                $.post("/"+url+"?"+params,function(data){
                     console.log(data);
                     target.html(data);
                 });

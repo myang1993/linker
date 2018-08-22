@@ -54,28 +54,32 @@ $trade = new Trade();
                 'attribute' => 'describe',
             ],
             [
-                'attribute' => 'province',
+                'label' => Yii::t('app', '省份'),
+                'attribute' => 'province_name',
                 'value' => function($model){
                     return $model->province ? Area::findOne($model->province)->name: '';
                 },
                 // 'filter' => $area->getAreaList(),
             ],
             [
-                'attribute' => 'city',
+                'label' => Yii::t('app', '市'),
+                'attribute' => 'city_name',
                 'value' => function($model){
                     return $model->city ? Area::findOne($model->city)->name : '';
                 },
                 // 'filter' => [],
             ],
             [
-                'attribute' => 'trade',
+                'label' => Yii::t('app', '行业'),
+                'attribute' => 'trade_name',
                 'value' => function($model){
                     return $model->trade ? Trade::findOne($model->trade)->name: '';
                 },
                 // 'filter' => $trade->getTradeList(0),
             ],
             [
-                'attribute' => 'child_trade',
+                'label' => Yii::t('app', '子行业'),
+                'attribute' => 'child_trade_name',
                 'value' => function($model){
                     return $model->child_trade ? Trade::findOne($model->child_trade)->name: '';
                 },
