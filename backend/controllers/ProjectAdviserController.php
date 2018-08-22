@@ -195,7 +195,8 @@ class ProjectAdviserController extends Controller
     public function actionImport()
     {
         if (!$_FILES['file']) {
-            echo "文件格式错误，请先另存为xls格式";exit;
+            Yii::$app->session->setFlash('error', '文件格式错误，请先另存为xls格式');
+            return $this->redirect(['project-adviser/index']);
         } else {
             $filepath = Yii::$app->basePath.'/upload/';
             is_dir($filepath) OR mkdir($filepath, 0777, true);
@@ -206,7 +207,8 @@ class ProjectAdviserController extends Controller
                 if (!$PHPReader->canRead($destination)) { // 这里是用Reader尝试去读文件，07不行用05，05不行就报错。注意，这里的return是Yii框架的方式。
                     $PHPReader = new \PHPExcel_Reader_Excel5();
                     if (!$PHPReader->canRead($destination)) {
-                        echo "文件格式错误，请先另存为xls格式";exit;
+                        Yii::$app->session->setFlash('error', '文件格式错误，请先另存为xls格式');
+                        return $this->redirect(['project-adviser/index']);
                     }
                 }
                 $PHPExcel = $PHPReader->load($destination); // Reader读出来后，加载给Excel实例
@@ -227,9 +229,11 @@ class ProjectAdviserController extends Controller
                         ProjectAdviser::updateAll($updateData, ['id' => $lineVal[0]]);
                     }
                 }
+                Yii::$app->session->setFlash('success', '修改成功');
                 return $this->redirect(['project-adviser/index']);
             }else{
-                echo "上传失败";
+                Yii::$app->session->setFlash('error', '上传失败');
+                return $this->redirect(['project-adviser/index']);
             }
         }
     }
