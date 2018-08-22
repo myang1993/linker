@@ -412,11 +412,6 @@ $customer = new Customer();
             'tableOptions' => ['style' => 'table-layout: fixed;word-wrap: break-word;word-break:break-all', 'class' => 'table table-striped table-bordered'],
             'columns' => [
                 [
-                    'class' => 'yii\grid\SerialColumn',
-                    'visible' => true,
-                    'headerOptions' => ['style' => 'width:2%;'],
-                ],
-                [
                     'label' => Yii::t('app', 'ID'),
                     'attribute' => 'id',
                     'headerOptions' => ['style' => 'width:2%;'],
@@ -426,11 +421,11 @@ $customer = new Customer();
                     'value' => function ($data) {
                         return $data->adviser->name_zh;
                     },
-                    'contentOptions' => ['style' => 'overflow:hidden;text-overflow:ellipsis;white-space:nowrap'],
-                    'headerOptions' => ['width' => '4%'],
+                    'contentOptions' => ['style' => 'overflow:hidden;text-overflow:ellipsis;white-space:inherit'],
+                    'headerOptions' => ['width' => '5%'],
                 ],
                 [
-                    'contentOptions' => ['style' => 'overflow:hidden;text-overflow:ellipsis;white-space:nowrap'],
+                    'contentOptions' => ['style' => 'overflow:hidden;text-overflow:ellipsis;white-space:inherit'],
                     'headerOptions' => ['width' => '5%'],
                     'label' => Yii::t('app', 'Company'),
                     'value' => function ($data) {
@@ -438,7 +433,7 @@ $customer = new Customer();
                     }
                 ],
                 [
-                    'contentOptions' => ['style' => 'overflow:hidden;text-overflow:ellipsis;white-space:nowrap'],
+                    'contentOptions' => ['style' => 'overflow:hidden;text-overflow:ellipsis;white-space:inherit'],
                     'headerOptions' => ['width' => '5%'],
                     'label' => Yii::t('app', 'Position'),
                     'value' => function ($data) {
@@ -447,15 +442,15 @@ $customer = new Customer();
                 ],
                 [
                     'format' => 'raw',
-                    'contentOptions' => ['style' => 'overflow:hidden;text-overflow:ellipsis;white-space:nowrap'],
-                    'headerOptions' => ['width' => '28%'],
+                    'contentOptions' => ['style' => 'overflow:hidden;text-overflow:ellipsis;white-space:inherit'],
+                    'headerOptions' => ['width' => '20%'],
                     'label' => Yii::t('app', 'Background'),
                     'value' => function ($data) {
                         return $data->adviser->describe;
                     }
                 ],
                 [
-                    'contentOptions' => ['style' => 'overflow:hidden;text-overflow:ellipsis;white-space:nowrap'],
+                    'contentOptions' => ['style' => 'overflow:hidden;text-overflow:ellipsis;white-space:inherit'],
                     'headerOptions' => ['width' => '5%'],
                     'label' => Yii::t('app', '安排人员'),
                     'value' => function ($data) {
@@ -463,7 +458,7 @@ $customer = new Customer();
                     }
                 ],
                 [
-                    'contentOptions' => ['style' => 'overflow:hidden;text-overflow:ellipsis;white-space:nowrap'],
+                    'contentOptions' => ['style' => 'overflow:hidden;text-overflow:ellipsis;white-space:inherit'],
                     'headerOptions' => ['width' => '6%'],
                     'label' => Yii::t('app', '状态'),
                     'value' => function ($data) {
@@ -471,27 +466,27 @@ $customer = new Customer();
                     }
                 ],
                 [
-                    'contentOptions' => ['style' => 'overflow:hidden;text-overflow:ellipsis;white-space:nowrap'],
+                    'contentOptions' => ['style' => 'overflow:hidden;text-overflow:ellipsis;white-space:inherit'],
                     'headerOptions' => ['width' => '9%'],
                     'label' => Yii::t('app', '备注'),
                     'value' => 'remark'
                 ],
                 [
-                    'contentOptions' => ['style' => 'overflow:hidden;text-overflow:ellipsis;white-space:nowrap'],
+                    'contentOptions' => ['style' => 'overflow:hidden;text-overflow:ellipsis;white-space:inherit'],
                     'headerOptions' => ['width' => '3%'],
                     'label' => Yii::t('app', '顾问倍率'),
                     'value' => 'fee_rate'
                 ],
                 [
-                    'contentOptions' => ['style' => 'overflow:hidden;text-overflow:ellipsis;white-space:nowrap'],
-                    'headerOptions' => ['width' => '14%'],
+                    'contentOptions' => ['style' => 'overflow:hidden;white-space:inherit'],
+                    'headerOptions' => ['width' => '8%'],
                     'label' => Yii::t('app', '访谈费率'),
                     'value' => function ($data) {
                         return $data->adviser->taxType($data->adviser->tax_type) . ' ' . $data->adviser->payType($data->pay_type) . ' ' . $data->fee . '（' . $data->adviser->priceType($data->fee_type) . '）';
                     }
                 ],
                 [
-                    'contentOptions' => ['style' => 'overflow:hidden;text-overflow:ellipsis;white-space:nowrap'],
+                    'contentOptions' => ['style' => 'overflow:hidden;text-overflow:ellipsis;white-space:inherit'],
                     'headerOptions' => ['width' => '9%'],
                     'label' => Yii::t('app', '访谈日期'),
                     'value' => function ($data) {
@@ -499,13 +494,13 @@ $customer = new Customer();
                     }
                 ],
                 [
-                    'contentOptions' => ['style' => 'overflow:hidden;text-overflow:ellipsis;white-space:nowrap'],
+                    'contentOptions' => ['style' => 'overflow:hidden;text-overflow:ellipsis;white-space:inherit'],
                     'headerOptions' => ['width' => '6%'],
                     'label' => Yii::t('app', '支付备注'),
                     'value' => 'pay_remark'
                 ],
                 [
-                    'contentOptions' => ['style' => 'overflow:hidden;text-overflow:ellipsis;white-space:nowrap'],
+                    'contentOptions' => ['style' => 'overflow:hidden;text-overflow:ellipsis;white-space:inherit'],
                     'headerOptions' => ['width' => '6%'],
                     'label' => Yii::t('app', '访谈时长(分钟)'),
                     'value' => function ($model) {
@@ -513,7 +508,7 @@ $customer = new Customer();
                     }
                 ],
                 [
-                    'contentOptions' => ['style' => 'overflow:hidden;text-overflow:ellipsis;white-space:nowrap'],
+                    'contentOptions' => ['style' => 'overflow:hidden;text-overflow:ellipsis;white-space:inherit'],
                     'headerOptions' => ['width' => '6%'],
                     'label' => Yii::t('app', '访谈时长(小时)'),
                     'value' => function ($model) {
@@ -521,7 +516,7 @@ $customer = new Customer();
                     }
                 ],
                 [
-                    'contentOptions' => ['style' => 'overflow:hidden;text-overflow:ellipsis;white-space:nowrap'],
+                    'contentOptions' => ['style' => 'overflow:hidden;text-overflow:ellipsis;white-space:inherit'],
                     'headerOptions' => ['width' => '6%'],
                     'label' => Yii::t('app', '专家成本'),
                     'value' => function ($model) {
@@ -529,7 +524,7 @@ $customer = new Customer();
                     }
                 ],
                 [
-                    'contentOptions' => ['style' => 'overflow:hidden;text-overflow:ellipsis;white-space:nowrap'],
+                    'contentOptions' => ['style' => 'overflow:hidden;text-overflow:ellipsis;white-space:inherit'],
                     'headerOptions' => ['width' => '2%'],
                     'class' => 'yii\grid\ActionColumn',
                     'template' => '{update}',
@@ -547,7 +542,7 @@ $customer = new Customer();
                     ],
                 ],
                 [
-                    'contentOptions' => ['style' => 'overflow:hidden;text-overflow:ellipsis;white-space:nowrap'],
+                    'contentOptions' => ['style' => 'overflow:hidden;text-overflow:ellipsis;white-space:inherit'],
                     'headerOptions' => ['width' => '2%'],
                     'class' => 'yii\grid\ActionColumn',
                     'template' => '{delete}',

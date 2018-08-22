@@ -287,9 +287,11 @@ $this->params['breadcrumbs'][] = Yii::t('app', '财务');
         'filterRowOptions' => ['class' => 'kartik-sheet-style'],
         'toolbar' => [
             ['content' =>
-               '<form id="import_xls" action="/project-adviser/import" method="post" enctype="multipart/form-data">
-                <input type="file" name="file" id="file" accept="application/vnd.ms-excel"><br>
-                </form>'
+               '<form id="import_xls" class="form-inline" action="/project-adviser/import" method="post" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="exampleInputName2">导入文件：</label>
+                    <input type="file" name="file" id="file" style="display:inline-block" accept="application/vnd.ms-excel"><br>
+                </div></form>'
             ],
             ['content' =>
                 Html::a('<i class="glyphicon glyphicon-repeat"></i>', ['index'], ['data-pjax' => 0, 'class' => 'btn btn-default', 'title' => Yii::t('app', '刷新')])],
