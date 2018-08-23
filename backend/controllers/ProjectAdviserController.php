@@ -239,7 +239,7 @@ class ProjectAdviserController extends Controller
                         $updateData = [
                             'bill_out' => $lineVal[15] == '是' ? 2 : 1,
                             'adviser_pay' => $lineVal[25] == '是' ? 2 : 1,
-                            'referee_pay' => $lineVal[32] == '是' ? 2 : 1,
+                            'referee_pay' => $lineVal[31] == '是' ? 2 : 1,
                         ];
                         ProjectAdviser::updateAll($updateData, ['id' => $lineVal[0]]);
                     }
