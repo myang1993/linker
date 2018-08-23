@@ -15,12 +15,12 @@ class File
     /**
      * @var \DOMDocument
      */
-    private $dom;
+    protected $dom;
 
     /**
      * @var \DOMElement
      */
-    private $contextNode;
+    protected $contextNode;
 
     public function __construct(\DOMElement $context)
     {
@@ -28,14 +28,14 @@ class File
         $this->contextNode = $context;
     }
 
-    public function getTotals(): Totals
+    public function getTotals()
     {
         $totalsContainer = $this->contextNode->firstChild;
 
         if (!$totalsContainer) {
             $totalsContainer = $this->contextNode->appendChild(
                 $this->dom->createElementNS(
-                    'https://schema.phpunit.de/coverage/1.0',
+                    'http://schema.phpunit.de/coverage/1.0',
                     'totals'
                 )
             );
@@ -44,17 +44,17 @@ class File
         return new Totals($totalsContainer);
     }
 
-    public function getLineCoverage(string $line): Coverage
+    public function getLineCoverage($line)
     {
         $coverage = $this->contextNode->getElementsByTagNameNS(
-            'https://schema.phpunit.de/coverage/1.0',
+            'http://schema.phpunit.de/coverage/1.0',
             'coverage'
         )->item(0);
 
         if (!$coverage) {
             $coverage = $this->contextNode->appendChild(
                 $this->dom->createElementNS(
-                    'https://schema.phpunit.de/coverage/1.0',
+                    'http://schema.phpunit.de/coverage/1.0',
                     'coverage'
                 )
             );
@@ -62,21 +62,11 @@ class File
 
         $lineNode = $coverage->appendChild(
             $this->dom->createElementNS(
-                'https://schema.phpunit.de/coverage/1.0',
+                'http://schema.phpunit.de/coverage/1.0',
                 'line'
             )
         );
 
         return new Coverage($lineNode, $line);
-    }
-
-    protected function getContextNode(): \DOMElement
-    {
-        return $this->contextNode;
-    }
-
-    protected function getDomDocument(): \DOMDocument
-    {
-        return $this->dom;
     }
 }
