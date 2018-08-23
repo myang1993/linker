@@ -572,7 +572,7 @@ $customer = new Customer();
     foreach ($model->projectAdvisers as $index => $projectAdviser) {
         Modal::begin([
             'header' => '<h4 class="modal-title">' . Yii::t('app', 'Update Adviser') . '</h4>',
-            'id' => 'update-advisers' . ($index + 1),
+            'id' => 'update-advisers' . ($projectAdviser->id),
             'options' => ['tabindex' => false]
         ]);
         $projectAdviser->date = ($projectAdviser->date > 0) ? date("Y-m-d H:i", $projectAdviser->date) : date('Y-m-d H:i');
