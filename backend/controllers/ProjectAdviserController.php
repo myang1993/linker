@@ -224,7 +224,7 @@ class ProjectAdviserController extends Controller
                 $PHPExcel = $PHPReader->load($destination); // Reader读出来后，加载给Excel实例
                 $currentSheet = $PHPExcel->getSheet(0); // 拿到第一个sheet（工作簿？）
                 $allColumn = $currentSheet->getHighestColumn();
-                if (strtoupper($allColumn) != 'AG') {
+                if (strtoupper($allColumn) != 'AF') {
                     Yii::$app->session->setFlash('error', '文件列数错误，请先确定与导出的excel列数是否一致');
                     return $this->redirect(['project-adviser/index']);
                 }
