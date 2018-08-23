@@ -223,7 +223,6 @@ $this->params['breadcrumbs'][] = Yii::t('app', '财务');
                     ];
                 }
             ],
-            'id',
             [
                 'label' => Yii::t('app', '是否有推荐人'),
                 'attribute' => 'referee',
