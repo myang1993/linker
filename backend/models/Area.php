@@ -3,6 +3,7 @@
 namespace backend\models;
 
 use Yii;
+use yii\helpers\ArrayHelper;
 
 /**
  * This is the model class for table "{{%area}}".
@@ -63,5 +64,11 @@ class Area extends \yii\db\ActiveRecord
     public static function find()
     {
         return new AreaQuery(get_called_class());
+    }
+
+    public static function getRegion($parentId = 0)
+    {
+        $result = static::find()->where(['pid' => $parentId])->asArray()->all();
+        return ArrayHelper::map($result, 'id', 'name');
     }
 }

@@ -2,6 +2,8 @@
 
 namespace backend\controllers;
 
+use backend\models\AdviserSearch;
+use backend\models\Area;
 use common\models\UploadForm;
 use Yii;
 use backend\models\ProjectAdviser;
@@ -251,5 +253,21 @@ class ProjectAdviserController extends Controller
                 return $this->redirect(['project-adviser/index']);
             }
         }
+    }
+
+    public function actions()
+    {
+        $actions=parent::actions();
+        $actions['get-region']=[
+            'class'=>\chenkby\region\Region::className(),
+            'model'=>Area::className(),
+        ];
+        return $actions;
+    }
+
+    public function actionTest()
+    {
+        $searchModel = new AdviserSearch();
+        return $this->render('test',['searchModel'=>$searchModel]);
     }
 }
