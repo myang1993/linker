@@ -13,7 +13,7 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="adviser-view view">
     <div class="box highlight">
-      <h3 class="title"><?= Html::encode($this->title) ?></h1>
+      <h3 class="title"><?= Html::encode($this->title) ?></h3>
 				<?= DetailView::widget([
             'model' => $model,
             'attributes' => [

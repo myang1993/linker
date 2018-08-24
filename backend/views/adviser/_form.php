@@ -31,7 +31,7 @@ $trade = new Trade();
 
     <?= $form->field($model, 'name_zh')->textInput(['maxlength' => true, 'required' => 'required', 'style' => 'min-width: 100px;']) ?>
 
-    <?= $form->field($model, 'name_en')->textInput(['maxlength' => true, 'required' => 'required']) ?>
+    <?= $form->field($model, 'name_en')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'province')->dropDownList(
         $area->getAreaList(),
@@ -193,7 +193,7 @@ $trade = new Trade();
         'options' => [
             'class' => 'form-group form-group-block'
         ]
-    ])->textArea(['maxlength' => true, 'class' => 'form-control form-field-5', 'required' => 'required']) ?>
+    ])->textArea(['maxlength' => true, 'class' => 'form-control form-field-5']) ?>
 
     <?= $form->field($model, 'profile', [
         'options' => [
