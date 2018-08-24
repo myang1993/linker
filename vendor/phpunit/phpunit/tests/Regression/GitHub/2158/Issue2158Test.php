@@ -1,22 +1,12 @@
 <?php
-/*
- * This file is part of PHPUnit.
- *
- * (c) Sebastian Bergmann <sebastian@phpunit.de>
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-use PHPUnit\Framework\TestCase;
-
-class Issue2158Test extends TestCase
+class Issue2158Test extends PHPUnit_Framework_TestCase
 {
     /**
      * Set constant in main process
      */
-    public function testSomething(): void
+    public function testSomething()
     {
-        include __DIR__ . '/constant.inc';
+        include(__DIR__ . '/constant.inc');
         $this->assertTrue(true);
     }
 
@@ -26,8 +16,8 @@ class Issue2158Test extends TestCase
      *
      * @runInSeparateProcess
      */
-    public function testSomethingElse(): void
+    public function testSomethingElse()
     {
-        $this->assertTrue(\defined('TEST_CONSTANT'));
+        $this->assertTrue(defined('TEST_CONSTANT'));
     }
 }

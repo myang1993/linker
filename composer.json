@@ -40,15 +40,15 @@
         "codeception/verify": "~0.3.1"
     },
     "config": {
-        "process-timeout": 1800,
-        "fxp-asset": {
-            "enabled": false
+        "process-timeout": 1800
+    },
+    "extra": {
+        "asset-installer-paths": {
+            "npm-asset-library": "vendor/npm",
+            "bower-asset-library": "vendor/bower"
         }
     },
-    "repositories": [
-        {
-            "type": "composer",
-            "url": "https://asset-packagist.org"
-        }
-    ]
+    "scripts": {
+        "post-install-cmd": "php init --env=Development --overwrite=n"
+    }
 }

@@ -1,17 +1,7 @@
 <?php
-/*
- * This file is part of PHPUnit.
- *
- * (c) Sebastian Bergmann <sebastian@phpunit.de>
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-use PHPUnit\Framework\TestCase;
-
-class Issue1149Test extends TestCase
+class Issue1149Test extends PHPUnit_Framework_TestCase
 {
-    public function testOne(): void
+    public function testOne()
     {
         $this->assertTrue(true);
         print '1';
@@ -20,7 +10,7 @@ class Issue1149Test extends TestCase
     /**
      * @runInSeparateProcess
      */
-    public function testTwo(): void
+    public function testTwo()
     {
         $this->assertTrue(true);
         print '2';

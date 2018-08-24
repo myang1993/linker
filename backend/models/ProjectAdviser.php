@@ -54,6 +54,7 @@ class ProjectAdviser extends \yii\db\ActiveRecord
                     return strtotime($this->date);
                 }
             }],
+            ['date', 'required'],
             [['project_id', 'selector_id', 'adviser_id', 'state', 'duration', 'fee', 'fee_type', 'adviser_pay', 'referee_pay', 'bill_out'], 'integer'],
             [['fee_rate'], 'number'],
             [['remark'], 'string', 'max' => 1024],

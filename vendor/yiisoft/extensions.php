@@ -3,15 +3,6 @@
 $vendorDir = dirname(__DIR__);
 
 return array (
-  'yiisoft/yii2-swiftmailer' => 
-  array (
-    'name' => 'yiisoft/yii2-swiftmailer',
-    'version' => '2.1.1.0',
-    'alias' => 
-    array (
-      '@yii/swiftmailer' => $vendorDir . '/yiisoft/yii2-swiftmailer/src',
-    ),
-  ),
   'yiisoft/yii2-bootstrap' => 
   array (
     'name' => 'yiisoft/yii2-bootstrap',
@@ -48,34 +39,6 @@ return array (
       '@yii/faker' => $vendorDir . '/yiisoft/yii2-faker',
     ),
   ),
-  'rmrevin/yii2-fontawesome' => 
-  array (
-    'name' => 'rmrevin/yii2-fontawesome',
-    'version' => '2.17.1.0',
-    'alias' => 
-    array (
-      '@rmrevin/yii/fontawesome' => $vendorDir . '/rmrevin/yii2-fontawesome',
-    ),
-  ),
-  'deesoft/yii2-adminlte' => 
-  array (
-    'name' => 'deesoft/yii2-adminlte',
-    'version' => '1.0.0.0',
-    'alias' => 
-    array (
-      '@dee/adminlte' => $vendorDir . '/deesoft/yii2-adminlte',
-    ),
-  ),
-  'deesoft/yii2-angular' => 
-  array (
-    'name' => 'deesoft/yii2-angular',
-    'version' => '1.3.0.0',
-    'alias' => 
-    array (
-      '@dee/angular' => $vendorDir . '/deesoft/yii2-angular',
-    ),
-    'bootstrap' => 'dee\\angular\\Bootstrap',
-  ),
   'insolita/yii2-migration-generator' => 
   array (
     'name' => 'insolita/yii2-migration-generator',
@@ -86,24 +49,6 @@ return array (
     ),
     'bootstrap' => 'insolita\\migrik\\Bootstrap',
   ),
-  'conquer/helpers' => 
-  array (
-    'name' => 'conquer/helpers',
-    'version' => '2.0.13.0',
-    'alias' => 
-    array (
-      '@conquer/helpers' => $vendorDir . '/conquer/helpers',
-    ),
-  ),
-  'conquer/select2' => 
-  array (
-    'name' => 'conquer/select2',
-    'version' => '1.4.4.0',
-    'alias' => 
-    array (
-      '@conquer/select2' => $vendorDir . '/conquer/select2',
-    ),
-  ),
   'mdmsoft/yii2-admin' => 
   array (
     'name' => 'mdmsoft/yii2-admin',
@@ -111,6 +56,78 @@ return array (
     'alias' => 
     array (
       '@mdm/admin' => $vendorDir . '/mdmsoft/yii2-admin',
+    ),
+  ),
+  'yiisoft/yii2-swiftmailer' => 
+  array (
+    'name' => 'yiisoft/yii2-swiftmailer',
+    'version' => '2.0.7.0',
+    'alias' => 
+    array (
+      '@yii/swiftmailer' => $vendorDir . '/yiisoft/yii2-swiftmailer',
+    ),
+  ),
+  'kartik-v/yii2-krajee-base' => 
+  array (
+    'name' => 'kartik-v/yii2-krajee-base',
+    'version' => '1.9.2.0',
+    'alias' => 
+    array (
+      '@kartik/base' => $vendorDir . '/kartik-v/yii2-krajee-base/src',
+    ),
+  ),
+  'kartik-v/yii2-widget-select2' => 
+  array (
+    'name' => 'kartik-v/yii2-widget-select2',
+    'version' => '2.1.2.0',
+    'alias' => 
+    array (
+      '@kartik/select2' => $vendorDir . '/kartik-v/yii2-widget-select2/src',
+    ),
+  ),
+  'kartik-v/yii2-widget-datetimepicker' => 
+  array (
+    'name' => 'kartik-v/yii2-widget-datetimepicker',
+    'version' => '1.4.5.0',
+    'alias' => 
+    array (
+      '@kartik/datetime' => $vendorDir . '/kartik-v/yii2-widget-datetimepicker/src',
+    ),
+  ),
+  'kartik-v/yii2-widget-activeform' => 
+  array (
+    'name' => 'kartik-v/yii2-widget-activeform',
+    'version' => '1.5.1.0',
+    'alias' => 
+    array (
+      '@kartik/form' => $vendorDir . '/kartik-v/yii2-widget-activeform/src',
+    ),
+  ),
+  'kartik-v/yii2-widget-depdrop' => 
+  array (
+    'name' => 'kartik-v/yii2-widget-depdrop',
+    'version' => '9999999-dev',
+    'alias' => 
+    array (
+      '@kartik/depdrop' => $vendorDir . '/kartik-v/yii2-widget-depdrop/src',
+    ),
+  ),
+  'kartik-v/yii2-widget-fileinput' => 
+  array (
+    'name' => 'kartik-v/yii2-widget-fileinput',
+    'version' => '9999999-dev',
+    'alias' => 
+    array (
+      '@kartik/file' => $vendorDir . '/kartik-v/yii2-widget-fileinput/src',
+    ),
+  ),
+  'kartik-v/yii2-grid' => 
+  array (
+    'name' => 'kartik-v/yii2-grid',
+    'version' => '9999999-dev',
+    'alias' => 
+    array (
+      '@kartik/grid' => $vendorDir . '/kartik-v/yii2-grid/src',
     ),
   ),
 );

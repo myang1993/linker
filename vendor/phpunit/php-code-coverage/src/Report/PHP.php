@@ -11,26 +11,23 @@
 namespace SebastianBergmann\CodeCoverage\Report;
 
 use SebastianBergmann\CodeCoverage\CodeCoverage;
-use SebastianBergmann\CodeCoverage\RuntimeException;
 
 /**
  * Uses var_export() to write a SebastianBergmann\CodeCoverage\CodeCoverage object to a file.
  */
-final class PHP
+class PHP
 {
     /**
      * @param CodeCoverage $coverage
-     * @param null|string  $target
-     *
-     * @throws \SebastianBergmann\CodeCoverage\RuntimeException
+     * @param string       $target
      *
      * @return string
      */
-    public function process(CodeCoverage $coverage, ?string $target = null): string
+    public function process(CodeCoverage $coverage, $target = null)
     {
         $filter = $coverage->filter();
 
-        $buffer = \sprintf(
+        $output = sprintf(
             '<?php
 $coverage = new SebastianBergmann\CodeCoverage\CodeCoverage;
 $coverage->setData(%s);
@@ -40,22 +37,15 @@ $filter = $coverage->filter();
 $filter->setWhitelistedFiles(%s);
 
 return $coverage;',
-            \var_export($coverage->getData(true), 1),
-            \var_export($coverage->getTests(), 1),
-            \var_export($filter->getWhitelistedFiles(), 1)
+            var_export($coverage->getData(true), 1),
+            var_export($coverage->getTests(), 1),
+            var_export($filter->getWhitelistedFiles(), 1)
         );
 
         if ($target !== null) {
-            if (@\file_put_contents($target, $buffer) === false) {
-                throw new RuntimeException(
-                    \sprintf(
-                        'Could not write to "%s',
-                        $target
-                    )
-                );
-            }
+            return file_put_contents($target, $output);
+        } else {
+            return $output;
         }
-
-        return $buffer;
     }
 }

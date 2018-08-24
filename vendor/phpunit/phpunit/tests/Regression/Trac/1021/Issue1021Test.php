@@ -1,22 +1,10 @@
 <?php
-/*
- * This file is part of PHPUnit.
- *
- * (c) Sebastian Bergmann <sebastian@phpunit.de>
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-use PHPUnit\Framework\TestCase;
-
-class Issue1021Test extends TestCase
+class Issue1021Test extends PHPUnit_Framework_TestCase
 {
     /**
      * @dataProvider provider
-     *
-     * @param mixed $data
      */
-    public function testSomething($data): void
+    public function testSomething($data)
     {
         $this->assertTrue($data);
     }
@@ -24,9 +12,8 @@ class Issue1021Test extends TestCase
     /**
      * @depends testSomething
      */
-    public function testSomethingElse(): void
+    public function testSomethingElse()
     {
-        $this->assertTrue(true);
     }
 
     public function provider()
