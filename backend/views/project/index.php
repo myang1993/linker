@@ -30,7 +30,13 @@ $this->params['breadcrumbs'][] = $this->title;
                     'style' => 'width: 80px;'
                 ]
             ],
-            'name',
+            [
+                'attribute' => 'name',
+                'format' => 'raw',
+                'value' => function($data){
+                    return Html::a($data->name, "/project/update?id=".$data->id);
+                },
+            ],
             [
                 'label' => Yii::t('app', '客户'),
                 'attribute' => 'customer_name',

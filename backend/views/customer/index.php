@@ -24,8 +24,20 @@ $this->params['breadcrumbs'][] = $this->title;
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
-            'id',
-            'name',
+            [
+                'attribute'=>'id',
+                'value'=> function($data){
+                    //超链接
+                    return Html::a($data->id, "/customer/update?id=".$data->id);
+                }
+            ],
+            [
+                'attribute'=>'name',
+                'value'=> function($data){
+                    //超链接
+                    return Html::a($data->name, "/customer/update?id=".$data->id);
+                }
+            ],
             'describe',
             'website',
             [
