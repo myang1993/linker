@@ -117,10 +117,10 @@ $trade = new Trade();
                 'class' => 'yii\grid\ActionColumn',
                 'template' => '{update}',
             ],
-            [
-                'class' => 'yii\grid\ActionColumn',
-                'template' => '{delete}',
-            ],
+//            [
+//                'class' => 'yii\grid\ActionColumn',
+//                'template' => '{delete}',
+//            ],
         ],
     ]); ?>
     <?php Pjax::end(); ?>
