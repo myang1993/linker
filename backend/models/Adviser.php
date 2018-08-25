@@ -242,7 +242,7 @@ class Adviser extends \yii\db\ActiveRecord
      */
     public function getAdviser()
     {
-        $model = $this->find()->all();
+        $model = $this->find()->select('id,name_zh,company')->all();
         foreach ($model as $key => &$value) {
             $value->name_zh = $value->name_zh.' '.$value->company;
         }
