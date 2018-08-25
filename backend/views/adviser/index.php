@@ -31,9 +31,13 @@ $trade = new Trade();
         'columns' => [
             [
                 'attribute' => 'name_zh',
+                'format' => 'raw',
                 'contentOptions' => [
                     'style' => 'min-width: 60px;'
-                ]
+                ],
+                'value' => function($data){
+                    return Html::a($data->name_zh, "/adviser/view?id=".$data->id);
+                }
             ],
             [
                 'attribute' => 'company',

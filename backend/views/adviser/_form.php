@@ -185,19 +185,19 @@ $trade = new Trade();
 
     <?= $form->field($model, 'describe', [
         'options' => [
-            'class' => 'form-group form-group-block'
+            'class' => 'form-group form-group-block ht_2'
         ]
     ])->textArea(['maxlength' => true, 'class' => 'form-control form-field-5']) ?>
 
     <?= $form->field($model, 'expertise', [
         'options' => [
-            'class' => 'form-group form-group-block'
+            'class' => 'form-group form-group-block ht_2'
         ]
     ])->textArea(['maxlength' => true, 'class' => 'form-control form-field-5']) ?>
 
     <?= $form->field($model, 'profile', [
         'options' => [
-            'class' => 'form-group form-group-block ht_4'
+            'class' => 'form-group form-group-block ht_2'
         ]
     ])->textArea(['maxlength' => true, 'class' => 'form-control form-field-5']) ?>
 
