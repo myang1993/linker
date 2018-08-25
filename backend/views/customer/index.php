@@ -26,6 +26,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             [
                 'attribute'=>'id',
+                'format' => 'raw',
                 'value'=> function($data){
                     //超链接
                     return Html::a($data->id, "/customer/update?id=".$data->id);
@@ -33,6 +34,7 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             [
                 'attribute'=>'name',
+                'format' => 'raw',
                 'value'=> function($data){
                     //超链接
                     return Html::a($data->name, "/customer/update?id=".$data->id);

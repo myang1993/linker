@@ -149,6 +149,7 @@ nav .container-fluid , footer .container-fluid {
 	}
 	.cu .form .ht_2,.cu .form .ht_2 textarea {
 		height: 200px;
+		margin-bottom: 36px;
 	}
 	.cu .form .form-group-btn {
 		margin-left: 200px;
