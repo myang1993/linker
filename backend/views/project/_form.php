@@ -843,7 +843,7 @@ $customer = new Customer();
             . '，下面几位专家您看是否合适，如果有需要约访的，欢迎您随时联系我，谢谢。<br>';
 
         foreach ($model->projectAdvisers as $index => $projectAdviser) {
-            echo '<div class="row" style="padding: 15px 15px 5px;"><div class="col-md-12" style="">ID:' . ($index + 1) . '</div><div class="col-md-12" style="line-height:20px; font-weight: bold;">' . $projectAdviser->adviser->company . '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' . $projectAdviser->adviser->position . '</div><div class="col-md-12"><span style="font-weight:bold;">Experience:&nbsp;&nbsp;</span>' . $projectAdviser->adviser->describe . '</div><div class="col-md-12"><span style="font-weight:bold;">Comments:&nbsp;&nbsp;</span>' . $projectAdviser->adviser->remark . '</div><div class="col-md-12" style="height:10px;">&nbsp;&nbsp;</div></div>';
+            echo '<div class="row" style="padding: 15px 15px 5px;"><div class="col-md-12" style="">ID:' . ($index + 1) . '</div><div class="col-md-12" style="line-height:20px; font-weight: bold;">' . $projectAdviser->adviser->company . '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' . $projectAdviser->adviser->position . '</div><div class="col-md-12"><span style="font-weight:bold;">Experience:&nbsp;&nbsp;</span>' . $projectAdviser->adviser->describe . '</div><div class="col-md-12"><span style="font-weight:bold;">Comments:&nbsp;&nbsp;</span>' . $projectAdviser->remark . '</div><div class="col-md-12" style="height:10px;">&nbsp;&nbsp;</div></div>';
         }
 
         Modal::end();

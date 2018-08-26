@@ -93,7 +93,7 @@ $this->params['breadcrumbs'][] = Yii::t('app', '财务');
                     if ($model->project->status == 4) {
                         $time = 0;
                         foreach ($model->project->projectAdvisers as $adviser) {
-                            $time += $adviser->customer_fee;
+                            $time += $adviser->customer_fee*$adviser->hour * $adviser->fee_rate;
                         }
                         return $time;
                     } else {
@@ -177,7 +177,7 @@ $this->params['breadcrumbs'][] = Yii::t('app', '财务');
                 },
             ],
             [
-                'label' => Yii::t('app', '专家小时数'),
+                'label' => Yii::t('app', '专家分钟数'),
                 'attribute' => 'duration',
             ],
             [
@@ -204,7 +204,7 @@ $this->params['breadcrumbs'][] = Yii::t('app', '财务');
             [
                 'label' => Yii::t('app', '专家成本'),
                 'value' => function ($model) {
-                    return $model->duration * $model->fee * $model->fee_rate;
+                    return $model->cost;
                 },
             ],
 
