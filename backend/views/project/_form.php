@@ -642,12 +642,6 @@ $customer = new Customer();
                     'attribute' => 'fee_rate',
                     'format' => 'raw',
                     'value' => $projectAdviser->fee_rate,
-                    'type' => DetailView::INPUT_SELECT2,
-                    'options' => ['id' => 'modal2-fee-rate-update-' . $index],
-                    'widgetOptions' => [
-                        'data' => $projectAdviser->feeRate(),
-                        'pluginOptions' => ['allowClear' => true, 'width' => '100%'],
-                    ],
                     'valueColOptions' => ['style' => 'width:60%']
                 ],
                 'cost',

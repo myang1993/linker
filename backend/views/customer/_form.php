@@ -29,19 +29,6 @@ use yii\helpers\Url;
             'name',
             'describe',
             'website',
-            'pay_style',
-            [
-                'attribute' => 'time_type',
-                'format' => 'raw',
-                'value' => $model->time_type > 0 ? $model->timeType($model->time_type) : null,
-                'type' => DetailView::INPUT_SELECT2,
-                'widgetOptions' => [
-                    'data' => $model->timeType(),
-                    'pluginOptions' => ['allowClear' => true, 'width' => '100%'],
-                    'options' => ['placeholder' => '-- ' . Yii::t('app', 'Please select')],
-                ],
-                'valueColOptions' => ['style' => 'width:60%']
-            ],
             [
                 'attribute' => 'tax_type',
                 'format' => 'raw',

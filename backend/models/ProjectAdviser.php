@@ -3,6 +3,7 @@
 namespace backend\models;
 
 use Yii;
+use yii\base\Model;
 
 /**
  * This is the model class for table "{{%project_adviser}}".
@@ -59,13 +60,12 @@ class ProjectAdviser extends \yii\db\ActiveRecord
             [['remark'], 'string', 'max' => 1024],
             [['pay_remark'], 'string', 'max' => 256],
             [['pay_type'], 'string', 'max' => 50],
-            [['hour', 'cost', 'customer_fee'], 'safe'],
-            // [['project_id', 'adviser_id'], 'unique', 'targetAttribute' => ['project_id', 'adviser_id']],
-            // [['project_id'], 'exist', 'skipOnError' => true, 'targetClass' => Project::className(), 'targetAttribute' => ['project_id' => 'id']],
-            // [['adviser_id'], 'exist', 'skipOnError' => true, 'targetClass' => Adviser::className(), 'targetAttribute' => ['adviser_id' => 'id']],
-            // [['selector_id'], 'exist', 'skipOnError' => true, 'targetClass' => Admin::className(), 'targetAttribute' => ['selector_id' => 'id']],
+//            [['hour', 'cost', 'customer_fee'], 'safe'],
+            [['hour', 'cost', 'customer_fee'], 'required','on'=>['update']],
         ];
     }
+
+
 
     /**
      * {@inheritdoc}
@@ -93,6 +93,13 @@ class ProjectAdviser extends \yii\db\ActiveRecord
             'bill_out' => Yii::t('app', '账单是否已出'),
             'customer_fee' => Yii::t('app', '收客户费用'),
         ];
+    }
+
+    public function scenarios()
+    {
+       return [
+           'update'=>['hour', 'cost', 'customer_fee']
+       ];
     }
 
     /**

@@ -143,6 +143,7 @@ class ProjectAdviserController extends Controller
         $post = Yii::$app->request->post('ProjectAdviser');
         $model = $this->findModel($post['id']);
 
+        $model->setScenario('update');
 
         if ($model->load(Yii::$app->request->post())) {
             if (isset($post['state']) && $post['state'] == 5) {
@@ -154,6 +155,8 @@ class ProjectAdviserController extends Controller
             if ($model->save()) {
                 return $this->redirect(['project/update', 'id' => $id]);
             }
+        } else {
+            print_r($model->getErrors());exit;
         }
 
         return $this->redirect(['project/update', 'id' => $id]);
