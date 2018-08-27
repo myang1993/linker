@@ -179,7 +179,7 @@ class Adviser extends \yii\db\ActiveRecord
     {
         $typeList = [1 => '搜索（baidu/Google）', 2 => '招聘网站', 3 => '顾问推荐', 4 => '公司内部推荐', 5 => '其他'];
 
-        return $retVal = $type ? $typeList[$type] : $typeList;
+        return $retVal = $type ? $typeList[$type] : '';
     }
 
     /**
@@ -242,7 +242,7 @@ class Adviser extends \yii\db\ActiveRecord
      */
     public function getAdviser()
     {
-        $model = $this->find()->select('id,name_zh,company')->all();
+        $model = $this->find()->select('id,name_zh,company')->limit(100)->all();
         foreach ($model as $key => &$value) {
             $value->name_zh = $value->name_zh.' '.$value->company;
         }

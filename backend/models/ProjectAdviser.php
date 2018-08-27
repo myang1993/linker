@@ -60,7 +60,7 @@ class ProjectAdviser extends \yii\db\ActiveRecord
             [['remark'], 'string', 'max' => 1024],
             [['pay_remark'], 'string', 'max' => 256],
             [['pay_type'], 'string', 'max' => 50],
-//            [['hour', 'cost', 'customer_fee'], 'safe'],
+            [['hour', 'cost', 'customer_fee'], 'safe'],
             [['hour', 'cost', 'customer_fee'], 'required','on'=>['update']],
         ];
     }
