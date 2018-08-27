@@ -4,7 +4,6 @@ namespace backend\controllers;
 
 use backend\models\AdviserSearch;
 use backend\models\Area;
-use common\models\UploadForm;
 use Yii;
 use backend\models\ProjectAdviser;
 use backend\models\ProjectAdviserSearch;
@@ -13,7 +12,6 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use conquer\helpers\Json;
-use yii\web\UploadedFile;
 
 /**
  * ProjectAdviserController implements the CRUD actions for ProjectAdviser model.
@@ -44,6 +42,17 @@ class ProjectAdviserController extends Controller
                 ],
             ],
         ];
+    }
+
+    public function actions()
+    {
+        //城市三级联动
+        $actions = parent::actions();
+        $actions['get-region'] = [
+            'class' => \chenkby\region\RegionAction::className(),
+            'model' => Area::className(),
+        ];
+        return $actions;
     }
 
     /**
@@ -204,7 +213,7 @@ class ProjectAdviserController extends Controller
         throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
     }
 
-    public function actionImport()
+    public function actionImport1()
     {
         if (!$_FILES['file']) {
             Yii::$app->session->setFlash('error', '文件格式错误，请先另存为xls格式');
@@ -255,14 +264,55 @@ class ProjectAdviserController extends Controller
         }
     }
 
-    public function actions()
+    public function actionImport()
     {
-        $actions=parent::actions();
-        $actions['get-region']=[
-            'class'=>\chenkby\region\Region::className(),
-            'model'=>Area::className(),
-        ];
-        return $actions;
+        if (!$_FILES['file']) {
+            Yii::$app->session->setFlash('error', '文件格式错误，请先另存为xls格式');
+            return $this->redirect(['project-adviser/index']);
+        } else {
+            $filepath = Yii::$app->basePath.'/upload/';
+            is_dir($filepath) OR mkdir($filepath, 0777, true);
+            $destination = $filepath.$_FILES['file']['name'];
+
+            if(move_uploaded_file($_FILES['file']['tmp_name'],$destination)){
+                $PHPReader = new \PHPExcel_Reader_Excel2007(); // Reader很关键，用来读excel文件
+                if (!$PHPReader->canRead($destination)) { // 这里是用Reader尝试去读文件，07不行用05，05不行就报错。注意，这里的return是Yii框架的方式。
+                    $PHPReader = new \PHPExcel_Reader_Excel5();
+                    if (!$PHPReader->canRead($destination)) {
+                        Yii::$app->session->setFlash('error', '文件格式错误，请先另存为xls格式');
+                        return $this->redirect(['project-adviser/index']);
+                    }
+                }
+                $PHPExcel = $PHPReader->load($destination); // Reader读出来后，加载给Excel实例
+                $currentSheet = $PHPExcel->getSheet(0); // 拿到第一个sheet（工作簿？）
+                $allColumn = $currentSheet->getHighestColumn();
+                if (strtoupper($allColumn) != 'AF') {
+                    Yii::$app->session->setFlash('error', '文件列数错误，请先确定与导出的excel列数是否一致');
+                    return $this->redirect(['project-adviser/index']);
+                }
+                foreach ($currentSheet->getRowIterator() as $key => $row) { // 行迭代器
+                    if ($key > 1) {//去掉表头
+                        $cellIterator = $row->getCellIterator(); // 拿到行中的cell迭代器
+                        $cellIterator->setIterateOnlyExistingCells(false); // 设置cell迭代器，遍历所有cell，哪怕cell没有值
+                        $lineVal = [];
+                        foreach ($cellIterator as $cell) {
+                            $lineVal[] = $cell->getValue();
+                        }
+                        $updateData = [
+                            'bill_out' => $lineVal[15] == '是' ? 2 : 1,
+                            'adviser_pay' => $lineVal[25] == '是' ? 2 : 1,
+                            'referee_pay' => $lineVal[31] == '是' ? 2 : 1,
+                        ];
+                        ProjectAdviser::updateAll($updateData, ['id' => $lineVal[0]]);
+                    }
+                }
+                Yii::$app->session->setFlash('success', '修改成功');
+                return $this->redirect(['project-adviser/index']);
+            }else{
+                Yii::$app->session->setFlash('error', '上传失败');
+                return $this->redirect(['project-adviser/index']);
+            }
+        }
     }
 
     public function actionTest()
