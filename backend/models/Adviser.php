@@ -179,7 +179,7 @@ class Adviser extends \yii\db\ActiveRecord
     {
         $typeList = [1 => '搜索（baidu/Google）', 2 => '招聘网站', 3 => '顾问推荐', 4 => '公司内部推荐', 5 => '其他'];
 
-        return $retVal = $type ? $typeList[$type] : '';
+        return $retVal = $type ? $typeList[$type] : $typeList;
     }
 
     /**

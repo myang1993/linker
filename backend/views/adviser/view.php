@@ -30,7 +30,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 ],
                 [
                     'attribute' => 'source_type',
-                    'value' => $model->SourceType($model->source_type),
+                    'value' => $model->source_type == 0 ? '' : $model->SourceType($model->source_type),
                 ],
                 [
                     'attribute' => 'referee',
