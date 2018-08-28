@@ -728,8 +728,8 @@ $customer = new Customer();
                             'data' => new JsExpression('function(params) { return {keyword:params.term}; }')
                         ],
                         'escapeMarkup' => new JsExpression('function (markup) { return markup; }'),
-                        'templateResult' => new JsExpression('function(city) { return city.text; }'),
-                        'templateSelection' => new JsExpression('function (city) { return city.text; }'),
+                        'templateResult' => new JsExpression('function(obj) { return obj.name_zh; }'),
+                        'templateSelection' => new JsExpression('function (obj) { return obj.name_zh; }'),
 
                     ],
                 ],
