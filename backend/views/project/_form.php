@@ -723,7 +723,7 @@ $customer = new Customer();
                         'width' => '100%',
                         'minimumInputLength' => 2,
                         'ajax' => [
-                            'url' => 'project-adviser/adviser',
+                            'url' => '/project-adviser/adviser',
                             'dataType' => 'json',
                             'data' => new JsExpression('function(params) { return {keyword:params.term}; }')
                         ],
