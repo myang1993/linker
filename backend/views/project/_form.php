@@ -727,9 +727,9 @@ $customer = new Customer();
                             'dataType' => 'json',
                             'data' => new JsExpression('function(params) { return {keyword:params.term}; }')
                         ],
-                        'escapeMarkup' => new JsExpression('function (markup) { return markup; }'),
-                        'templateResult' => new JsExpression('function(obj) { return obj.text; }'),
-                        'templateSelection' => new JsExpression('function (obj) { return obj.text; }'),
+                        'escapeMarkup' => new JsExpression('function (markup) {console.log(markup); return markup; }'),
+                        'templateResult' => new JsExpression('function(obj) {console.log(obj); return obj.text; }'),
+                        'templateSelection' => new JsExpression('function (obj) {console.log(obj); return obj.text; }'),
 
                     ],
                 ],
