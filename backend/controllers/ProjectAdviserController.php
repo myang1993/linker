@@ -255,7 +255,7 @@ class ProjectAdviserController extends Controller
 
     public function actionAdviser($keyword)
     {
-        echo json_encode((new Adviser())->getAdviserByKeyWord($keyword),JSON_UNESCAPED_UNICODE);
+        echo json_encode((new Adviser())->getAdviserByKeyWord(urldecode($keyword)),JSON_UNESCAPED_UNICODE);
         exit();
     }
 }
