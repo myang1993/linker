@@ -77,6 +77,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'position',
                 'describe',
                 'expertise',
+                'profile',
             ],
             'options' => ['class' => 'table table-hover table-noborder']
         ]) ?>
