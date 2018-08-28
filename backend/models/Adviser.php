@@ -279,7 +279,7 @@ class Adviser extends \yii\db\ActiveRecord
     {
         $model = $this->find()->select('id,name_zh,company')->where("name_zh like '%{$keyword}%'")->asArray()->all();
         foreach ($model as $key => &$value) {
-            $value['name_zh'] = $value['name_zh'].' '.$value['company'];
+            $value['text'] = $value['name_zh'].' '.$value['company'];
             unset($value['company']);
         }
         return $model;
