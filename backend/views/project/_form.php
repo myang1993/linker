@@ -725,6 +725,7 @@ $customer = new Customer();
                         'ajax' => [
                             'url' => '/project-adviser/adviser',
                             'dataType' => 'json',
+                            'delay' => 250,
                             'data' => new JsExpression('function(params) { return {keyword:params.term}; }')
                         ],
                         'escapeMarkup' => new JsExpression('function (markup) {return markup; }'),
