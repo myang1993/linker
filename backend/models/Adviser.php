@@ -270,4 +270,17 @@ class Adviser extends \yii\db\ActiveRecord
     {
         return new AdviserQuery(get_called_class());
     }
+
+    /**通过关键字获取顾问列表
+     * @param $keyword
+     * @return array
+     */
+    public function getAdviserByKeyWord($keyword)
+    {
+        $model = $this->find()->select('id,name_zh,company')->where("name_zh like '%{$keyword}%'")->all();
+        foreach ($model as $key => &$value) {
+            $value->name_zh = $value->name_zh.' '.$value->company;
+        }
+        return yii\helpers\ArrayHelper::map($model, 'id', 'name_zh');
+    }
 }

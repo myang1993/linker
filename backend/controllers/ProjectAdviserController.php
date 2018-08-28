@@ -2,6 +2,7 @@
 
 namespace backend\controllers;
 
+use backend\models\Adviser;
 use common\models\UploadForm;
 use Yii;
 use backend\models\ProjectAdviser;
@@ -254,5 +255,10 @@ class ProjectAdviserController extends Controller
                 return $this->redirect(['project-adviser/index']);
             }
         }
+    }
+
+    public function actionAdviser($keyword)
+    {
+        echo json_encode((new Adviser())->getAdviserByKeyWord($keyword),JSON_UNESCAPED_UNICODE);
     }
 }
