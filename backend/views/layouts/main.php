@@ -1,6 +1,7 @@
 <?php
 
 /* @var $this \yii\web\View */
+
 /* @var $content string */
 
 use backend\assets\AppAsset;
@@ -52,7 +53,9 @@ AppAsset::register($this);
         $menuItems[] = ['label' => Yii::t('app', 'Customers'), 'url' => ['/customer']];
         $menuItems[] = ['label' => Yii::t('app', 'Advisers'), 'url' => ['/adviser']];
         // $menuItems[] = ['label' => Yii::t('app', 'Trades'), 'url' => ['/trade']];
-        $menuItems[] = ['label' => Yii::t('app', 'Finance'), 'url' => ['/project-adviser']];
+        if (in_array(Yii::$app->user->identity->username, ['admin','Carol.Sun'])) {
+            $menuItems[] = ['label' => Yii::t('app', 'Finance'), 'url' => ['/project-adviser']];
+        }
         $menuItems[] = '<li>'
             . Html::beginForm(['/site/logout'], 'post')
             . Html::submitButton(Yii::t('app', 'Logout') . '(' . Yii::$app->user->identity->username . ')', ['class' => 'btn btn-link logout'])
@@ -76,7 +79,7 @@ AppAsset::register($this);
 
     <div class="container-fluid content">
         <?= Breadcrumbs::widget([
-            'homeLink'=>[
+            'homeLink' => [
                 'label' => Yii::t('app', 'Home'),
                 'url' => Yii::$app->homeUrl
             ],
