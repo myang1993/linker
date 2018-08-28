@@ -1,3 +1,4 @@
 #common/config/main-local.php
 YxController.php
 backend/upload/*
+vendor/*
