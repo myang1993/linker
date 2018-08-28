@@ -94,13 +94,6 @@ class ProjectAdviser extends \yii\db\ActiveRecord
         ];
     }
 
-    public function scenarios()
-    {
-       return [
-           'update'=>['hour', 'cost', 'customer_fee']
-       ];
-    }
-
     /**
      * 状态类型
      *
