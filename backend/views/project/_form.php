@@ -726,11 +726,12 @@ $customer = new Customer();
                             'url' => '/project-adviser/adviser',
                             'dataType' => 'json',
                             'delay' => 250,
-                            'data' => new JsExpression('function(params) { return {keyword:params.term}; }')
+                            'data' => new JsExpression('function(params) { return {keyword:params.term}; }'),
+                            'processResults' => new JsExpression('function(data) {console.log(data); return {results:data}; }')
                         ],
                         'escapeMarkup' => new JsExpression('function (markup) {return markup; }'),
-                        'templateResult' => new JsExpression('function(city) {console.log(city); return city.text; }'),
-                        'templateSelection' => new JsExpression('function (city) {console.log(city); return city.text; }'),
+                        'templateResult' => new JsExpression('function(city) {console.log("1111",city); return city.text; }'),
+                        'templateSelection' => new JsExpression('function (city) {console.log("222",city); return city.text; }'),
 
                     ],
                 ],
