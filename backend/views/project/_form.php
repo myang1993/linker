@@ -730,7 +730,7 @@ $customer = new Customer();
                             'dataType' => 'json',
                             'delay' => 250,
                             'data' => new JsExpression('function(params) { return {keyword:params.term}; }'),
-                            'processResults' => new JsExpression('function(data) {return {results: JSON.parse(data)};}')
+                            'processResults' => new JsExpression('function(data) {return {results: data};}')
                         ],
                         'escapeMarkup' => new JsExpression('function (markup) {return markup; }'),
                         'templateResult' => new JsExpression('function(city) {return city.text; }'),
