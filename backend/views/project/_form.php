@@ -722,15 +722,19 @@ $customer = new Customer();
                         'allowClear' => true,
                         'width' => '100%',
                         'minimumInputLength' => 2,
+                        'language' => [
+                            'errorLoading' => new JsExpression("function () { return 'Waiting for results...'; }"),
+                        ],
                         'ajax' => [
                             'url' => '/project-adviser/adviser',
                             'dataType' => 'json',
                             'delay' => 250,
-                            'data' => new JsExpression('function(params) { return {keyword:params.term}; }')
+                            'data' => new JsExpression('function(params) { return {keyword:params.term}; }'),
+                            'processResults' => new JsExpression('function(data) {return {results: JSON.parse(data)};}')
                         ],
                         'escapeMarkup' => new JsExpression('function (markup) {return markup; }'),
-                        'templateResult' => new JsExpression('function(city) {console.log(city); return city.text; }'),
-                        'templateSelection' => new JsExpression('function (city) {console.log(city); return city.text; }'),
+                        'templateResult' => new JsExpression('function(city) {return city.text; }'),
+                        'templateSelection' => new JsExpression('function (city) {return city.text; }'),
 
                     ],
                 ],
