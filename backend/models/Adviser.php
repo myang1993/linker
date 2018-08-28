@@ -277,10 +277,11 @@ class Adviser extends \yii\db\ActiveRecord
      */
     public function getAdviserByKeyWord($keyword)
     {
-        $model = $this->find()->select('id,name_zh,company')->where("name_zh like '%{$keyword}%'")->all();
+        $model = $this->find()->select('id,name_zh,company')->where("name_zh like '%{$keyword}%'")->asArray()->all();
         foreach ($model as $key => &$value) {
-            $value->name_zh = $value->name_zh.' '.$value->company;
+            $value['name_zh'] = $value['name_zh'].' '.$value['company'];
+            unset($value['company']);
         }
-        return yii\helpers\ArrayHelper::map($model, 'id', 'name_zh');
+        return $model;
     }
 }
