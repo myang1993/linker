@@ -717,11 +717,24 @@ $customer = new Customer();
                 'type' => DetailView::INPUT_SELECT2,
                 'options' => ['id' => 'modal2-adviser-id', 'placeholder' => '-- ' . Yii::t('app', 'Please select')],
                 'widgetOptions' => [
-                    'data' => $adviser->getAdviser(),
-                    'pluginOptions' => ['allowClear' => true, 'width' => '100%'],
+                    // 'data' => $adviser->getAdviser(),
+                    'pluginOptions' => [
+                        'allowClear' => true,
+                        'width' => '100%',
+                        'minimumInputLength' => 2,
+                        'ajax' => [
+                            'url' => '/project-adviser/adviser',
+                            'dataType' => 'json',
+                            'data' => new JsExpression('function(params) { return {keyword:params.term}; }')
+                        ],
+                        'escapeMarkup' => new JsExpression('function (markup) { return markup; }'),
+                        'templateResult' => new JsExpression('function(city) { return city.text; }'),
+                        'templateSelection' => new JsExpression('function (city) { return city.text; }'),
+
+                    ],
                 ],
                 'valueColOptions' => ['style' => 'width:60%']
-            ],
+            ],  
             [
                 'label' => Yii::t('app', 'Company'),
                 'contentOptions' => ['id' => 'modal2-adviser_company', 'readonly' => 'readonly'],
