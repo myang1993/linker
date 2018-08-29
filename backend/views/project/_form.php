@@ -786,12 +786,7 @@ $customer = new Customer();
             [
                 'attribute' => 'fee_rate',
                 'format' => 'raw',
-                'type' => DetailView::INPUT_SELECT2,
-                'options' => ['id' => 'modal2-fee-rate-id'],
-                'widgetOptions' => [
-                    'data' => $projectAdviser->feeRate(),
-                    'pluginOptions' => ['allowClear' => true, 'width' => '100%'],
-                ],
+                'value' => $projectAdviser->fee_rate,
                 'valueColOptions' => ['style' => 'width:60%']
             ],
             [
