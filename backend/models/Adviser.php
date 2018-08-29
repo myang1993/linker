@@ -64,7 +64,7 @@ class Adviser extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['source_type', 'fee_phone_type', 'fee_road_type', 'fee_face_type', 'update_time', 'mobile_phone', 'tax_type','province'], 'integer'],
+            [['source_type', 'fee_phone_type', 'fee_road_type', 'fee_face_type', 'update_time', 'mobile_phone', 'tax_type', 'province'], 'integer'],
             [['mobile_phone'], 'required'],
             ['mobile_phone', 'match', 'pattern' => '/^1[0-9]{10}$/', 'message' => '{attribute}必须为1开头的11位纯数字'],
             ['mobile_phone', 'unique'],
@@ -244,7 +244,7 @@ class Adviser extends \yii\db\ActiveRecord
     {
         $model = $this->find()->select('id,name_zh,company')->limit(100)->all();
         foreach ($model as $key => &$value) {
-            $value->name_zh = $value->name_zh.' '.$value->company;
+            $value->name_zh = $value->name_zh . ' ' . $value->company;
         }
         return yii\helpers\ArrayHelper::map($model, 'id', 'name_zh');
     }
@@ -279,7 +279,7 @@ class Adviser extends \yii\db\ActiveRecord
     {
         $model = $this->find()->select('id,name_zh,company')->where("name_zh like '%{$keyword}%'")->asArray()->all();
         foreach ($model as $key => &$value) {
-            $value['text'] = $value['name_zh'].' '.$value['company'];
+            $value['text'] = $value['name_zh'] . ' ' . $value['company'];
             unset($value['name_zh']);
             unset($value['company']);
         }

@@ -176,4 +176,14 @@ class Project extends \yii\db\ActiveRecord
     {
         return new ProjectQuery(get_called_class());
     }
+
+    /**
+     * 根据关键字查询项目列表
+     * @param $keyword
+     */
+    public function getProjectList($keyword)
+    {
+        $model = $this->find()->select('id,name')->where("name like '%{$keyword}%'")->asArray()->all();
+        return $model;
+    }
 }

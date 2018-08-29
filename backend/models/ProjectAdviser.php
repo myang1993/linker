@@ -150,4 +150,20 @@ class ProjectAdviser extends \yii\db\ActiveRecord
     {
         return new ProjectAdviserQuery(get_called_class());
     }
+
+    /**
+     * 添加专家到项目中
+     * @param $adviser_id
+     * @param $project_id
+     */
+    public function addAdviserProject($adviser_id, $project_id)
+    {
+        $isNewRecord = $this->find()->where(['adviser_id'=>$adviser_id,'project_id'=>$project_id])->one();
+        if (!$isNewRecord) {
+            $this->project_id = $project_id;
+            $this->adviser_id = $adviser_id;
+            $this->date = date('Y-m-d H:i:s');
+            $this->save();
+        }
+    }
 }

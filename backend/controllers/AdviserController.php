@@ -2,6 +2,7 @@
 
 namespace backend\controllers;
 
+use backend\models\ProjectAdviser;
 use Yii;
 use backend\models\Adviser;
 use backend\models\AdviserSearch;
@@ -71,10 +72,10 @@ class AdviserController extends Controller
         $type = $model->priceType();
         $tax_type = $model->taxType();
 
-        $info['fee_face_type_v']  = $type[$info['fee_face_type']];
+        $info['fee_face_type_v'] = $type[$info['fee_face_type']];
         $info['fee_phone_type_v'] = $type[$info['fee_phone_type']];
-        $info['fee_road_type_v']  = $type[$info['fee_road_type']];
-        $info['tax_type_v']       = $tax_type[$info['tax_type']];
+        $info['fee_road_type_v'] = $type[$info['fee_road_type']];
+        $info['tax_type_v'] = $tax_type[$info['tax_type']];
         Yii::$app->response->data = $info;
     }
 
@@ -129,7 +130,7 @@ class AdviserController extends Controller
 
         return $this->render('create', [
             'model' => $model,
-            'area'=> $area,
+            'area' => $area,
         ]);
     }
 
@@ -159,7 +160,7 @@ class AdviserController extends Controller
 
         return $this->render('update', [
             'model' => $model,
-            'area'=> $area,
+            'area' => $area,
         ]);
     }
 
@@ -191,5 +192,20 @@ class AdviserController extends Controller
         }
 
         throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
+    }
+
+    public function actionAddAdviserProject()
+    {
+        $queryParams = Yii::$app->request->queryParams;
+        if (empty($queryParams['adviser_list']) || !is_array($queryParams['adviser_list']) || empty($queryParams['project_id'])) {
+            echo json_encode(['status'=>-1,'message'=>'参数错误'],JSON_UNESCAPED_UNICODE);
+        } else {
+            $projectAdviserModel = new ProjectAdviser();
+            foreach ($queryParams['adviser_list'] as $adviser_id) {
+                $projectAdviserModel->addAdviserProject($adviser_id,$queryParams['project_id']);
+            }
+            echo json_encode(['status'=>0,'message'=>'success'],JSON_UNESCAPED_UNICODE);
+        }
+        Yii::$app->end();
     }
 }
