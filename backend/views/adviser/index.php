@@ -47,7 +47,6 @@ $trade = new Trade();
                 'mode' => DetailView::MODE_EDIT,
                 'container' => ['id' => 'add_project_modal'],
                 
-
                 'attributes' => [
                 
                     [
@@ -55,7 +54,7 @@ $trade = new Trade();
                         'attribute' => 'name_zh',
                         'format' => 'raw',
                         'type' => DetailView::INPUT_SELECT2,
-                        'options' => ['id' => 'modal2-adviser-id', 'placeholder' => '-- ' . Yii::t('app', 'Please select')],
+                        'options' => ['id' => 'modal2-project-id', 'placeholder' => '-- ' . Yii::t('app', 'Please select')],
                         'widgetOptions' => [
                             // 'data' => $adviser->getAdviser(),
                             'pluginOptions' => [
@@ -204,7 +203,7 @@ $trade = new Trade();
             
             //save
             $(".modal-save").on("click", function(){
-                var p_id = $("#modal2-adviser-id").val();
+                var p_id = $("#modal2-project-id").val();
                 console.log(store, typeof store);
                 $.ajax({
                     url: "/adviser/add-adviser-project",
@@ -219,6 +218,7 @@ $trade = new Trade();
                             localStorage.setItem("box_list", "");
                         }
                         $("#add_project_modal").modal("hide");
+                        window.location.reload();
                     },
                     error: function(data){
                         console.log(data);
