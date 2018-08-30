@@ -7,6 +7,8 @@ use backend\models\Area;
 use backend\models\Trade;
 use yii\bootstrap\Modal;
 use kartik\select2\Select2;
+use kartik\detail\DetailView;
+use yii\web\JsExpression;
 /* @var $this yii\web\View */
 /* @var $searchModel backend\models\AdviserSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -32,14 +34,59 @@ $trade = new Trade();
             'toggleButton' => ['label' => '添加顾问到项目', 'class' => 'btn btn-primary add_button'],
             'options' => ['tabindex' => false]
         ]); ?>
-            <div class="form-group row">
+            <!-- <div class="form-group row">
                 <label for="project_list" class="col-sm-2 col-form-label">项目</label>
                 <div class="col-sm-8">
                     <select type="text" class="form-control" id="project_list" placeholder="Enter email"></select>
                 </div>
+            </div> -->
+            <?= DetailView::widget([
+                'model' => $searchModel,
+                'condensed' => true,
+                'hover' => true,
+                'mode' => DetailView::MODE_EDIT,
+                'container' => ['id' => 'add_project_modal'],
+                
+
+                'attributes' => [
+                
+                    [
+                        'label' => '项目',
+                        'attribute' => 'name_zh',
+                        'format' => 'raw',
+                        'type' => DetailView::INPUT_SELECT2,
+                        'options' => ['id' => 'modal2-adviser-id', 'placeholder' => '-- ' . Yii::t('app', 'Please select')],
+                        'widgetOptions' => [
+                            // 'data' => $adviser->getAdviser(),
+                            'pluginOptions' => [
+                                'allowClear' => true,
+                                'width' => '100%',
+                                'minimumInputLength' => 2,
+                                'language' => [
+                                    'errorLoading' => new JsExpression("function () { return 'Waiting for results...'; }"),
+                                ],
+                                'ajax' => [
+                                    'url' => '/project/get-project',
+                                    'dataType' => 'json',
+                                    'delay' => 250,
+                                    'data' => new JsExpression('function(params) { return {keyword:params.term}; }'),
+                                    'processResults' => new JsExpression('function(data) {return {results: data.data};}')
+                                ],
+                                'escapeMarkup' => new JsExpression('function (markup) {return markup; }'),
+                                'templateResult' => new JsExpression('function(city) {return city.name; }'),
+                                'templateSelection' => new JsExpression('function (city) {return city.name; }'),
+
+                            ],
+                        ],
+                        'valueColOptions' => ['style' => 'width:60%']
+                    ]
+                ]
+
+            ]); ?>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary modal-save">Save</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
             </div>
-
-
 
         <?php Modal::end(); ?>
 
@@ -153,33 +200,32 @@ $trade = new Trade();
 <?php
     $this->registerJs('
         $(document).ready(function(){
-
             var store = "";
-
-            $("#project_list").select2({
-                minimumInputLength: 2,
-                tags: [],
-                ajax: {
-                    url: "/project/get-project",
+            
+            //save
+            $(".modal-save").on("click", function(){
+                var p_id = $("#modal2-adviser-id").val();
+                console.log(store, typeof store);
+                $.ajax({
+                    url: "/adviser/add-adviser-project",
                     dataType: "json",
-                    type: "GET",
-                    data: function (term) {
-                        return {
-                            keyword: term
-                        };
+                    method: "GET",
+                    data: {
+                        "adviser_list": store,
+                        "project_id": p_id
                     },
-                    results: function (data) {
-                        return {
-                            results: $.map(data, function (item) {
-                                return {
-                                    text: item.completeName,
-                                    slug: item.slug,
-                                    id: item.id
-                                }
-                            })
-                        };
+                    success: function(data){
+                        if(window.localStorage){
+                            localStorage.setItem("box_list", "");
+                        }
+                        $("#add_project_modal").modal("hide");
+                    },
+                    error: function(data){
+                        console.log(data);
                     }
-                }
+                });
+
+
             });
 
             //点击添加按钮
@@ -193,8 +239,10 @@ $trade = new Trade();
                 }
 
                 store = tmp_ls ? tmp_ls.concat(tmp_arr) : tmp_arr;
+                
                 if(!store.length) {
                     alert("请选择顾问");
+                    return false;
                 }
 
             });
@@ -202,16 +250,15 @@ $trade = new Trade();
             //点击分页添加localstorage
             $(".pagination").on("click", function(){
                 var keys = $("#adviser_list").yiiGridView("getSelectedRows");
-                console.log(keys);
                 //支持localStorage
                 if(window.localStorage) {
                     var row_list = localStorage.getItem("box_list");
-                    console.log(row_list);
                     if(keys.length > 0){
                         if(!row_list){
                             row_list = "";
                         }
-                        var store = row_list+keys.join(",")+",";
+                        console.log(row_list);
+                        store = row_list ? keys.join(",")+","+row_list : keys.join(",");
                         localStorage.setItem("box_list", store);
                     }
                 }
