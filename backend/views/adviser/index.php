@@ -199,12 +199,24 @@ $trade = new Trade();
 <?php
     $this->registerJs('
         $(document).ready(function(){
-            var store = "";
-            
+            var store = [];
+            if(window.localStorage){
+                var old_store = localStorage.getItem("box_list");
+                $("#adviser_list").find("tbody tr").map(function(item){
+                    var v = $(this).attr("data-key");
+                    if(old_store.indexOf(v) > -1) {
+                        store.push(v);
+                        $(this).find("input:checkbox").attr("checked", "checked")
+                    }
+                });
+            }
+
+
             //save
             $(".modal-save").on("click", function(){
                 var p_id = $("#modal2-project-id").val();
-                console.log(store, typeof store);
+                //删除空数组
+                store = store.filter(function(n){return n});
                 $.ajax({
                     url: "/adviser/add-adviser-project",
                     dataType: "json",
@@ -224,22 +236,38 @@ $trade = new Trade();
                         console.log(data);
                     }
                 });
-
-
+            });
+                
+            //点击checkbox
+            $("#adviser_list").find("table").on("click", function(e){
+                var target = e.target;
+                if(target && $(target).attr("type") == "checkbox" ){
+                    var v = $(target).val()+"";
+                    var tmp_ls = window.localStorage ? localStorage.getItem("box_list") : "";
+                    if(store.indexOf(v) == -1){
+                        store.push(v);
+                    }else {
+                        var index = store.indexOf(v);
+                        store.splice(index, 1);
+                        var tmp = tmp_ls.replace(v, "");
+                        localStorage.setItem("box_list", tmp);
+                    }
+                    console.log(store);
+                }
             });
 
             //点击添加按钮
             $(".add_button").on("click", function () {
                 //支持localStorage
-                var tmp_arr = $("#adviser_list").yiiGridView("getSelectedRows");
                 var tmp_ls = window.localStorage ? localStorage.getItem("box_list") : "";
 
                 if(tmp_ls){
                     tmp_ls = tmp_ls.split(",");
                 }
 
-                store = tmp_ls ? tmp_ls.concat(tmp_arr) : tmp_arr;
+                store = tmp_ls ? tmp_ls.concat(store) : store;
                 
+                console.log(store);
                 if(!store.length) {
                     alert("请选择顾问");
                     return false;
@@ -249,18 +277,20 @@ $trade = new Trade();
 
             //点击分页添加localstorage
             $(".pagination").on("click", function(){
-                var keys = $("#adviser_list").yiiGridView("getSelectedRows");
                 //支持localStorage
                 if(window.localStorage) {
-                    var row_list = localStorage.getItem("box_list");
-                    if(keys.length > 0){
-                        if(!row_list){
-                            row_list = "";
-                        }
-                        console.log(row_list);
-                        store = row_list ? keys.join(",")+","+row_list : keys.join(",");
+                    var tmp_ls = window.localStorage ? localStorage.getItem("box_list") : "";
+                    if(store.length > 0) {
+                        var tmp = store.filter(function(item){
+                            if(tmp_ls.indexOf(item) == -1) {
+                                return item;
+                            }
+                        })
+                        console.log("----", tmp);
+                        store = tmp_ls ? tmp_ls + "," + tmp.join(",") : tmp.join(",");
                         localStorage.setItem("box_list", store);
                     }
+
                 }
             });
 
