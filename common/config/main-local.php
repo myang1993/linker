@@ -11,9 +11,9 @@ return [
 //
         'db' => [
             'class' => 'yii\db\Connection',
-            'dsn' => 'mysql:host=47.98.241.235:3306;dbname=project',
-            'username' => '',
-            'password' => '',
+            'dsn' => 'mysql:host=47.96.187.102:3306;dbname=project',
+            'username' => 'project',
+            'password' => 'Project123456#',
             'charset' => 'utf8',
         ],
         'mailer' => [
