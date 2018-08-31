@@ -42,6 +42,16 @@ class AdviserController extends Controller
         ];
     }
 
+//    public function beforeAction($action)
+//    {
+//        $action = Yii::$app->controller->action->id;
+//        if(\Yii::$app->user->can($action)){
+//            return true;
+//        }else{
+//            throw new \yii\web\UnauthorizedHttpException('对不起，您现在还没获此操作的权限');
+//        }
+//    }
+
     public function actionSite($pid, $typeId = 0)
     {
         $model = new Area();
@@ -200,8 +210,8 @@ class AdviserController extends Controller
         if (empty($queryParams['adviser_list']) || !is_array($queryParams['adviser_list']) || empty($queryParams['project_id'])) {
             echo json_encode(['status'=>-1,'message'=>'参数错误'],JSON_UNESCAPED_UNICODE);
         } else {
-            $projectAdviserModel = new ProjectAdviser();
             foreach ($queryParams['adviser_list'] as $adviser_id) {
+                $projectAdviserModel = new ProjectAdviser();
                 $projectAdviserModel->addAdviserProject($adviser_id,$queryParams['project_id']);
             }
             echo json_encode(['status'=>0,'message'=>'success'],JSON_UNESCAPED_UNICODE);
