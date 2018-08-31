@@ -68,7 +68,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 ]
 
             ]); ?>
-            <div class="has-error text-center" style="font-size: 20px;"><p class="modal_tip help-block help-block-error"></p></div>
+            <div class="has-error text-center" style="font-size: 18px;"><p class="modal_tip help-block help-block-error"></p></div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-primary modal-save">Save</button>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -184,6 +184,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     method: "GET",
                     data: {
                         "adviser_list": store,
+                        "project_id": p_id
                     }
                 }).done(function(data){
                     if(data.status == 0) {
