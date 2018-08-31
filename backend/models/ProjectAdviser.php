@@ -4,6 +4,7 @@ namespace backend\models;
 
 use Yii;
 use yii\base\Model;
+use yii\helpers\Json;
 
 /**
  * This is the model class for table "{{%project_adviser}}".
@@ -56,7 +57,10 @@ class ProjectAdviser extends \yii\db\ActiveRecord
                 }
             }],
             [['project_id', 'selector_id', 'adviser_id', 'state', 'duration', 'fee', 'fee_type', 'adviser_pay', 'referee_pay', 'bill_out'], 'integer'],
-            [['fee_rate'], 'number'],
+            [['fee_rate'],'match','pattern'=>'/^\d\.\d{1}$/', 'message'=>'只能包含小数点后一位'],
+            [['fee_rate'],'default','value'=>0],
+            [['selector_id'],'default','value'=>0],
+            [['state'],'default','value'=>1],
             [['remark'], 'string', 'max' => 1024],
             [['pay_remark'], 'string', 'max' => 256],
             [['pay_type'], 'string', 'max' => 50],
@@ -158,12 +162,13 @@ class ProjectAdviser extends \yii\db\ActiveRecord
      */
     public function addAdviserProject($adviser_id, $project_id)
     {
-        $isNewRecord = $this->find()->where(['adviser_id'=>$adviser_id,'project_id'=>$project_id])->one();
-        if (!$isNewRecord) {
-            $this->project_id = $project_id;
-            $this->adviser_id = $adviser_id;
-            $this->date = date('Y-m-d H:i:s');
-            $this->save();
+        $this->project_id = $project_id;
+        $this->adviser_id = $adviser_id;
+        $this->date = date('Y-m-d H:i:s');
+        if (!$this->save()) {
+            Yii::error(json_encode($this->getErrors(),JSON_UNESCAPED_UNICODE));
+//            print_r($this->fee_rate);
+            var_dump($this->getErrors());
         }
     }
 }
