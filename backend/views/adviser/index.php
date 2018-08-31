@@ -197,14 +197,21 @@ $project = new \backend\models\Project();
         $(document).ready(function(){
             var store = [];
             if(window.localStorage){
+                if(localStorage.getItem("box_list_time") && new Date().getTime() - localStorage.getItem("box_list_time") > 1000*60*60){
+                    localStorage.setItem("box_list", "");
+                    localStorage.setItem("box_list_time", "");
+                }
                 var old_store = localStorage.getItem("box_list");
-                $("#adviser_list").find("tbody tr").map(function(item){
-                    var v = $(this).attr("data-key");
-                    if(old_store.indexOf(v) > -1) {
-                        store.push(v);
-                        $(this).find("input:checkbox").attr("checked", "checked")
-                    }
-                });
+                var tmp_store = old_store.split(",");
+                if(old_store){
+                    $("#adviser_list").find("tbody tr").map(function(item){
+                        var v = $(this).attr("data-key");
+                        if(tmp_store.indexOf(v) > -1) {
+                            store.push(v);
+                            $(this).find("input:checkbox").attr("checked", "checked")
+                        }
+                    });
+                }
             }
 
 
@@ -225,6 +232,7 @@ $project = new \backend\models\Project();
                     if(data.status == 0){
                         if(window.localStorage){
                             localStorage.setItem("box_list", "");
+                            localStorage.setItem("box_list_time", "");
                         }
                         $("#add-advisers").modal("hide");
                         window.location.reload();
@@ -233,7 +241,7 @@ $project = new \backend\models\Project();
                     }
                 });
             });
-                
+
             //点击checkbox
             $("#adviser_list").find("table").on("click", function(e){
                 var target = e.target;
@@ -262,7 +270,6 @@ $project = new \backend\models\Project();
                 }
 
                 store = tmp_ls ? tmp_ls.concat(store) : store;
-                
                 console.log(store);
                 if(!store.length) {
                     alert("请选择顾问");
@@ -284,9 +291,11 @@ $project = new \backend\models\Project();
                         })
                         console.log("----", tmp);
                         store = tmp_ls ? tmp_ls + "," + tmp.join(",") : tmp.join(",");
+                        if(!localStorage.getItem("box_list")){
+                            localStorage.setItem("box_list_time", new Date().getTime())
+                        }
                         localStorage.setItem("box_list", store);
                     }
-
                 }
             });
 
