@@ -20,7 +20,7 @@ $this->params['breadcrumbs'][] = $this->title;
             <?= Html::encode($this->title) ?>
             <?= Html::a('', '/adviser/update?id='.$model->id, [
                 'class' => 'glyphicon glyphicon-pencil pull-right',
-                'style' => 'margin-left:20px;'
+                'style' => 'margin-left:50px;'
             ]) ?>
             <?php Modal::begin([
                 'header' => '<h4 class="modal-title text-center"><strong>选择项目</strong></h4>',
