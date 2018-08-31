@@ -178,6 +178,9 @@ $this->params['breadcrumbs'][] = $this->title;
             $(".modal-save").on("click", function(){
                 var p_id = '.$model->id.';
                 var store = [].push($("#modal2-project-id").val());
+                if(store.length == 0 || !p_id){
+                    return false;
+                }
                 $.ajax({
                     url: "/adviser/add-adviser-project",
                     dataType: "json",
