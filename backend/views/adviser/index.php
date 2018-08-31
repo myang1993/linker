@@ -34,12 +34,6 @@ $trade = new Trade();
             'toggleButton' => ['label' => '添加顾问到项目', 'class' => 'btn btn-primary add_button'],
             'options' => ['tabindex' => false]
         ]); ?>
-            <!-- <div class="form-group row">
-                <label for="project_list" class="col-sm-2 col-form-label">项目</label>
-                <div class="col-sm-8">
-                    <select type="text" class="form-control" id="project_list" placeholder="Enter email"></select>
-                </div>
-            </div> -->
             <?= DetailView::widget([
                 'model' => $searchModel,
                 'condensed' => true,
@@ -82,6 +76,7 @@ $trade = new Trade();
                 ]
 
             ]); ?>
+            <div class="has-error text-center" style="font-size: 18px;"><p class="modal_tip help-block help-block-error"></p></div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-primary modal-save">Save</button>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -224,16 +219,16 @@ $trade = new Trade();
                     data: {
                         "adviser_list": store,
                         "project_id": p_id
-                    },
-                    success: function(data){
+                    }
+                }).done(function(data){
+                    if(data.status == 0){
                         if(window.localStorage){
                             localStorage.setItem("box_list", "");
                         }
-                        $("#add_project_modal").modal("hide");
+                        $("#add-advisers").modal("hide");
                         window.location.reload();
-                    },
-                    error: function(data){
-                        console.log(data);
+                    }else{
+                        $(".modal_tip").text(data.message);
                     }
                 });
             });
