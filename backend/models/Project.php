@@ -183,7 +183,7 @@ class Project extends \yii\db\ActiveRecord
      */
     public function getProjectList($keyword)
     {
-        $model = $this->find()->select('id,name')->where("name like '%{$keyword}%'")->asArray()->all();
+        $model = $this->find()->select('id,name')->where("name like '%{$keyword}%'")->where(['<>','status',4])->asArray()->all();
         return $model;
     }
 }

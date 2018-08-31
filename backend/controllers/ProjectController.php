@@ -150,7 +150,7 @@ class ProjectController extends Controller
     {
         $queryParams =Yii::$app->request->queryParams;
         if (empty($queryParams['keyword'])) {
-            echo json_encode(['status'=>-1,'message'=>'参数错误'],JSON_UNESCAPED_UNICODE);
+            echo json_encode(['status'=>-1,'message'=>'请输入搜索信息'],JSON_UNESCAPED_UNICODE);
         } else {
             $keyword = urldecode($queryParams['keyword']);
             $data = (new Project())->getProjectList($keyword);
