@@ -177,7 +177,10 @@ $this->params['breadcrumbs'][] = $this->title;
             //save
             $(".modal-save").on("click", function(){
                 var p_id = '.$model->id.';
-                var store = [].push($("#modal2-project-id").val());
+                var store = [];
+                if($("#modal2-project-id").val()){
+                    store.push($("#modal2-project-id").val());
+                }
                 if(store.length == 0 || !p_id){
                     return false;
                 }
