@@ -177,11 +177,12 @@ $this->params['breadcrumbs'][] = $this->title;
             //save
             $(".modal-save").on("click", function(){
                 var p_id = '.$model->id.';
+                var v = $("#modal2-project-id").val();
                 var store = [];
-                if($("#modal2-project-id").val()){
-                    store.push($("#modal2-project-id").val());
+                if(p_id){
+                    store.push(p_id);
                 }
-                if(store.length == 0 || !p_id){
+                if(store.length == 0 || !v){
                     return false;
                 }
                 $.ajax({
@@ -190,14 +191,14 @@ $this->params['breadcrumbs'][] = $this->title;
                     method: "GET",
                     data: {
                         "adviser_list": store,
-                        "project_id": p_id
+                        "project_id": v
                     }
                 }).done(function(data){
                     if(data.status == 0) {
                         if(window.localStorage){
                             localStorage.setItem("box_list", "");
                         }
-                        $("#add_project_modal").modal("hide");
+                        $("#add-advisers").modal("hide");
                     }else {
                         $(".modal_tip").text(data.message);
                     }
