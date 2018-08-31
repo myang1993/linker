@@ -179,14 +179,14 @@ $project = new \backend\models\Project();
                     'style' => 'min-width: 130px;'
                 ]
             ],
-            [
-                'class' => 'yii\grid\ActionColumn',
-                'template' => '{view}',
-            ],
-            [
-                'class' => 'yii\grid\ActionColumn',
-                'template' => '{update}',
-            ],
+//            [
+//                'class' => 'yii\grid\ActionColumn',
+//                'template' => '{view}',
+//            ],
+//            [
+//                'class' => 'yii\grid\ActionColumn',
+//                'template' => '{update}',
+//            ],
         ],
     ]); ?>
     <?php Pjax::end(); ?>

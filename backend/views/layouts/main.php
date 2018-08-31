@@ -53,7 +53,7 @@ AppAsset::register($this);
         $menuItems[] = ['label' => Yii::t('app', 'Customers'), 'url' => ['/customer']];
         $menuItems[] = ['label' => Yii::t('app', 'Advisers'), 'url' => ['/adviser']];
         // $menuItems[] = ['label' => Yii::t('app', 'Trades'), 'url' => ['/trade']];
-        if (in_array(Yii::$app->user->identity->username, ['admin','Carol.Sun'])) {
+        if (in_array(Yii::$app->user->identity->username, ['admin'])) {
             $menuItems[] = ['label' => Yii::t('app', 'Finance'), 'url' => ['/project-adviser']];
         }
         $menuItems[] = '<li>'
