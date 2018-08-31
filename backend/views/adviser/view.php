@@ -9,7 +9,7 @@ use kartik\detail\DetailView;
 use yii\web\JsExpression;
 /* @var $this yii\web\View */
 /* @var $model backend\models\Adviser */
-
+$project = new \backend\models\Project();
 $this->title = $model->name_zh;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Advisers'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
@@ -42,24 +42,24 @@ $this->params['breadcrumbs'][] = $this->title;
                         'type' => DetailView::INPUT_SELECT2,
                         'options' => ['id' => 'modal2-project-id', 'placeholder' => '-- ' . Yii::t('app', 'Please select')],
                         'widgetOptions' => [
-                            // 'data' => $adviser->getAdviser(),
+                            'data' => $project->getProject(),
                             'pluginOptions' => [
                                 'allowClear' => true,
                                 'width' => '100%',
-                                'minimumInputLength' => 2,
-                                'language' => [
-                                    'errorLoading' => new JsExpression("function () { return 'Waiting for results...'; }"),
-                                ],
-                                'ajax' => [
-                                    'url' => '/project/get-project',
-                                    'dataType' => 'json',
-                                    'delay' => 250,
-                                    'data' => new JsExpression('function(params) { return {keyword:params.term}; }'),
-                                    'processResults' => new JsExpression('function(data) {return {results: data.data};}')
-                                ],
-                                'escapeMarkup' => new JsExpression('function (markup) {return markup; }'),
-                                'templateResult' => new JsExpression('function(city) {return city.name; }'),
-                                'templateSelection' => new JsExpression('function (city) {return city.name; }'),
+                                // 'minimumInputLength' => 2,
+                                // 'language' => [
+                                //     'errorLoading' => new JsExpression("function () { return 'Waiting for results...'; }"),
+                                // ],
+                                // 'ajax' => [
+                                //     'url' => '/project/get-project',
+                                //     'dataType' => 'json',
+                                //     'delay' => 250,
+                                //     'data' => new JsExpression('function(params) { return {keyword:params.term}; }'),
+                                //     'processResults' => new JsExpression('function(data) {return {results: data.data};}')
+                                // ],
+                                // 'escapeMarkup' => new JsExpression('function (markup) {return markup; }'),
+                                // 'templateResult' => new JsExpression('function(city) {return city.name; }'),
+                                // 'templateSelection' => new JsExpression('function (city) {return city.name; }'),
 
                             ],
                         ],
