@@ -34,12 +34,6 @@ $trade = new Trade();
             'toggleButton' => ['label' => '添加顾问到项目', 'class' => 'btn btn-primary add_button'],
             'options' => ['tabindex' => false]
         ]); ?>
-            <!-- <div class="form-group row">
-                <label for="project_list" class="col-sm-2 col-form-label">项目</label>
-                <div class="col-sm-8">
-                    <select type="text" class="form-control" id="project_list" placeholder="Enter email"></select>
-                </div>
-            </div> -->
             <?= DetailView::widget([
                 'model' => $searchModel,
                 'condensed' => true,
