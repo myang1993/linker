@@ -186,4 +186,15 @@ class Project extends \yii\db\ActiveRecord
         $model = $this->find()->select('id,name')->where("name like '%{$keyword}%'")->where(['<>','status',4])->asArray()->all();
         return $model;
     }
+
+    /**
+     * 获取顾问列表
+     *
+     * @return array
+     */
+    public function getProject()
+    {
+        $model = $this->find()->select('id,name')->where(['<>','id',4])->all();
+        return yii\helpers\ArrayHelper::map($model, 'id', 'name');
+    }
 }
