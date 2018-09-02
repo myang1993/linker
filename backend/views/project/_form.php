@@ -650,7 +650,7 @@ $customer = new Customer();
                 'cost',
                 [
                     'attribute' => Yii::t('app', 'fee'),
-                    'value' => empty($projectAdviser->adviser->tax_type)?'':$projectAdviser->adviser->taxType($projectAdviser->adviser->tax_type) . ' ' . empty($projectAdviser->pay_type)?'':$projectAdviser->adviser->payType($projectAdviser->pay_type) . ' ' . $projectAdviser->fee . '（' . empty($projectAdviser->fee_type)?'':$projectAdviser->adviser->priceType($projectAdviser->fee_type) . '）',
+                    'value' => (empty($projectAdviser->adviser->tax_type)?'':$projectAdviser->adviser->taxType($projectAdviser->adviser->tax_type)) . ' ' . (empty($projectAdviser->pay_type)?'':$projectAdviser->adviser->payType($projectAdviser->pay_type)) . ' ' . $projectAdviser->fee . '（' . (empty($projectAdviser->fee_type)?'':$projectAdviser->adviser->priceType($projectAdviser->fee_type)) . '）',
                     'type' => DetailView::INPUT_TEXT,
                     'options' => ['placeholder' => '-- ' . Yii::t('app', 'Please select')],
                     'displayOnly' => true,
