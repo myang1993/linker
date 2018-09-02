@@ -202,7 +202,7 @@ $project = new \backend\models\Project();
                     localStorage.setItem("box_list_time", "");
                 }
                 var old_store = localStorage.getItem("box_list");
-                var tmp_store = old_store.split(",");
+                var tmp_store = old_store ? old_store.split(",") : "";
                 if(old_store){
                     $("#adviser_list").find("tbody tr").map(function(item){
                         var v = $(this).attr("data-key");
