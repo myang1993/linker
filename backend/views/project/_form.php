@@ -482,7 +482,10 @@ $customer = new Customer();
                     'headerOptions' => ['width' => '8%'],
                     'label' => Yii::t('app', '访谈费率'),
                     'value' => function ($data) {
-                        return $data->adviser->taxType($data->adviser->tax_type) . ' ' . $data->adviser->payType($data->pay_type) . ' ' . $data->fee . '（' . $data->adviser->priceType($data->fee_type) . '）';
+                        $tax_type = empty($data->adviser->tax_type)?'':$data->adviser->taxType($data->adviser->tax_type);
+                        $pay_type =  empty($data->pay_type)?'':$data->adviser->payType($data->pay_type);
+                        $fee_type =  empty($data->fee_type)?'':$data->adviser->priceType($data->fee_type);
+                        return $tax_type . ' ' . $pay_type . ' ' . $data->fee . '（' . $fee_type . '）';
                     }
                 ],
                 [
@@ -647,7 +650,7 @@ $customer = new Customer();
                 'cost',
                 [
                     'attribute' => Yii::t('app', 'fee'),
-                    'value' => $projectAdviser->adviser->taxType($projectAdviser->adviser->tax_type) . ' ' . $projectAdviser->adviser->payType($projectAdviser->pay_type) . ' ' . $projectAdviser->fee . '（' . $projectAdviser->adviser->priceType($projectAdviser->fee_type) . '）',
+                    'value' => empty($projectAdviser->adviser->tax_type)?'':$projectAdviser->adviser->taxType($projectAdviser->adviser->tax_type) . ' ' . empty($projectAdviser->pay_type)?'':$projectAdviser->adviser->payType($projectAdviser->pay_type) . ' ' . $projectAdviser->fee . '（' . empty($projectAdviser->fee_type)?'':$projectAdviser->adviser->priceType($projectAdviser->fee_type) . '）',
                     'type' => DetailView::INPUT_TEXT,
                     'options' => ['placeholder' => '-- ' . Yii::t('app', 'Please select')],
                     'displayOnly' => true,

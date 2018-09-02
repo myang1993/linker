@@ -59,7 +59,7 @@ class ProjectSearch extends Project
     public function search($params)
     {
         $query = Project::find()->joinWith('customer as c', true, 'LEFT JOIN')
-            ->joinWith('advisers as a', true,'LEFT JOIN')->innerJoinWith('boffins as b', true);
+            ->joinWith('advisers as a', true,'LEFT JOIN')->joinWith('boffins as b', true,'LEFT JOIN');
         // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([

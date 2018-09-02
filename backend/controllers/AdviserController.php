@@ -208,7 +208,7 @@ class AdviserController extends Controller
     {
         $queryParams = Yii::$app->request->queryParams;
         if (empty($queryParams['adviser_list']) || !is_array($queryParams['adviser_list']) || empty($queryParams['project_id'])) {
-            echo json_encode(['status'=>-1,'message'=>'参数错误'],JSON_UNESCAPED_UNICODE);
+            echo json_encode(['status'=>-1,'message'=>'请输入搜索信息'],JSON_UNESCAPED_UNICODE);
         } else {
             foreach ($queryParams['adviser_list'] as $adviser_id) {
                 $projectAdviserModel = new ProjectAdviser();
