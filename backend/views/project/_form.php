@@ -418,8 +418,10 @@ $customer = new Customer();
                 ],
                 [
                     'label' => Yii::t('app', 'Chinese Name'),
+                    'format' => 'raw',
                     'value' => function ($data) {
-                        return $data->adviser->name_zh;
+                        return Html::a($data->adviser->name_zh, "/adviser/view?id=".$data->id);;
+
                     },
                     'contentOptions' => ['style' => 'overflow:hidden;text-overflow:ellipsis;white-space:inherit'],
                     'headerOptions' => ['width' => '5%'],
@@ -900,9 +902,9 @@ $this->registerJs(
                         console.log(data);
                         data = data;
                         var tmp = [];
-                        tmp[0] = "<option value="+data.fee_face+" data-type="+data.fee_face_type+" data-pay=fee_face>("+data.tax_type_v+") ' . Yii::t('app', 'Face Interview Price') . ' "+data.fee_face+" ("+data.fee_face_type_v+")</option>";
-                        tmp[1] = "<option value="+data.fee_phone+" data-type="+data.fee_phone_type+" data-pay=fee_phone>("+data.tax_type_v+") ' . Yii::t('app', 'Telephone Interview Price') . ' "+data.fee_phone+" ("+data.fee_phone_type_v+")</option>";
-                        tmp[2] = "<option value="+data.fee_road+" data-type="+data.fee_road_type+" data-pay=fee_road>("+data.tax_type_v+") ' . Yii::t('app', 'Roadshow Interview Price') . ' "+data.fee_road+" ("+data.fee_road_type_v+")</option>";
+                        tmp[0] = "<option value="+data.fee_face+" data-type="+data.fee_face_type+" data-pay=fee_face>' . Yii::t('app', 'Face Interview Price') . ' </option>";
+                        tmp[1] = "<option value="+data.fee_phone+" data-type="+data.fee_phone_type+" data-pay=fee_phone>' . Yii::t('app', 'Telephone Interview Price') . '</option>";
+                        tmp[2] = "<option value="+data.fee_road+" data-type="+data.fee_road_type+" data-pay=fee_road>' . Yii::t('app', 'Roadshow Interview Price') . '</option>";
 
                         for(var i=0;i<3;i++){
                             ctm_p.append(tmp[i]);
