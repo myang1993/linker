@@ -870,6 +870,10 @@ $customer = new Customer();
 <?php
 $this->registerJs(
     '$(document).ready(function(){
+            var client_info = $("#project_info");
+            client_info.find("tbody tr").eq(7).addClass("hide");
+            client_info.find("tbody tr").eq(8).addClass("hide");
+
             //设置参与者的值
             var arr = "' . $model->participants . '";
             arr = arr.split("，");
