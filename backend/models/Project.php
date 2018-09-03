@@ -20,6 +20,7 @@ use Yii;
  * @property int $date 访谈日期
  * @property int $fee_time 客户收费时长
  * @property double $unit_price 单价
+ * @property double $pay_type 访谈类型
  * @property int $unit_type 1：RMB，2：USD
  *
  * @property Customer $customer
@@ -60,6 +61,7 @@ class Project extends \yii\db\ActiveRecord
             [['name', 'customer_id'], 'required'],
             [['name', 'head'], 'string', 'max' => 255],
             [['customer_id'], 'exist', 'skipOnError' => true, 'targetClass' => Customer::className(), 'targetAttribute' => ['customer_id' => 'id']],
+            ['pay_type','safe']
         ];
     }
 
@@ -83,6 +85,7 @@ class Project extends \yii\db\ActiveRecord
             'fee_time' => Yii::t('app', '客户收费时长'),
             'unit_price' => Yii::t('app', '客户单价'),
             'unit_type' => Yii::t('app', '类型'),
+            'pay_type' => Yii::t('app', '访谈类型'),
         ];
     }
 

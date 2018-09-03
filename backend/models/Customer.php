@@ -149,4 +149,21 @@ class Customer extends \yii\db\ActiveRecord
     {
         return new CustomerQuery(get_called_class());
     }
+
+    /**
+     * 付费类型
+     *
+     * @param integer $type
+     * @return void
+     */
+    public function payType($type = '')
+    {
+        $typeList = [
+            'fee_phone' => Yii::t('app', 'Telephone Interview Price'),
+            'fee_road' => Yii::t('app', 'Roadshow Interview Price'),
+            'fee_face' => Yii::t('app', 'Face Interview Price'),
+        ];
+
+        return $retVal = !empty($type) ? $typeList[$type] : $typeList;
+    }
 }
