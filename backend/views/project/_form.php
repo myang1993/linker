@@ -541,6 +541,9 @@ $customer = new Customer();
                                 'data-target' => '#update-advisers1',
                                 'data-id' => $model->id,
                                 'data-adviser-id' => $model->adviser->id,
+                                'data-adviser-fee' => $model->fee,
+                                'data-fee-type' => $model->fee_type,
+                                'data-pay-type' => $model->pay_type,
                                 'style' => 'float:right',]);
                         },
                     ],
@@ -1046,6 +1049,9 @@ $('.updateAdviser').click(function(){
     var index = $(this).parent().parent().find('td').eq(0).text();
     $(this).attr('data-target','#update-advisers'+index);
     var adviser_id = $(this).attr('data-adviser-id');
+    var adviser_fee = $(this).attr('data-adviser-fee');
+    var data_fee_type = $(this).attr('data-fee-type');
+    var data_pay_type = $(this).attr('data-pay-type');
     var sel2 = $("#fee"+index);
     var fee_type = $("#fee_type"+index);
     var pay_type = $("#pay_type"+index);
@@ -1058,9 +1064,21 @@ $('.updateAdviser').click(function(){
             sel2.empty();
             data = data;
             var tmp = [];
-            tmp[0] = "<option value="+data.fee_face+" data-type="+data.fee_face_type+" data-pay=fee_face>("+data.tax_type_v+") 面谈访谈费率"+data.fee_face+" ("+data.fee_face_type_v+")</option>";
-            tmp[1] = "<option value="+data.fee_phone+" data-type="+data.fee_phone_type+" data-pay=fee_phone>("+data.tax_type_v+") 电话访谈费率 "+data.fee_phone+" ("+data.fee_phone_type_v+")</option>";
-            tmp[2] = "<option value="+data.fee_road+" data-type="+data.fee_road_type+" data-pay=fee_road>("+data.tax_type_v+") 路演访谈费率 "+data.fee_road+" ("+data.fee_road_type_v+")</option>";
+            if (adviser_fee ==data.fee_face && data_fee_type == data.fee_face_type && data_pay_type == 'fee_face') {
+               tmp[0] = "<option value="+data.fee_face+" data-type="+data.fee_face_type+" data-pay=fee_face selected>("+data.tax_type_v+") 面谈访谈费率"+data.fee_face+" ("+data.fee_face_type_v+")</option>"; 
+            } else {
+                tmp[0] = "<option value="+data.fee_face+" data-type="+data.fee_face_type+" data-pay=fee_face>("+data.tax_type_v+") 面谈访谈费率"+data.fee_face+" ("+data.fee_face_type_v+")</option>";
+            }
+             if (adviser_fee ==data.fee_phone && data_fee_type == data.fee_phone_type && data_pay_type == 'fee_phone') {
+                 tmp[1] = "<option value="+data.fee_phone+" data-type="+data.fee_phone_type+" data-pay=fee_phone selected>("+data.tax_type_v+") 电话访谈费率 "+data.fee_phone+" ("+data.fee_phone_type_v+")</option>";
+             } else {
+                 tmp[1] = "<option value="+data.fee_phone+" data-type="+data.fee_phone_type+" data-pay=fee_phone>("+data.tax_type_v+") 电话访谈费率 "+data.fee_phone+" ("+data.fee_phone_type_v+")</option>";
+             }
+             if (adviser_fee ==data.fee_road && data_fee_type == data.fee_road_type && data_pay_type == 'fee_road') {
+                 tmp[2] = "<option value="+data.fee_road+" data-type="+data.fee_road_type+" data-pay=fee_road selected>("+data.tax_type_v+") 路演访谈费率 "+data.fee_road+" ("+data.fee_road_type_v+")</option>";
+             } else {
+                 tmp[2] = "<option value="+data.fee_road+" data-type="+data.fee_road_type+" data-pay=fee_road>("+data.tax_type_v+") 路演访谈费率 "+data.fee_road+" ("+data.fee_road_type_v+")</option>";
+             }
     
             for(var i=0;i<3;i++){
                 sel2.append(tmp[i]);
