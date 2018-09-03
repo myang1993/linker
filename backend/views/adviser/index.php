@@ -124,6 +124,12 @@ $project = new \backend\models\Project();
                 'attribute' => 'describe',
             ],
             [
+                'attribute' => 'expertise',
+            ],
+            [
+                'attribute' => 'profile',
+            ],
+            [
                 'label' => Yii::t('app', '省份'),
                 'attribute' => 'province_name',
                 'value' => function($model){
@@ -179,10 +185,10 @@ $project = new \backend\models\Project();
                     'style' => 'min-width: 130px;'
                 ]
             ],
-//            [
-//                'class' => 'yii\grid\ActionColumn',
-//                'template' => '{view}',
-//            ],
+           [
+               'class' => 'yii\grid\ActionColumn',
+               'template' => '{delete}',
+           ],
 //            [
 //                'class' => 'yii\grid\ActionColumn',
 //                'template' => '{update}',
