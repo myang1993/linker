@@ -57,17 +57,16 @@ class ProjectAdviser extends \yii\db\ActiveRecord
                 }
             }],
             [['project_id', 'selector_id', 'adviser_id', 'state', 'duration', 'fee', 'fee_type', 'adviser_pay', 'referee_pay', 'bill_out'], 'integer'],
-            [['fee_rate'],'match','pattern'=>'/^\d\.\d{1}$/', 'message'=>'只能包含小数点后一位'],
-            [['fee_rate'],'default','value'=>0],
-            [['selector_id'],'default','value'=>0],
-            [['state'],'default','value'=>1],
+            [['fee_rate'], 'match', 'pattern' => '/^\d+\.{0,1}\d{0,1}$/', 'message' => '{attribute}只能包含小数点后一位'],
+            [['fee_rate'], 'default', 'value' => 0],
+            [['selector_id'], 'default', 'value' => 0],
+            [['state'], 'default', 'value' => 1],
             [['remark'], 'string', 'max' => 1024],
             [['pay_remark'], 'string', 'max' => 256],
             [['pay_type'], 'string', 'max' => 50],
             [['hour', 'cost', 'customer_fee'], 'safe'],
         ];
     }
-
 
 
     /**
@@ -166,9 +165,24 @@ class ProjectAdviser extends \yii\db\ActiveRecord
         $this->adviser_id = $adviser_id;
         $this->date = date('Y-m-d H:i:s');
         if (!$this->save()) {
-            Yii::error(json_encode($this->getErrors(),JSON_UNESCAPED_UNICODE));
+            Yii::error(json_encode($this->getErrors(), JSON_UNESCAPED_UNICODE));
 //            print_r($this->fee_rate);
             var_dump($this->getErrors());
         }
+    }
+
+    public function getInfo($id)
+    {
+        $model = new Adviser();
+        $info = $model->getInfo($id, 'all');
+        $type = $model->priceType();
+        $tax_type = $model->taxType();
+        $data = [
+            $info['fee_face'] => '('.$tax_type[$info['tax_type']].') ' . Yii::t('app', 'Face Interview Price') . $info['fee_face'] . '(' . $type[$info['fee_face_type']] . ')',
+            $info['fee_phone'] => '('.$tax_type[$info['tax_type']].') ' . Yii::t('app', 'Telephone Interview Price') . $info['fee_phone'] . '(' . $type[$info['fee_phone_type']] . ')',
+            $info['fee_road'] => '('.$tax_type[$info['tax_type']].') ' . Yii::t('app', 'Roadshow Interview Price') . $info['fee_road'] . '(' . $type[$info['fee_road_type']] . ')',
+        ];
+        return $data;
+
     }
 }

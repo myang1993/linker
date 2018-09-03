@@ -256,10 +256,14 @@ class Adviser extends \yii\db\ActiveRecord
      *
      * @return string
      */
-    public function getInfo($id)
+    public function getInfo($id,$type ='')
     {
         $model = Adviser::findOne($id);
-        return !empty($model) ? $model['name_zh'] : null;
+        if (empty($type)) {
+            return !empty($model) ? $model['name_zh'] : null;
+        } else {
+            return $model;
+        }
     }
 
     /**

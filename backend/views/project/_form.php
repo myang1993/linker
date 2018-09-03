@@ -406,7 +406,7 @@ $customer = new Customer();
         ?>
     </h3>
     <?php
-    if(Yii::$app->controller->action->id == 'update') {
+    if (Yii::$app->controller->action->id == 'update') {
         echo \yii\grid\GridView::widget([
             'dataProvider' => $dataProvider,
             'tableOptions' => ['style' => 'table-layout: fixed;word-wrap: break-word;word-break:break-all', 'class' => 'table table-striped table-bordered'],
@@ -482,9 +482,9 @@ $customer = new Customer();
                     'headerOptions' => ['width' => '8%'],
                     'label' => Yii::t('app', '访谈费率'),
                     'value' => function ($data) {
-                        $tax_type = empty($data->adviser->tax_type)?'':$data->adviser->taxType($data->adviser->tax_type);
-                        $pay_type =  empty($data->pay_type)?'':$data->adviser->payType($data->pay_type);
-                        $fee_type =  empty($data->fee_type)?'':$data->adviser->priceType($data->fee_type);
+                        $tax_type = empty($data->adviser->tax_type) ? '' : $data->adviser->taxType($data->adviser->tax_type);
+                        $pay_type = empty($data->pay_type) ? '' : $data->adviser->payType($data->pay_type);
+                        $fee_type = empty($data->fee_type) ? '' : $data->adviser->priceType($data->fee_type);
                         return $tax_type . ' ' . $pay_type . ' ' . $data->fee . '（' . $fee_type . '）';
                     }
                 ],
@@ -540,6 +540,7 @@ $customer = new Customer();
                                 'data-toggle' => 'modal',
                                 'data-target' => '#update-advisers1',
                                 'data-id' => $model->id,
+                                'data-adviser-id' => $model->adviser->id,
                                 'style' => 'float:right',]);
                         },
                     ],
@@ -579,6 +580,7 @@ $customer = new Customer();
             'options' => ['tabindex' => false]
         ]);
         $projectAdviser->date = ($projectAdviser->date > 0) ? date("Y-m-d H:i", $projectAdviser->date) : date('Y-m-d H:i');
+//        $select_fee = $projectAdviser->getInfo($projectAdviser->adviser_id);
         echo DetailView::widget([
             'options' => [
                 'class' => 'form-inline form',
@@ -649,15 +651,25 @@ $customer = new Customer();
                 ],
                 'cost',
                 [
-                    'attribute' => Yii::t('app', 'fee'),
-                    'value' => (empty($projectAdviser->adviser->tax_type)?'':$projectAdviser->adviser->taxType($projectAdviser->adviser->tax_type)) . ' ' . (empty($projectAdviser->pay_type)?'':$projectAdviser->adviser->payType($projectAdviser->pay_type)) . ' ' . $projectAdviser->fee . '（' . (empty($projectAdviser->fee_type)?'':$projectAdviser->adviser->priceType($projectAdviser->fee_type)) . '）',
-                    'type' => DetailView::INPUT_TEXT,
-                    'options' => ['placeholder' => '-- ' . Yii::t('app', 'Please select')],
-                    'displayOnly' => true,
+                    'attribute' => 'fee',
+                    'format' => 'raw',
+                    'type' => DetailView::INPUT_SELECT2,
+                    'options' => ['id' => 'fee' . $projectAdviser->id, 'placeholder' => '-- ' . Yii::t('app', 'Please select'), 'readonly' => 'readonly'],
                     'widgetOptions' => [
                         'data' => [],
                         'pluginOptions' => ['allowClear' => true, 'width' => '100%'],
                     ],
+                    'valueColOptions' => ['style' => 'width:60%']
+                ],
+                [
+                    'attribute' => 'fee_type',
+                    'options' => ['id' => 'fee_type' . $projectAdviser->id],
+                    'type' => DetailView::INPUT_HIDDEN,
+                ],
+                [
+                    'attribute' => 'pay_type',
+                    'options' => ['id' => 'pay_type' . $projectAdviser->id],
+                    'type' => DetailView::INPUT_HIDDEN,
                 ],
                 [
                     'attribute' => 'date',
@@ -742,7 +754,7 @@ $customer = new Customer();
                     ],
                 ],
                 'valueColOptions' => ['style' => 'width:60%']
-            ],  
+            ],
             [
                 'label' => Yii::t('app', 'Company'),
                 'contentOptions' => ['id' => 'modal2-adviser_company', 'readonly' => 'readonly'],
@@ -1030,10 +1042,38 @@ $this->registerJs(
 <?php
 
 $js = <<<JS
-var da_id='';
 $('.updateAdviser').click(function(){
     var index = $(this).parent().parent().find('td').eq(0).text();
     $(this).attr('data-target','#update-advisers'+index);
+    var adviser_id = $(this).attr('data-adviser-id');
+    var sel2 = $("#fee"+index);
+    var fee_type = $("#fee_type"+index);
+    var pay_type = $("#pay_type"+index);
+      $.ajax({
+        url: "/adviser/info",
+        dataType: "json",
+        method: "GET",
+        data: {id:adviser_id},
+        success: function(data){
+            sel2.empty();
+            data = data;
+            var tmp = [];
+            tmp[0] = "<option value="+data.fee_face+" data-type="+data.fee_face_type+" data-pay=fee_face>("+data.tax_type_v+") 面谈访谈费率"+data.fee_face+" ("+data.fee_face_type_v+")</option>";
+            tmp[1] = "<option value="+data.fee_phone+" data-type="+data.fee_phone_type+" data-pay=fee_phone>("+data.tax_type_v+") 电话访谈费率 "+data.fee_phone+" ("+data.fee_phone_type_v+")</option>";
+            tmp[2] = "<option value="+data.fee_road+" data-type="+data.fee_road_type+" data-pay=fee_road>("+data.tax_type_v+") 路演访谈费率 "+data.fee_road+" ("+data.fee_road_type_v+")</option>";
+    
+            for(var i=0;i<3;i++){
+                sel2.append(tmp[i]);
+            }
+        }
+    });
+      
+      sel2.on("change", function(){
+                var tmp = sel2.find("option:selected");
+                fee_type.val(tmp.attr("data-type"));
+                pay_type.val(tmp.attr("data-pay"));
+            });
+
 });
 
 JS;

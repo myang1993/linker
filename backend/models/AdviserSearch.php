@@ -31,7 +31,7 @@ class AdviserSearch extends Adviser
     {
         return [
             [['id', 'source_type', 'fee_phone_type', 'fee_road_type', 'fee_face_type', 'update_time'], 'integer'],
-            [['name_zh', 'name_en', 'mobile_phone', 'tele_phone', 'email', 'wechat', 'linkedin', 'company', 'position', 'describe', 'expertise', 'bank_card_name', 'bank_card_addr', 'bank_card_no', 'remark','province_name','city_name','province','city','trade_name','child_trade_name','trade','child_trade','city_name'], 'safe'],
+            [['name_zh', 'name_en', 'mobile_phone', 'tele_phone', 'email', 'wechat', 'linkedin', 'company', 'position', 'describe', 'expertise', 'bank_card_name', 'bank_card_addr', 'bank_card_no', 'remark','province_name','city_name','province','city','trade_name','child_trade_name','trade','child_trade','city_name','profile'], 'safe'],
             [['fee_phone', 'fee_road', 'fee_face'], 'number'],
         ];
     }
@@ -105,6 +105,7 @@ class AdviserSearch extends Adviser
             ->andFilterWhere(['like', 't_city.name', $this->city_name])
             ->andFilterWhere(['like', 't_trade.name', $this->trade_name])
             ->andFilterWhere(['like', 't_child_trade.name', $this->child_trade_name])
+            ->andFilterWhere(['like', 'profile', $this->profile])
             ->andFilterWhere(['like', 'remark', $this->remark]);
 
         $dataProvider->setSort([
