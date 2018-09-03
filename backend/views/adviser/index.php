@@ -122,12 +122,27 @@ $project = new \backend\models\Project();
             ],
             [
                 'attribute' => 'describe',
+                'contentOptions' => function($data){
+                    $arr = [];
+                    $arr['title'] = $data->describe;
+                    return $arr;
+                }
             ],
             [
                 'attribute' => 'expertise',
+                'contentOptions' => function($data){
+                    $arr = [];
+                    $arr['title'] = $data->expertise;
+                    return $arr;
+                }
             ],
             [
                 'attribute' => 'profile',
+                'contentOptions' => function($data){
+                    $arr = [];
+                    $arr['title'] = $data->profile;
+                    return $arr;
+                }
             ],
             [
                 'label' => Yii::t('app', '省份'),
