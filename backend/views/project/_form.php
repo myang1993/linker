@@ -121,7 +121,7 @@ $customer = new Customer();
             ],
             [
                 'attribute' => 'unit_price',
-                'value' => '('.$model->customer->taxType($model->customer->tax_type).') '.(empty($model->pay_type)?'':$model->customer->payType($model->pay_type)),
+                'value' => (empty($model->pay_type)?'':$model->customer->payType($model->pay_type)),
                 'format' => 'raw',
                 'type' => DetailView::INPUT_SELECT2,
                 'options' => ['id' => 'customer-price'],
@@ -890,9 +890,9 @@ $this->registerJs(
                         console.log(data);
                         data = data;
                         var tmp = [];
-                        tmp[0] = "<option value="+data.fee_face+" data-type="+data.fee_face_type+" data-pay=fee_face>("+data.tax_type_v+") ' . Yii::t('app', 'Face Interview Price') . ' </option>";
-                        tmp[1] = "<option value="+data.fee_phone+" data-type="+data.fee_phone_type+" data-pay=fee_phone>("+data.tax_type_v+") ' . Yii::t('app', 'Telephone Interview Price') . ' </option>";
-                        tmp[2] = "<option value="+data.fee_road+" data-type="+data.fee_road_type+" data-pay=fee_road>("+data.tax_type_v+") ' . Yii::t('app', 'Roadshow Interview Price') . ' </option>";
+                        tmp[0] = "<option value="+data.fee_face+" data-type="+data.fee_face_type+" data-pay=fee_face>' . Yii::t('app', 'Face Interview Price') . ' </option>";
+                        tmp[1] = "<option value="+data.fee_phone+" data-type="+data.fee_phone_type+" data-pay=fee_phone> ' . Yii::t('app', 'Telephone Interview Price') . ' </option>";
+                        tmp[2] = "<option value="+data.fee_road+" data-type="+data.fee_road_type+" data-pay=fee_road> ' . Yii::t('app', 'Roadshow Interview Price') . ' </option>";
 
                         for(var i=0;i<3;i++){
                             ctm_p.append(tmp[i]);
