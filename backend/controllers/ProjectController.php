@@ -156,6 +156,6 @@ class ProjectController extends Controller
             $data = (new Project())->getProjectList($keyword);
             echo json_encode(['status'=>0,'message'=>'success','data'=>$data],JSON_UNESCAPED_UNICODE);
         }
-        Yii::$app->end();
+        exit();
     }
 }
