@@ -113,15 +113,15 @@ $this->params['breadcrumbs'][] = $this->title;
                 ],
                 [
                     'attribute' => 'fee_phone',
-                    'value' => $model->fee_phone . "（" . $model->fee_phone_type == 0 ? '' : $model->priceType($model->fee_phone_type) . "）",
+                    'value' => $model->fee_phone . "（" . ($model->fee_phone_type == 0 ? '' : $model->priceType($model->fee_phone_type)) . "）",
                 ],
                 [
                     'attribute' => 'fee_road',
-                    'value' => $model->fee_road . "（" . $model->fee_road_type == 0 ? '' : $model->priceType($model->fee_road_type) . "）",
+                    'value' => $model->fee_road . "（" . ($model->fee_road_type == 0 ? '' : $model->priceType($model->fee_road_type)) . "）",
                 ],
                 [
                     'attribute' => 'fee_face',
-                    'value' => $model->fee_face . "（" . $model->fee_face_type == 0 ? '' : $model->priceType($model->fee_face_type) . "）",
+                    'value' => $model->fee_face . "（" . ($model->fee_face_type == 0 ? '' : $model->priceType($model->fee_face_type)) . "）",
                 ],
                 'operator'
             ],
