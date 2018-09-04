@@ -256,6 +256,6 @@ class ProjectAdviserController extends Controller
     public function actionAdviser($keyword)
     {
         echo json_encode((new Adviser())->getAdviserByKeyWord(urldecode($keyword)),JSON_UNESCAPED_UNICODE);
-       Yii::$app->end();
+        exit();
     }
 }

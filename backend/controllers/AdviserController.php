@@ -216,6 +216,6 @@ class AdviserController extends Controller
             }
             echo json_encode(['status'=>0,'message'=>'success'],JSON_UNESCAPED_UNICODE);
         }
-        Yii::$app->end();
+        exit();
     }
 }
