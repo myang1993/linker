@@ -96,7 +96,7 @@ nav .container-fluid , footer .container-fluid {
 }
 
 .content.container-fluid {
-	padding: 70px 30px 0;
+	padding: 0;
 }
 
 @media (min-width: 768px) {

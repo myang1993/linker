@@ -8,11 +8,10 @@ use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 
 $this->title = 'Login';
-$this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="site-login" style="text-align: center;">
-    <div class="highlight box" style="width: 400px; margin-top: 100px; display: inline-block;">
-        <h1><?= Html::encode($this->title) ?></h1>
+<div class="site-login">
+    <div class="box">
+        <h3><?= Html::encode($this->title) ?></h3>
 
         <!-- <p>Please fill out the following fields to login</p> -->
 
@@ -27,20 +26,27 @@ $this->params['breadcrumbs'][] = $this->title;
 
                     <?= $form->field($model, 'username', [
                             'options' => [
-                                'style' => 'margin:20px 0 10px 0;'
+                                'class' => 'input_outer'
                             ]
-                        ])->textInput(['autofocus' => true]) ?>
+                        ])->textInput([
+                            'autofocus' => true,
+                            'placeholder' => '请输入账户',
+                            'autocomplete' => 'off'
+                        ])->label(false) ?>
 
                     <?= $form->field($model, 'password', [
                             'options' => [
-                                'style' => 'margin:20px 0 10px 0;'
+                                'class' => 'input_outer'
                             ]
-                        ])->passwordInput() ?>
+                        ])->passwordInput([
+                            'placeholder' => '请输入密码',
+                            'autocomplete' => 'off'
+                        ])->label(false) ?>
 
                     <?= $form->field($model, 'rememberMe')->checkbox() ?>
 
-                    <div class="form-group form-group-block form-group-btn">
-                        <?= Html::submitButton('Login', ['class' => 'btn btn-primary', 'name' => 'login-button']) ?>
+                    <div class="form-group login-button">
+                        <?= Html::submitButton('登录', ['class' => 'btn', 'name' => 'login-button']) ?>
                     </div>
 
                 <?php ActiveForm::end(); ?>
