@@ -170,6 +170,7 @@ a.desc:after {
     border-radius: 50px;
     position: relative;
     border: rgba(255,255,255,0.2) 2px solid !important;
+    text-align: left;
  }
 
  .site-login .input_outer input{
@@ -188,3 +189,22 @@ a.desc:after {
     box-shadow: none;
     border-color: initial;
  }
+ .site-login .input_outer input::-webkit-input-placeholder { /* WebKit browsers */
+    color:    #000;
+}
+ .site-login .input_outer input:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+    color:    #000;
+}
+ .site-login .input_outer input::-moz-placeholder { /* Mozilla Firefox 19+ */
+    color:    #000;
+}
+ .site-login .input_outer input:-ms-input-placeholder { /* Internet Explorer 10+ */
+    color:    #000;
+}
+ .site-login .input_outer .help-block {
+    margin-left: 35px;
+ }
+ .site-login .check_outer {
+    margin-left: 35px;
+    text-align: left;
+}

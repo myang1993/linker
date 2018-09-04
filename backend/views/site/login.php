@@ -31,7 +31,7 @@ $this->title = 'Login';
                         ])->textInput([
                             'autofocus' => true,
                             'placeholder' => '请输入账户',
-                            'autocomplete' => 'off'
+                            'autocomplete' => 'off',
                         ])->label(false) ?>
 
                     <?= $form->field($model, 'password', [
@@ -40,10 +40,14 @@ $this->title = 'Login';
                             ]
                         ])->passwordInput([
                             'placeholder' => '请输入密码',
-                            'autocomplete' => 'off'
+                            'autocomplete' => 'off',
                         ])->label(false) ?>
 
-                    <?= $form->field($model, 'rememberMe')->checkbox() ?>
+                    <?= $form->field($model, 'rememberMe', [
+                        'options' => [
+                                'class' => 'check_outer'
+                            ]
+                    ])->checkbox() ?>
 
                     <div class="form-group login-button">
                         <?= Html::submitButton('登录', ['class' => 'btn', 'name' => 'login-button']) ?>
