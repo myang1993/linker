@@ -3,5 +3,5 @@ YxController.php
 backend/upload/*
 backend/runtime/
 vendor/*
-composer.json
+composer.lock
 /.idea/
