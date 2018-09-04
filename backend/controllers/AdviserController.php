@@ -82,10 +82,10 @@ class AdviserController extends Controller
         $type = $model->priceType();
         $tax_type = $model->taxType();
 
-        $info['fee_face_type_v'] = $type[$info['fee_face_type']];
-        $info['fee_phone_type_v'] = $type[$info['fee_phone_type']];
-        $info['fee_road_type_v'] = $type[$info['fee_road_type']];
-        $info['tax_type_v'] = $tax_type[$info['tax_type']];
+        $info['fee_face_type_v'] = $info['fee_face_type'] == 0 ? $type[1] : $type[$info['fee_face_type']];
+        $info['fee_phone_type_v'] = $info['fee_phone_type'] == 0 ? $type[1] : $type[$info['fee_phone_type']];
+        $info['fee_road_type_v'] = $info['fee_road_type'] == 0 ? $type[1] : $type[$info['fee_road_type']];
+        $info['tax_type_v'] = $info['tax_type'] == 0 ? $tax_type[1] : $tax_type[$info['tax_type']];
         Yii::$app->response->data = $info;
     }
 
@@ -208,13 +208,13 @@ class AdviserController extends Controller
     {
         $queryParams = Yii::$app->request->queryParams;
         if (empty($queryParams['adviser_list']) || !is_array($queryParams['adviser_list']) || empty($queryParams['project_id'])) {
-            echo json_encode(['status'=>-1,'message'=>'请输入搜索信息'],JSON_UNESCAPED_UNICODE);
+            echo json_encode(['status' => -1, 'message' => '请输入搜索信息'], JSON_UNESCAPED_UNICODE);
         } else {
             foreach ($queryParams['adviser_list'] as $adviser_id) {
                 $projectAdviserModel = new ProjectAdviser();
-                $projectAdviserModel->addAdviserProject($adviser_id,$queryParams['project_id']);
+                $projectAdviserModel->addAdviserProject($adviser_id, $queryParams['project_id']);
             }
-            echo json_encode(['status'=>0,'message'=>'success'],JSON_UNESCAPED_UNICODE);
+            echo json_encode(['status' => 0, 'message' => 'success'], JSON_UNESCAPED_UNICODE);
         }
         exit();
     }
