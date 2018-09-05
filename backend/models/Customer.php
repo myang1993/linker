@@ -61,9 +61,9 @@ class Customer extends \yii\db\ActiveRecord
         return [
             'id' => Yii::t('app', '客户ID'),
             'name' => Yii::t('app', '公司名称'),
-            'name_en' => Yii::t('app', '英文名称'),
-            'short_name' => Yii::t('app', '简称'),
-            'address' => Yii::t('app', '地址'),
+            'name_en' => Yii::t('app', '公司英文名称'),
+            'short_name' => Yii::t('app', '公司简称'),
+            'address' => Yii::t('app', '公司地址'),
             'describe' => Yii::t('app', '公司描述'),
             'website' => Yii::t('app', '公司官网'),
             'pay_style' => Yii::t('app', '计费方式'),
