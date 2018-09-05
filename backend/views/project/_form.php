@@ -408,7 +408,7 @@ $customer = new Customer();
                     'label' => Yii::t('app', 'Chinese Name'),
                     'format' => 'raw',
                     'value' => function ($data) {
-                        return Html::a($data->adviser->name_zh, "/adviser/view?id=".$data->id);;
+                        return Html::a($data->adviser->name_zh, "/adviser/view?id=".$data->adviser->id);;
 
                     },
                     'contentOptions' => ['style' => 'overflow:hidden;text-overflow:ellipsis;white-space:inherit'],
