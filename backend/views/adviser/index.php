@@ -40,8 +40,10 @@ $project = new \backend\models\Project();
                 'condensed' => true,
                 'hover' => true,
                 'mode' => DetailView::MODE_EDIT,
-                'container' => ['id' => 'add_project_modal'],
-                
+                'container' => [
+                    'id' => 'add_project_modal',
+
+                ],
                 'attributes' => [
                 
                     [
@@ -79,7 +81,7 @@ $project = new \backend\models\Project();
             ]); ?>
             <div class="has-error text-center" style="font-size: 18px;"><p class="modal_tip help-block help-block-error"></p></div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary modal-save">Save</button>
+                <button type="button" class="btn btn-primary modal-save" id="modal-save">Save</button>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
             </div>
 
@@ -235,12 +237,14 @@ $project = new \backend\models\Project();
                 }
             }
 
-
             //save
-            $(".modal-save").on("click", function(){
+            $(".adviser-index").on("click", "#modal-save", function(){
+                alert(2);
                 var p_id = $("#modal2-project-id").val();
                 //删除空数组
                 store = store.filter(function(n){return n});
+                console.log(store, p_id);
+                return false;
                 $.ajax({
                     url: "/adviser/add-adviser-project",
                     dataType: "json",
@@ -264,7 +268,7 @@ $project = new \backend\models\Project();
             });
 
             //点击checkbox
-            $("#adviser_list").find("table").on("click", function(e){
+            $(".adviser-index").on("click", "#adviser_list table", function(e){
                 var target = e.target;
                 if(target && $(target).attr("type") == "checkbox" ){
                     var v = $(target).val()+"";
@@ -300,7 +304,7 @@ $project = new \backend\models\Project();
             });
 
             //点击分页添加localstorage
-            $(".pagination").on("click", function(){
+            $(".adviser-index").on("click", ".pagination", function(){
                 //支持localStorage
                 if(window.localStorage) {
                     var tmp_ls = window.localStorage ? localStorage.getItem("box_list") : "";
