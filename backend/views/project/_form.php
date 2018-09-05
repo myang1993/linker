@@ -121,7 +121,7 @@ $customer = new Customer();
             ],
             [
                 'attribute' => 'unit_price',
-                'value' => (empty($model->pay_type)?'':$model->customer->payType($model->pay_type)),
+                'value' => (empty($model->pay_type) ? '' : $model->customer->payType($model->pay_type)),
                 'format' => 'raw',
                 'type' => DetailView::INPUT_SELECT2,
                 'options' => ['id' => 'customer-price'],
@@ -408,7 +408,7 @@ $customer = new Customer();
                     'label' => Yii::t('app', 'Chinese Name'),
                     'format' => 'raw',
                     'value' => function ($data) {
-                        return Html::a($data->adviser->name_zh, "/adviser/view?id=".$data->adviser->id);;
+                        return Html::a($data->adviser->name_zh, "/adviser/view?id=" . $data->adviser->id);;
 
                     },
                     'contentOptions' => ['style' => 'overflow:hidden;text-overflow:ellipsis;white-space:inherit'],
@@ -884,25 +884,48 @@ $this->registerJs(
             var ctm_id = $("#project-customer_id");
             var ctm_t = $("#customer-unit_type");
             var cell = $("tr.kv-child-table-row").find(".kv-attribute");
+            var customer_pay_type = $("#project-pay_type").val();        
+            var unit_type = $("#project-unit_type").val();
             function init_ajax(v){
                 $.ajax({
                     url: "/customer/info",
                     dataType: "json",
                     method: "GET",
                     data: "id="+v,
-                    success: function(data){
-                        console.log(data);
+                    success: function(data){                  
                         data = data;
-                        var tmp = [];
-                        tmp[0] = "<option value="+data.fee_face+" data-type="+data.fee_face_type+" data-pay=fee_face>' . Yii::t('app', 'Face Interview Price') . ' </option>";
-                        tmp[1] = "<option value="+data.fee_phone+" data-type="+data.fee_phone_type+" data-pay=fee_phone> ' . Yii::t('app', 'Telephone Interview Price') . ' </option>";
-                        tmp[2] = "<option value="+data.fee_road+" data-type="+data.fee_road_type+" data-pay=fee_road> ' . Yii::t('app', 'Roadshow Interview Price') . ' </option>";
+                        var tmp = [];                       
+                        if (customer_pay_type == "fee_phone") {
+                         tmp[0] = "<option value="+data.fee_phone+" data-type="+data.fee_phone_type+" data-pay=fee_phone selected> ' . Yii::t('app', 'Telephone Interview Price') . ' </option>";
+                        } else {
+                         tmp[0] = "<option value="+data.fee_phone+" data-type="+data.fee_phone_type+" data-pay=fee_phone> ' . Yii::t('app', 'Telephone Interview Price') . ' </option>";
+                         }
+                        if (customer_pay_type == "fee_face") {
+                          tmp[1] = "<option value="+data.fee_face+" data-type="+data.fee_face_type+" data-pay=fee_face selected>' . Yii::t('app', 'Face Interview Price') . ' </option>";   
+                        } else {
+                          tmp[1] = "<option value="+data.fee_face+" data-type="+data.fee_face_type+" data-pay=fee_face>' . Yii::t('app', 'Face Interview Price') . ' </option>";   
+                          }
+                          
+                         if (customer_pay_type == "fee_road") {     
+                       tmp[2] = "<option value="+data.fee_road+" data-type="+data.fee_road_type+" data-pay=fee_road selected> ' . Yii::t('app', 'Roadshow Interview Price') . ' </option>";   
+                         }else {
+                          tmp[2] = "<option value="+data.fee_road+" data-type="+data.fee_road_type+" data-pay=fee_road> ' . Yii::t('app', 'Roadshow Interview Price') . ' </option>";
+                          }   
+                      
 
                         for(var i=0;i<3;i++){
                             ctm_p.append(tmp[i]);
                         }
-
-                        ctm_t.val(data.fee_face_type);
+                     
+                     if(pay_type == "") {
+                     $("#project-pay_type").val("fee_phone");
+                     }
+                     
+                     if (unit_type == "") {
+                     $("#project-unit_type").val(data.fee_phone_type);
+                     }
+                       
+                       
                         if(cell.length == 3){
                             if($(cell[1]).next().attr("class") == "kv-form-attribute"){
                                 $(cell[1]).next().addClass("hide");

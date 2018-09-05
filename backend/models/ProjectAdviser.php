@@ -58,7 +58,7 @@ class ProjectAdviser extends \yii\db\ActiveRecord
             }],
             [['project_id', 'selector_id', 'adviser_id', 'state', 'duration', 'fee', 'fee_type', 'adviser_pay', 'referee_pay', 'bill_out'], 'integer'],
             [['fee_rate'], 'match', 'pattern' => '/^\d+\.{0,1}\d{0,1}$/', 'message' => '{attribute}只能包含小数点后一位'],
-            [['fee_rate'], 'default', 'value' => 0],
+            [['fee_rate'], 'default', 'value' => 1],
             [['selector_id'], 'default', 'value' => 0],
             [['state'], 'default', 'value' => 1],
             [['remark'], 'string', 'max' => 1024],
