@@ -98,6 +98,9 @@ nav .container-fluid , footer .container-fluid {
 .content.container-fluid {
 	padding: 0;
 }
+.content.container-fluid > div{
+	padding: 25px 15px 20px;
+}
 
 @media (min-width: 768px) {
 	.list table.table thead tr td,

@@ -7,7 +7,7 @@ use yii\widgets\Pjax;
 /* @var $searchModel backend\models\CustomerBoffinSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = Yii::t('app', 'Customer Boffins');
+$this->title = Yii::t('app', 'customerBoffins');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="customer-boffin-index list">

@@ -120,6 +120,7 @@ a.desc:after {
 }
 
 .site-login {
+    padding: 0;
     position: absolute;
     width: 100%;
     height: 100%;
@@ -162,6 +163,10 @@ a.desc:after {
     background: #e7a15f;
     color: #fff;
     font-size: 20px;
+}
+.site-login .login-button .btn:focus{
+    outline: 0;
+    box-shadow: none;
 }
 .site-login .input_outer {
     height: 46px;
