@@ -239,12 +239,9 @@ $project = new \backend\models\Project();
 
             //save
             $(".adviser-index").on("click", "#modal-save", function(){
-                alert(2);
                 var p_id = $("#modal2-project-id").val();
                 //删除空数组
                 store = store.filter(function(n){return n});
-                console.log(store, p_id);
-                return false;
                 $.ajax({
                     url: "/adviser/add-adviser-project",
                     dataType: "json",
