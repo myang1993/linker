@@ -48,7 +48,7 @@ class Customer extends \yii\db\ActiveRecord
         return [
             [['time_type', 'tax_type', 'fee_phone_type', 'fee_road_type', 'fee_face_type', 'unit_type'], 'integer'],
             [['fee_phone', 'fee_road', 'fee_face', 'unit_price'], 'number'],
-            [['name', 'describe', 'website', 'remark'], 'string', 'max' => 255],
+            [['name', 'name_en', 'short_name', 'address','describe', 'website', 'remark'], 'string', 'max' => 255],
             [['pay_style'], 'string', 'max' => 1024],
         ];
     }

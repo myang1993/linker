@@ -30,7 +30,10 @@ $this->params['breadcrumbs'][] = $this->title;
                 'value'=> function($data){
                     //超链接
                     return Html::a($data->id, "/customer/update?id=".$data->id);
-                }
+                },
+                'contentOptions' => [
+                    'style' => 'width: 80px;'
+                ]
             ],
             [
                 'attribute'=>'name',
