@@ -27,6 +27,9 @@ use yii\helpers\Url;
         ],
         'attributes' => [
             'name',
+            'name_en',
+            'short_name',
+            'address',
             'describe',
             'website',
             [

@@ -40,6 +40,9 @@ $this->params['breadcrumbs'][] = $this->title;
                     return Html::a($data->name, "/customer/update?id=".$data->id);
                 }
             ],
+            'name_en',
+            'short_name',
+            'address',
             'describe',
             'website',
             [

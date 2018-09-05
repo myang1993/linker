@@ -9,6 +9,9 @@ use Yii;
  *
  * @property int $id 客户ID
  * @property string $name 公司名称
+ * @property string $name_en 英文名称
+ * @property string $short_name 简称
+ * @property string $address 地址
  * @property string $describe 公司描述
  * @property string $website 公司官网
  * @property string $pay_style 计费方式
@@ -58,6 +61,9 @@ class Customer extends \yii\db\ActiveRecord
         return [
             'id' => Yii::t('app', '客户ID'),
             'name' => Yii::t('app', '公司名称'),
+            'name_en' => Yii::t('app', '英文名称'),
+            'short_name' => Yii::t('app', '简称'),
+            'address' => Yii::t('app', '地址'),
             'describe' => Yii::t('app', '公司描述'),
             'website' => Yii::t('app', '公司官网'),
             'pay_style' => Yii::t('app', '计费方式'),
