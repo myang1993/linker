@@ -161,13 +161,18 @@ class ProjectAdviser extends \yii\db\ActiveRecord
      */
     public function addAdviserProject($adviser_id, $project_id)
     {
+        $adviserInfo = (new Adviser())->getInfo($adviser_id,'all');
+        if (!$adviserInfo) {
+            return ;
+        }
         $this->project_id = $project_id;
         $this->adviser_id = $adviser_id;
         $this->date = date('Y-m-d H:i:s');
+        $this->pay_type = 'fee_phone';
+        $this->fee = $adviserInfo->fee_phone;
+        $this->fee_type = $adviserInfo->fee_phone_type;
         if (!$this->save()) {
-            Yii::error(json_encode($this->getErrors(), JSON_UNESCAPED_UNICODE));
-//            print_r($this->fee_rate);
-            var_dump($this->getErrors());
+            Yii::error('批量添加错误:'.json_encode($this->getErrors(), JSON_UNESCAPED_UNICODE));
         }
     }
 

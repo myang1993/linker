@@ -556,12 +556,6 @@ $customer = new Customer();
     ?>
 
     <?php
-    $projectAdviser = new ProjectAdviser();
-    $projectAdviser->project_id = $model->id;
-    $projectAdviser->date = $projectAdviser->date ? date("Y-m-d H:i", $projectAdviser->date) : date('Y-m-d H:i');
-    ?>
-
-    <?php
     //编辑顾问信息
     ?>
     <!-- // Url::toRoute(['adviser/info', 'id' => '']) -->
@@ -696,6 +690,13 @@ $customer = new Customer();
         ]);
         Modal::end();
     } ?>
+
+    <?php
+    $projectAdviser = new ProjectAdviser();
+    $projectAdviser->project_id = $model->id;
+    $projectAdviser->fee_rate = 1;
+    $projectAdviser->date = $projectAdviser->date ? date("Y-m-d H:i", $projectAdviser->date) : date('Y-m-d H:i');
+    ?>
 
     <?php Modal::begin([
         'header' => '<h4 class="modal-title">' . Yii::t('app', 'Add Adviser') . '</h4>',
