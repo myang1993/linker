@@ -30,7 +30,7 @@ $this->params['breadcrumbs'][] = Yii::t('app', '财务');
                 'label' => Yii::t('app', '日期'),
                 'attribute' => 'project_date',
                 'value' => function ($data) {
-                    return date('Y-m-d', $data->project->start_time);
+                    return date('Y-m-d H:i', $data->date);
                 },
             ],
             [

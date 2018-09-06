@@ -49,7 +49,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'describe',
             'website',
             [
-                'attribute'=>'pay_style',
+                'attribute' => 'remark',
                 'contentOptions' => [
                     'style' => 'min-width: 80px;'
                 ]

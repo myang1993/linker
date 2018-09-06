@@ -107,6 +107,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'email',
                 'wechat',
                 'linkedin',
+                'remark',
                 [
                     'attribute' => 'tax_type',
                     'value' => $model->tax_type == 0 ? '' : $model->taxType($model->tax_type),
@@ -152,7 +153,6 @@ $this->params['breadcrumbs'][] = $this->title;
                 'bank_card_no',
                 'bank_card_addr',
                 'bank_card_name',
-                'remark',
                 'pay_remark',
             ],
             'options' => ['class' => 'table table-hover table-noborder']
