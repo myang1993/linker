@@ -42,7 +42,7 @@ class CustomerBoffin extends \yii\db\ActiveRecord
             [['name_zh', 'name_en'], 'string', 'max' => 60],
             [['position'], 'string', 'max' => 255],
             [['email'], 'string', 'max' => 50],
-            [['mobile_phone', 'tele_phone'], 'string', 'max' => 11],
+            [['mobile_phone', 'tele_phone'], 'string', 'max' => 16],
             [['wechat', 'linkedin'], 'string', 'max' => 128],
             [['customer_id'], 'exist', 'skipOnError' => true, 'targetClass' => Customer::className(), 'targetAttribute' => ['customer_id' => 'id']],
         ];
