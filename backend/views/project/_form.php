@@ -918,7 +918,7 @@ $this->registerJs(
                             ctm_p.append(tmp[i]);
                         }
                      
-                     if(pay_type == "") {
+                     if(customer_pay_type == "") {
                      $("#project-pay_type").val("fee_phone");
                      }
                      
