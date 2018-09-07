@@ -47,8 +47,31 @@ use yii\helpers\Url;
             [
                 'columns' => [
                     [
+                        'attribute' => 'fee_phone',
+                        'labelColOptions' => ['style' => "width: 20%;text-align: right;vertical-align: middle;"],
+                    ],
+                    [
+                        'attribute' => 'fee_phone_type',
+                        'value' => $model->fee_phone_type > 0 ? $model->unitType($model->fee_phone_type) : null,
+                        'type' => DetailView::INPUT_SELECT2,
+                        'labelColOptions' => ['hidden' => true],
+                        'widgetOptions' => [
+                            'data' => $model->unitType(),
+                            'pluginOptions' => ['allowClear' => true, 'width' => '100%'],
+                            'options' => ['placeholder' => '-- ' . Yii::t('app', 'Please select')],
+                        ],
+                        'valueColOptions' => ['style' => 'width:35%'],
+
+                    ]
+                ],
+                'visible' => Yii::$app->user->identity->username == 'admin' ? 1 : 0
+
+            ],
+            [
+                'columns' => [
+                    [
                         'attribute' => 'fee_face',
-                        'labelColOptions' => ['style' => "width: 25%;text-align: right;"],
+                        'labelColOptions' => ['style' => "width: 20%;text-align: right;"],
 
                     ],
                     [
@@ -62,41 +85,18 @@ use yii\helpers\Url;
                             'pluginOptions' => ['allowClear' => true, 'width' => '100%'],
                             'options' => ['placeholder' => '-- ' . Yii::t('app', 'Please select')],
                         ],
-                        'visible' => 'false',
-                        'valueColOptions' => ['style' => 'width:35%']
+                        'valueColOptions' => ['style' => 'width:35%'],
 
                     ]
-                ]
-
-            ],
-
-            [
-                'columns' => [
-                    [
-                        'attribute' => 'fee_phone',
-                        'labelColOptions' => ['style' => "width: 25%;text-align: right;"],
-                    ],
-                    [
-                        'attribute' => 'fee_phone_type',
-                        'value' => $model->fee_phone_type > 0 ? $model->unitType($model->fee_phone_type) : null,
-                        'type' => DetailView::INPUT_SELECT2,
-                        'labelColOptions' => ['hidden' => true],
-                        'widgetOptions' => [
-                            'data' => $model->unitType(),
-                            'pluginOptions' => ['allowClear' => true, 'width' => '100%'],
-                            'options' => ['placeholder' => '-- ' . Yii::t('app', 'Please select')],
-                        ],
-                        'valueColOptions' => ['style' => 'width:35%']
-
-                    ]
-                ]
+                ],
+                'visible' => Yii::$app->user->identity->username == 'admin' ? 1 : 0
 
             ],
             [
                 'columns' => [
                     [
                         'attribute' => 'fee_road',
-                        'labelColOptions' => ['style' => "width: 25%;text-align: right;"],
+                        'labelColOptions' => ['style' => "width: 20%;text-align: right;"],
                     ],
                     [
                         'attribute' => 'fee_road_type',
@@ -108,9 +108,10 @@ use yii\helpers\Url;
                             'pluginOptions' => ['allowClear' => true, 'width' => '100%'],
                             'options' => ['placeholder' => '-- ' . Yii::t('app', 'Please select')],
                         ],
-                        'valueColOptions' => ['style' => 'width:35%']
+                        'valueColOptions' => ['style' => 'width:35%'],
                     ]
-                ]
+                ],
+                'visible' => Yii::$app->user->identity->username == 'admin' ? 1 : 0
             ],
             'remark',
         ],
