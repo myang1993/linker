@@ -792,7 +792,26 @@ $customer = new Customer();
                 'attribute' => 'remark',
                 'options' => ['id' => 'modal2-remark'],
             ],
+						[
+                'attribute' => 'date',
+                'type' => DetailView::INPUT_DATETIME,
+                'options' => ['id' => 'modal2-date'],
+                'widgetOptions' => [
+                    'type' => DateTimePicker::TYPE_COMPONENT_PREPEND,
+                    'language' => 'zh-CN',
+                    'id' => 'pay_date',
+                    'convertFormat' => true,
+                    'pluginOptions' => [
+                        'autoclose' => true,
+                        'format' => 'yyyy-MM-dd HH:mm',
+                        'todayHighlight' => true,
+                        'id' => 'pay_date',
+                    ]
+                ],
+                'valueColOptions' => ['style' => 'width:60%']
+            ],
             'duration',
+            'hour',
             [
                 'attribute' => 'fee_rate',
                 'format' => 'raw',
@@ -819,24 +838,6 @@ $customer = new Customer();
                 'attribute' => 'pay_type',
                 'options' => ['id' => 'modal2-pay_type'],
                 'type' => DetailView::INPUT_HIDDEN,
-            ],
-            [
-                'attribute' => 'date',
-                'type' => DetailView::INPUT_DATETIME,
-                'options' => ['id' => 'modal2-date'],
-                'widgetOptions' => [
-                    'type' => DateTimePicker::TYPE_COMPONENT_PREPEND,
-                    'language' => 'zh-CN',
-                    'id' => 'pay_date',
-                    'convertFormat' => true,
-                    'pluginOptions' => [
-                        'autoclose' => true,
-                        'format' => 'yyyy-MM-dd HH:mm',
-                        'todayHighlight' => true,
-                        'id' => 'pay_date',
-                    ]
-                ],
-                'valueColOptions' => ['style' => 'width:60%']
             ],
             [
                 'attribute' => 'pay_remark',
