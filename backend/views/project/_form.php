@@ -173,8 +173,8 @@ $customer = new Customer();
                 ],
                 'valueColOptions' => ['style' => 'width:60%']
             ],
-            'second',
-            'fee_time',
+//            'second',
+//            'fee_time',
         ],
     ]); ?>
     <?php if (!$model->id) {
