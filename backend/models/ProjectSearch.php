@@ -65,7 +65,7 @@ class ProjectSearch extends Project
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
             'pagination' => [
-                'pagesize' => 200,
+                'pagesize' => 20,
             ]
         ]);
 
