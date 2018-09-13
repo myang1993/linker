@@ -173,8 +173,8 @@ $customer = new Customer();
                 ],
                 'valueColOptions' => ['style' => 'width:60%']
             ],
-            'second',
-            'fee_time',
+//            'second',
+//            'fee_time',
         ],
     ]); ?>
     <?php if (!$model->id) {
@@ -628,6 +628,27 @@ $customer = new Customer();
                     'attribute' => 'remark',
                     'value' => $projectAdviser->adviser->remark,
                 ],
+                [
+                    'attribute' => 'pay_type',
+                    'options' => ['id' => 'pay_type' . $projectAdviser->id],
+                    'type' => DetailView::INPUT_HIDDEN,
+                ],
+                [
+                    'attribute' => 'date',
+                    'type' => DetailView::INPUT_DATETIME,
+                    'options' => ['id' => 'date' . $index],
+                    'widgetOptions' => [
+                        'type' => DateTimePicker::TYPE_COMPONENT_PREPEND,
+                        'language' => 'zh-CN',
+                        'convertFormat' => true,
+                        'pluginOptions' => [
+                            'autoclose' => true,
+                            'format' => 'yyyy-MM-dd HH:mm',
+                            'todayHighlight' => true,
+                        ]
+                    ],
+                    'valueColOptions' => ['style' => 'width:60%']
+                ],
                 'duration',
                 'hour',
                 [
@@ -653,27 +674,7 @@ $customer = new Customer();
                     'options' => ['id' => 'fee_type' . $projectAdviser->id],
                     'type' => DetailView::INPUT_HIDDEN,
                 ],
-                [
-                    'attribute' => 'pay_type',
-                    'options' => ['id' => 'pay_type' . $projectAdviser->id],
-                    'type' => DetailView::INPUT_HIDDEN,
-                ],
-                [
-                    'attribute' => 'date',
-                    'type' => DetailView::INPUT_DATETIME,
-                    'options' => ['id' => 'date' . $index],
-                    'widgetOptions' => [
-                        'type' => DateTimePicker::TYPE_COMPONENT_PREPEND,
-                        'language' => 'zh-CN',
-                        'convertFormat' => true,
-                        'pluginOptions' => [
-                            'autoclose' => true,
-                            'format' => 'yyyy-MM-dd HH:mm',
-                            'todayHighlight' => true,
-                        ]
-                    ],
-                    'valueColOptions' => ['style' => 'width:60%']
-                ],
+                
                 [
                     'attribute' => 'pay_remark',
                     'value' => $projectAdviser->adviser->pay_remark,
@@ -791,7 +792,26 @@ $customer = new Customer();
                 'attribute' => 'remark',
                 'options' => ['id' => 'modal2-remark'],
             ],
+						[
+                'attribute' => 'date',
+                'type' => DetailView::INPUT_DATETIME,
+                'options' => ['id' => 'modal2-date'],
+                'widgetOptions' => [
+                    'type' => DateTimePicker::TYPE_COMPONENT_PREPEND,
+                    'language' => 'zh-CN',
+                    'id' => 'pay_date',
+                    'convertFormat' => true,
+                    'pluginOptions' => [
+                        'autoclose' => true,
+                        'format' => 'yyyy-MM-dd HH:mm',
+                        'todayHighlight' => true,
+                        'id' => 'pay_date',
+                    ]
+                ],
+                'valueColOptions' => ['style' => 'width:60%']
+            ],
             'duration',
+            'hour',
             [
                 'attribute' => 'fee_rate',
                 'format' => 'raw',
@@ -818,24 +838,6 @@ $customer = new Customer();
                 'attribute' => 'pay_type',
                 'options' => ['id' => 'modal2-pay_type'],
                 'type' => DetailView::INPUT_HIDDEN,
-            ],
-            [
-                'attribute' => 'date',
-                'type' => DetailView::INPUT_DATETIME,
-                'options' => ['id' => 'modal2-date'],
-                'widgetOptions' => [
-                    'type' => DateTimePicker::TYPE_COMPONENT_PREPEND,
-                    'language' => 'zh-CN',
-                    'id' => 'pay_date',
-                    'convertFormat' => true,
-                    'pluginOptions' => [
-                        'autoclose' => true,
-                        'format' => 'yyyy-MM-dd HH:mm',
-                        'todayHighlight' => true,
-                        'id' => 'pay_date',
-                    ]
-                ],
-                'valueColOptions' => ['style' => 'width:60%']
             ],
             [
                 'attribute' => 'pay_remark',
