@@ -155,7 +155,7 @@ $this->params['breadcrumbs'][] = Yii::t('app', '财务');
                 'attribute' => 'adviser_fee',
                 'value' => function ($model) {
                     $tmp = $model->adviser->tax_type == 0 ? 1 : $model->adviser->tax_type;
-                    return $model->adviser->taxType($model->adviser->tax_type) . ' ' . $model->fee . ' ' . $model->adviser->priceType($model->fee_type);
+                    return $model->adviser->taxType($tmp) . ' ' . $model->fee . ' ' . $model->adviser->priceType($model->fee_type);
                 },
             ],
             [
