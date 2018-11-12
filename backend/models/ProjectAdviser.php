@@ -190,4 +190,15 @@ class ProjectAdviser extends \yii\db\ActiveRecord
         return $data;
 
     }
+
+    public function addSPace($number)
+    {
+        $number = str_replace(' ', '', $number);
+        $len = strlen($number);
+        $space = [];
+        for ($i = 0; $i < $len; $i = $i + 4) {
+            $space[] = substr($number, $i, 4);
+        }
+        return implode(' ', $space);
+    }
 }

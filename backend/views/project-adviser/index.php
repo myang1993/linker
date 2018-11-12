@@ -172,8 +172,9 @@ $this->params['breadcrumbs'][] = Yii::t('app', '财务');
             [
                 'label' => Yii::t('app', '专家银行账号'),
                 'attribute' => 'adviser_bank_card',
+                'format' => 'raw',
                 'value' => function ($model) {
-                    return $model->adviser->bank_card_no;
+                    return $model->addSpace($model->adviser->bank_card_no);
                 },
             ],
             [

@@ -58,14 +58,13 @@ class ProjectSearch extends Project
      */
     public function search($params)
     {
-        $query = Project::find()->joinWith('customer as c', true, 'LEFT JOIN')
-            ->joinWith('advisers as a', true,'LEFT JOIN')->joinWith('boffins as b', true,'LEFT JOIN');
+        $query = Project::find()->joinWith('customer as c', true, 'LEFT JOIN');
         // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
             'pagination' => [
-                'pagesize' => 200,
+                'pagesize' => 20,
             ]
         ]);
 
@@ -78,6 +77,34 @@ class ProjectSearch extends Project
         }
 
         // grid filtering conditions
+
+        if (!empty($this->adviser_name)) {
+            $project_id_arr = ProjectAdviser::find()->select('project_adviser.adviser_id,project_adviser.project_id,a.name_zh')->andFilterWhere(['like', 'a.name_zh', $this->adviser_name])->innerJoinWith('adviser as a', true)->asArray()->all();
+            $project_id_arr = array_unique(array_column($project_id_arr, 'project_id'));
+            if (empty($project_id_arr)) {
+                $project_adviser_id = [0];
+            } else {
+                $project_adviser_id = $project_id_arr;
+            }
+        }
+
+        if (!empty($this->boffin_name)) {
+            $project_id_arr = ProjectBoffin::find()->select('project_boffin.boffin_id,project_boffin.project_id,a.name_zh')->andFilterWhere(['like', 'a.name_zh', $this->boffin_name])->innerJoinWith('boffin as a', true)->asArray()->all();
+            $project_id_arr = array_unique(array_column($project_id_arr, 'project_id'));
+            if (empty($project_id_arr)) {
+                $project_boffin_id = [0];
+            } else {
+                $project_boffin_id = $project_id_arr;
+            }
+        }
+
+        if (isset($project_adviser_id) && isset($project_boffin_id)) {
+            $query->andFilterWhere(['in', 'project.id', array_intersect($project_adviser_id, $project_boffin_id)]);
+        } else if (isset($project_adviser_id)) {
+            $query->andFilterWhere(['in', 'project.id', $project_adviser_id]);
+        } else if (isset($project_boffin_id)) {
+            $query->andFilterWhere(['in', 'project.id', $project_boffin_id]);
+        }
         $query->andFilterWhere([
             'project.id' => $this->id,
             'project.customer_id' => $this->customer_id,
@@ -85,7 +112,6 @@ class ProjectSearch extends Project
             'project.second' => $this->second,
             'project.date' => $this->date,
             'project.fee_time' => $this->fee_time,
-            'a.name_zh' => $this->adviser_name,
         ]);
 
         $query->andFilterWhere(['like', 'project.name', $this->name]);
@@ -93,8 +119,6 @@ class ProjectSearch extends Project
         $query->andFilterWhere(['<', 'project.status', 10]);
         $query->andFilterWhere(['like', 'c.name', $this->customer_name]);
         $query->andFilterWhere(['like', 'participants', $this->participants]);
-        $query->andFilterWhere(['like', 'a.name_zh', $this->adviser_name]);
-        $query->andFilterWhere(['like', 'b.name_zh', $this->boffin_name]);
 
         if (!empty($this->start)) {
             if (!empty($this->start[0])) {
