@@ -107,8 +107,8 @@ $this->params['breadcrumbs'][] = Yii::t('app', '财务');
                 'label' => Yii::t('app', '客户单价'),
                 'attribute' => 'unit_price',
                 'value' => function ($model) {
-                    $tmp = $model->project->unit_type == 0 ? 1: model->project->unit_type;
-                    return $model->project->unit_price . '（' . $model->project->unitType($tmp) . '）';
+                    $tmp = $model->project->unit_type == 0 ? 1: $model->project->unit_type;
+                    return $model->project->unit_price . '（' . $model->project->unitType($model->project->unit_type) . '）';
                 },
             ],
             [
