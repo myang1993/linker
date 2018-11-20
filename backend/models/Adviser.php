@@ -64,13 +64,13 @@ class Adviser extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['source_type', 'fee_phone_type', 'fee_road_type', 'fee_face_type', 'update_time', 'mobile_phone', 'tax_type', 'province'], 'integer'],
+            [['source_type', 'fee_phone_type', 'fee_road_type', 'fee_face_type', 'update_time', 'tax_type', 'province'], 'integer'],
             [['mobile_phone'], 'required'],
-            ['mobile_phone', 'match', 'pattern' => '/^1[0-9]{10}$/', 'message' => '{attribute}必须为1开头的11位纯数字'],
-            ['mobile_phone', 'unique'],
+//            ['mobile_phone', 'match', 'pattern' => '/^1[0-9]{10}$/', 'message' => '{attribute}必须为1开头的11位纯数字'],
+//            ['mobile_phone', 'unique'],
             [['referee_fee', 'fee_phone', 'fee_road', 'fee_face'], 'number'],
             [['name_zh', 'name_en', 'referee'], 'string', 'max' => 128],
-            [['tele_phone'], 'string', 'max' => 11],
+            [['tele_phone'], 'string', 'max' => 64],
             [['email', 'wechat', 'bank_card_name'], 'string', 'max' => 64],
             [['linkedin', 'company', 'position', 'expertise', 'bank_card_addr', 'remark', 'pay_remark'], 'string', 'max' => 255],
             [['describe', 'profile'], 'string', 'max' => 1024],
