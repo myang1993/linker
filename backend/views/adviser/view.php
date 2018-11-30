@@ -131,6 +131,21 @@ $this->params['breadcrumbs'][] = $this->title;
 
         <div class="hr"></div>
 
+        <p>
+            <?= Html::a('Create Adviser Comments', ['/adviser/create_comments'], ['class' => 'btn btn-success']) ?>
+        </p>
+
+        <?= \yii\grid\GridView::widget([
+            'dataProvider' => $dataProvider,
+            'columns' => [
+                'comments',
+                'comment_uid',
+                'create_time',
+            ],
+        ]); ?>
+
+        <div class="hr"></div>
+
         <h3 class="title"><?= Yii::t('app', 'Career') ?></h3>
         <?= DetailView::widget([
             'model' => $model,

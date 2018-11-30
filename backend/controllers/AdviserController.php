@@ -2,6 +2,8 @@
 
 namespace backend\controllers;
 
+use app\models\AdviserComments;
+use app\models\AdviserCommentsSearch;
 use backend\models\ProjectAdviser;
 use Yii;
 use backend\models\Adviser;
@@ -114,8 +116,12 @@ class AdviserController extends Controller
      */
     public function actionView($id)
     {
+        $searchModel = new AdviserCommentsSearch();
+        $dataProvider = $searchModel->search(['AdviserCommentsSearch'=>['adviser_id'=>$id]]);
+
         return $this->render('view', [
             'model' => $this->findModel($id),
+            'dataProvider' => $dataProvider,
         ]);
     }
 
