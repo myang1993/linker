@@ -2,6 +2,7 @@
 
 namespace app\models;
 
+use backend\models\Admin;
 use Yii;
 
 /**
@@ -32,6 +33,7 @@ class AdviserComments extends \yii\db\ActiveRecord
             [['comment_uid','adviser_id'], 'integer'],
             [['create_time'], 'safe'],
             [['comments'], 'string', 'max' => 1024],
+            [['comments', 'comment_uid'], 'required'],
         ];
     }
 
@@ -56,5 +58,13 @@ class AdviserComments extends \yii\db\ActiveRecord
     public static function find()
     {
         return new AdviserCommentsQuery(get_called_class());
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getAdmin()
+    {
+        return $this->hasOne(Admin::className(), ['id' => 'comment_uid']);
     }
 }

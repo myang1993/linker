@@ -65,9 +65,8 @@ class AdviserCommentsController extends Controller
     public function actionCreate()
     {
         $model = new AdviserComments();
-
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['/adviser/view', 'id' => $model->adviser_id]);
         }
 
         return $this->render('create', [
