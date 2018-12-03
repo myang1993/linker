@@ -108,7 +108,6 @@ $this->params['breadcrumbs'][] = $this->title;
                     'email',
                     'wechat',
                     'linkedin',
-                    'remark',
                     [
                         'attribute' => 'tax_type',
                         'value' => $model->tax_type == 0 ? '' : $model->taxType($model->tax_type),

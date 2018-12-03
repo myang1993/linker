@@ -189,6 +189,9 @@ $project = new \backend\models\Project();
             ],
             [
                 'attribute' => 'remark',
+                'value' => function ($data) {
+                    return \app\models\AdviserComments::getNewComments($data->id) ? \app\models\AdviserComments::getNewComments($data->id)->comments : '';
+                },
             ],
             [
                 'attribute' => 'times',

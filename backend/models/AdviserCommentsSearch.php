@@ -65,6 +65,8 @@ class AdviserCommentsSearch extends AdviserComments
             'create_time' => $this->create_time,
         ]);
 
+        $query->orderBy(['id' => SORT_DESC]);
+
         $query->andFilterWhere(['like', 'comments', $this->comments]);
 //                echo $query->createCommand()->getRawSql();exit;
 

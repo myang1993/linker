@@ -98,7 +98,6 @@ class AdviserController extends Controller
     public function actionIndex()
     {
         $searchModel = new AdviserSearch();
-//        print_r(Yii::$app->request->queryParams);exit;
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
 

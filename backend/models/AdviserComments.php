@@ -67,4 +67,10 @@ class AdviserComments extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Admin::className(), ['id' => 'comment_uid']);
     }
+
+    public static function getNewComments($adviser_id)
+    {
+        $ret = static::find()->where(['adviser_id' => $adviser_id])->orderBy(['id' => SORT_DESC])->one();
+        return $ret;
+    }
 }

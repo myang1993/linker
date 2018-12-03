@@ -117,7 +117,6 @@ $trade = new Trade();
     <?= $form->field($model, 'wechat')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'linkedin')->textInput(['maxlength' => true]) ?>
-    <?= $form->field($model, 'remark')->textInput(['maxlength' => true]) ?>
     <?= $form->field($model, 'tax_type')->hiddenInput()->dropDownList(
         $model->taxType(),
         [

@@ -2,6 +2,7 @@
 
 namespace backend\models;
 
+use app\models\AdviserComments;
 use Yii;
 
 /**
@@ -236,6 +237,15 @@ class Adviser extends \yii\db\ActiveRecord
     }
 
     /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getComment()
+    {
+        return $this->hasMany(AdviserComments::className(), ['id' => 'adviser_id'])
+            ->orderBy(['id' => SORT_DESC])->limit(1);
+    }
+
+    /**
      * 获取顾问列表
      *
      * @return array
@@ -256,7 +266,7 @@ class Adviser extends \yii\db\ActiveRecord
      *
      * @return string
      */
-    public function getInfo($id,$type ='')
+    public function getInfo($id, $type ='')
     {
         $model = Adviser::findOne($id);
         if (empty($type)) {
