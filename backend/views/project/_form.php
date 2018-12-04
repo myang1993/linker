@@ -674,7 +674,7 @@ $customer = new Customer();
                     'options' => ['id' => 'fee_type' . $projectAdviser->id],
                     'type' => DetailView::INPUT_HIDDEN,
                 ],
-                
+
                 [
                     'attribute' => 'pay_remark',
                     'value' => $projectAdviser->adviser->pay_remark,
@@ -792,7 +792,7 @@ $customer = new Customer();
                 'attribute' => 'remark',
                 'options' => ['id' => 'modal2-remark'],
             ],
-						[
+            [
                 'attribute' => 'date',
                 'type' => DetailView::INPUT_DATETIME,
                 'options' => ['id' => 'modal2-date'],

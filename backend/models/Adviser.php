@@ -3,6 +3,7 @@
 namespace backend\models;
 
 use app\models\AdviserComments;
+use app\models\AdviserResume;
 use Yii;
 
 /**
@@ -241,8 +242,14 @@ class Adviser extends \yii\db\ActiveRecord
      */
     public function getComment()
     {
-        return $this->hasMany(AdviserComments::className(), ['id' => 'adviser_id'])
+        return $this->hasMany(AdviserComments::className(), ['adviser_id' => 'id'])
             ->orderBy(['id' => SORT_DESC])->limit(1);
+    }
+
+    public function getAdviserResume()
+    {
+        return $this->hasMany(AdviserResume::className(), ['adviser_id' => 'id'])
+            ->orderBy(['id' => SORT_DESC]);
     }
 
     /**

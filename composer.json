@@ -28,8 +28,10 @@
         "kartik-v/yii2-widget-depdrop": "@dev",
         "kartik-v/yii2-widget-fileinput": "@dev",
         "kartik-v/yii2-widget-datetimepicker": "*",
+        "kartik-v/yii2-widget-datepicker": "@dev",
         "kartik-v/yii2-grid": "@dev",
         "phpoffice/phpexcel": "^1.8",
+        yesyes
         "chenkby/yii2-region": "dev-master"
     },
     "require-dev": {

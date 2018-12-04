@@ -217,6 +217,104 @@ $this->params['breadcrumbs'][] = $this->title;
             ]) ?>
 
             <div class="hr"></div>
+            <?= \yii\grid\GridView::widget([
+                'dataProvider' => $dataAdviserResume,
+                'columns' => [
+                    'company',
+                    'position',
+                    'begin_time',
+                    'end_time',
+                    'create_time',
+//                    ['class' => 'yii\grid\ActionColumn'],
+                ],
+            ]); ?>
+
+            <?php
+            $adviserResume = new \app\models\AdviserResume();
+            $adviserResume->adviser_id = $model->id;
+            $adviserResume->create_time = date('Y-m-d H:i:s');
+            ?>
+
+            <?php Modal::begin([
+                'header' => '<h4 class="modal-title" style="1000px">' . '添加简历' . '</h4>',
+                'toggleButton' => ['label' => '<i class="glyphicon glyphicon-plus"></i>' . '添加简历', 'class' => 'btn btn-primary'],
+                'options' => ['style' => 'height:1000px']
+
+            ]); ?>
+            <?= DetailView::widget([
+                'model' => $adviserResume,
+                'condensed' => true,
+                'hover' => true,
+                'mode' => DetailView::MODE_EDIT,
+                'container' => ['id' => 'kv-demo'],
+                'panel' => [
+                    'heading' => '',
+                    'type' => DetailView::TYPE_PRIMARY,
+                ],
+                'attributes' => [
+                    [
+                        'label' => '专家',
+                        'value' => $model->name_zh,
+                        'options' => ['id' => 'modal1-boffin-name_en'],
+                        'displayOnly' => true,
+                    ],
+                    [
+                        'attribute' => 'adviser_id',
+                        'value' => $model->id,
+                        'type' => DetailView::INPUT_HIDDEN,
+                    ],
+                    [
+                        'attribute' => 'create_time',
+                        'type' => DetailView::INPUT_HIDDEN,
+                    ],
+                    [
+                        'attribute' => 'company',
+                        'type' => DetailView::INPUT_TEXT,
+                    ],
+                    [
+                        'attribute' => 'position',
+                        'type' => DetailView::INPUT_TEXT,
+                    ],
+                    [
+                        'attribute' => 'begin_time',
+                        'type' => DetailView::INPUT_DATE,
+                        'widgetOptions' => [
+                            'type' => \kartik\date\DatePicker::TYPE_COMPONENT_PREPEND,
+                            'language' => 'zh-CN',
+                            'id' => 'pay_date',
+                            'convertFormat' => true,
+                            'pluginOptions' => [
+                                'autoclose' => true,
+                                'format' => 'yyyy-MM-dd',
+                                'todayHighlight' => true,
+                            ]
+                        ],
+                        'valueColOptions' => ['style' => 'width:60%']
+                    ],
+                    [
+                        'attribute' => 'end_time',
+                        'type' => DetailView::INPUT_DATE,
+                        'widgetOptions' => [
+                            'type' => \kartik\date\DatePicker::TYPE_COMPONENT_PREPEND,
+                            'language' => 'zh-CN',
+                            'id' => 'pay_date',
+                            'convertFormat' => true,
+                            'pluginOptions' => [
+                                'autoclose' => true,
+                                'format' => 'yyyy-MM-dd',
+                                'todayHighlight' => true,
+                            ]
+                        ],
+                        'valueColOptions' => ['style' => 'width:60%']
+                    ],
+                ],
+                'formOptions' => [
+                    'action' => \yii\helpers\Url::toRoute(['adviser-resume/create']),
+                ],
+            ]); ?>
+            <?php Modal::end(); ?>
+
+            <div class="hr"></div>
 
             <h3 class="title"><?= Yii::t('app', 'Bank card Information') ?></h3>
             <?= DetailView::widget([
