@@ -3,3 +3,4 @@ YxController.php
 backend/upload/*
 backend/runtime/
 /.idea/
+/vendor
