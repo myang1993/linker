@@ -113,9 +113,9 @@ class ProjectBoffinController extends Controller
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionDelete($id)
+    public function actionDelete($id, $project_id)
     {
-        $post = Yii::$app->request->post();
+        $post = Yii::$app->request->queryParams;
 
         $this->findModel($post['id'])->delete();
 
@@ -129,7 +129,7 @@ class ProjectBoffinController extends Controller
             return;
         }
 
-        return $this->redirect(['project/update', 'id' => $id]);
+        return $this->redirect(['project/update', 'id' => $project_id]);
 
         // $this->findModel($id)->delete();
 

@@ -21,6 +21,7 @@ use backend\models\Adviser;
 /* @var $model backend\models\Project */
 /* @var $form yii\widgets\ActiveForm */
 /* @var $dataProvider yii\data\ActiveDataProvider */
+/* @var $projectBoffinProvider yii\data\ActiveDataProvider */
 
 $admin = new \backend\models\Admin();
 $model->start_time = ($model->start_time > 0) ? date("Y-m-d H:i", $model->start_time) : date('Y-m-d H:i');
@@ -182,115 +183,78 @@ $customer = new Customer();
     } ?>
     <div class="hr"></div>
     <h3 class="title">研究员</h3>
-    <?php foreach ($model->projectBoffins as $index => $boffin) {
-        echo DetailView::widget([
-            'options' => [
-                'class' => 'form-inline form',
+    <?= \yii\grid\GridView::widget([
+        'dataProvider' => $projectBoffinProvider,
+        'columns' => [
+            'id',
+            [
+                'label' => '研究员ID',
+                'format' => 'raw',
+                'value' => 'boffin_id'
             ],
-            'model' => $boffin,
-            'condensed' => true,
-            'hover' => true,
-            'mode' => DetailView::MODE_VIEW,
-            'panel' => [
-                'heading' => Yii::t('app', 'projectBoffins') . '：' . $boffin->boffin->name_zh,
-                'type' => DetailView::TYPE_INFO,
+            [
+                'label' => '研究员名称',
+                'format' => 'raw',
+                'value' => function ($data) {
+                    return $data->boffin->name_zh;
+                },
             ],
-            'attributes' => [
-                [
-                    'attribute' => 'boffin_id',
-                    'type' => DetailView::INPUT_HIDDEN,
-                ],
-                [
-                    'label' => Yii::t('app', 'customerBoffins'),
-                    'attribute' => 'boffin_id',
-                    'value' => $boffin->boffin->name_zh,
-                    'format' => 'raw',
-                    'options' => ['id' => 'boffin-id' . $index],
-                    'type' => DetailView::INPUT_SELECT2,
-                    'widgetOptions' => [
-                        'data' => $customerBoffin->getCustomerBoffins($model->customer_id),
-                        'options' => ['placeholder' => '-- ' . Yii::t('app', 'Please select')],
-                        'pluginOptions' => ['allowClear' => true, 'width' => '100%'],
-                        'pluginEvents' => [
-                            'change' => 'function() {
-                                var boffin_id = $("#projectboffin-boffin_id");
-                                var parent = $(this).parents("tr").siblings();
-                                var boffin_name_en  = parent.eq(1).find(".kv-form-attribute");
-                                var boffin_position = parent.eq(2).find(".kv-form-attribute");
-                                var boffin_email    = parent.eq(3).find(".kv-form-attribute");
-                                var boffin_mobile   = parent.eq(4).find(".kv-form-attribute");
-                                var boffin_tele     = parent.eq(5).find(".kv-form-attribute");
-                                var boffin_wechat   = parent.eq(6).find(".kv-form-attribute");
-                                var boffin_link     = parent.eq(7).find(".kv-form-attribute");
-                                var val = $(this).val();
-                                if(val){
-                                    boffin_id.val(val);
-                                    $.ajax({
-                                        url: "/customer-boffin/info",
-                                        dataType: "json",
-                                        method: "GET",
-                                        data: "id="+val,
-                                        success: function(data){
-                                            boffin_name_en.text(data.name_en);
-                                            boffin_position.text(data.position);
-                                            boffin_email.text(data.email);
-                                            boffin_mobile.text(data.mobile_phone);
-                                            boffin_tele.text(data.tele_phone);
-                                            boffin_wechat.text(data.wechat);
-                                            boffin_link.text(data.linkedin);
-                                        }
-                                    });
-                                }
-                            }',
-                        ],
-                    ],
-                    'valueColOptions' => ['style' => 'width:60%']
-                ],
-                [
-                    'label' => Yii::t('app', 'English Name'),
-                    'value' => $boffin->boffin->name_en,
-                    'displayOnly' => true,
-                ],
-                [
-                    'label' => Yii::t('app', 'Position'),
-                    'value' => $boffin->boffin->position,
-                    'displayOnly' => true,
-                ],
-                [
-                    'label' => Yii::t('app', 'E-mail'),
-                    'value' => $boffin->boffin->email,
-                    'displayOnly' => true,
-                ],
-                [
-                    'label' => Yii::t('app', 'Mobile Phone'),
-                    'value' => $boffin->boffin->mobile_phone,
-                    'displayOnly' => true,
-                ],
-                [
-                    'label' => Yii::t('app', 'Tele Phone'),
-                    'value' => $boffin->boffin->tele_phone,
-                    'displayOnly' => true,
-                ],
-                [
-                    'label' => Yii::t('app', 'Wechat'),
-                    'value' => $boffin->boffin->wechat,
-                    'displayOnly' => true,
-                ],
-                [
-                    'label' => Yii::t('app', 'Linkedin'),
-                    'value' => $boffin->boffin->linkedin,
-                    'displayOnly' => true,
+            [
+                'label' => Yii::t('app', 'English Name'),
+                'value' => function ($data) {
+                    return $data->boffin->name_en;
+                },
+            ],
+            [
+                'label' => Yii::t('app', 'Position'),
+                'value' => function ($data) {
+                    return $data->boffin->position;
+                },
+            ],
+            [
+                'label' => Yii::t('app', 'E-mail'),
+                'value' => function ($data) {
+                    return $data->boffin->email;
+                },
+            ],
+            [
+                'label' => Yii::t('app', 'Mobile Phone'),
+                'value' => function ($data) {
+                    return $data->boffin->mobile_phone;
+                },
+            ],
+            [
+                'label' => Yii::t('app', 'Tele Phone'),
+                'value' => function ($data) {
+                    return $data->boffin->tele_phone;
+                },
+            ],
+            [
+                'label' => Yii::t('app', 'Wechat'),
+                'value' => function ($data) {
+                    return $data->boffin->wechat;
+                },
+            ],
+            [
+                'label' => Yii::t('app', 'Linkedin'),
+                'value' => function ($data) {
+                    return $data->boffin->linkedin;
+                },
+            ],
+            [
+                'contentOptions' => ['style' => 'overflow:hidden;text-overflow:ellipsis;white-space:inherit'],
+                'headerOptions' => ['width' => '2%'],
+                'class' => 'yii\grid\ActionColumn',
+                'template' => '{delete}',
+                'buttons' => [
+                    'delete' => function ($url, $data, $key) {
+                        $url = Url::toRoute(['project-boffin/delete', 'id' => $data->id, 'project_id' => $data->project_id]);
+                        return Html::a('<span class="glyphicon glyphicon-trash"></span>', $url, ['data-confirm' => 'Are you sure you want to delete this item?', 'title' => 'Delete', 'data-method' => 'post']);
+                    },
                 ],
             ],
-            'deleteOptions' => [
-                'params' => ['id' => $boffin->id, 'delete' => true],
-                'url' => Url::toRoute(['project-boffin/delete', 'id' => $model->id]),
-            ],
-            'formOptions' => [
-                'action' => Url::toRoute(['project-boffin/update', 'id' => $model->id]),
-            ],
-        ]);
-    } ?>
+        ],
+    ]); ?>
 
     <?php
     $projectBoffin = new ProjectBoffin();
@@ -618,7 +582,7 @@ $customer = new Customer();
                     'options' => ['id' => 'state' . $index],
                     'type' => DetailView::INPUT_SELECT2,
                     'widgetOptions' => [
-                        'data' => $projectAdviser->stateType(),
+                        'data' => $projectAdviser->stateType($projectAdviser->state, 2),
                         'options' => ['placeholder' => '-- ' . Yii::t('app', 'Please select')],
                         'pluginOptions' => ['allowClear' => true, 'width' => '100%'],
                     ],

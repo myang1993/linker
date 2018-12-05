@@ -99,9 +99,8 @@ class ProjectAdviser extends \yii\db\ActiveRecord
 
     /**
      * 状态类型
-     *
-     * @param integer $type
-     * @return void
+     * @param int $rate
+     * @return array|mixed
      */
     public function feeRate($rate = 0)
     {
@@ -111,14 +110,19 @@ class ProjectAdviser extends \yii\db\ActiveRecord
 
     /**
      * 状态类型
-     *
-     * @param integer $type
-     * @return void
+     * @param int $type
+     * @param int $mode
+     * @return array|mixed
      */
-    public function stateType($type = 0)
+    public function stateType($type = 0, $mode = 1)
     {
-        $typeList = [1 => 'not contacted', 2 => 'contacted', 3 => 'recommended', 3 => 'arranged', 4 => 'rescheduled', 5 => 'completed', 6 => 'deleted'];
-        return $retVal = $type ? $typeList[$type] : $typeList;
+        $typeList = [1 => 'not contacted', 2 => 'contacted', 3 => 'recommended', 4 => 'arranged', 5 => 'rescheduled', 6 => 'completed', 7 => 'deleted'];
+        if ($mode == 2) {
+            $lenght = count($typeList) - $type;
+            return array_slice($typeList, $type, $lenght, true);
+        } else {
+            return $retVal = $type ? $typeList[$type] : $typeList;
+        }
     }
 
     /**

@@ -4,6 +4,7 @@ namespace backend\controllers;
 
 use backend\models\AdviserSearch;
 use backend\models\ProjectAdviserSearch;
+use backend\models\ProjectBoffinSearch;
 use phpDocumentor\Reflection\DocBlock\Tags\Var_;
 use Yii;
 use backend\models\Customer;
@@ -68,6 +69,7 @@ class ProjectController extends Controller
      */
     public function actionView($id)
     {
+
         return $this->render('view', [
             'model' => $this->findModel($id),
         ]);
@@ -104,6 +106,8 @@ class ProjectController extends Controller
 
         $searchModel = new ProjectAdviserSearch();
         $dataProvider = $searchModel->updateSearch($id);
+        $projectBoffinSearch = new ProjectBoffinSearch();
+        $projectBoffinProvider = $projectBoffinSearch->search(['ProjectBoffinSearch' => ['project_id' => $id]]);
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['project/update', 'id' => $model->id]);
         }
@@ -111,6 +115,7 @@ class ProjectController extends Controller
         return $this->render('update', [
             'model' => $model,
             'dataProvider' => $dataProvider,
+            'projectBoffinProvider' => $projectBoffinProvider,
         ]);
     }
 
