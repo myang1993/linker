@@ -4,3 +4,4 @@ backend/upload/*
 backend/runtime/
 /.idea/
 /vendor
+composer.lock
