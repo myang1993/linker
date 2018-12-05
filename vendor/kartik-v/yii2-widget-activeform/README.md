@@ -123,7 +123,7 @@ echo $form->field($model, 'amount_paid', [
 echo $form->field($model, 'phone', [
     'addon' => [
         'prepend' => [
-            'content' => '<i class="glyphicon glyphicon-phone"></i>'
+            'content' => '<i class="fas fa-phone"></i>'
         ]
     ]
 ]);
@@ -150,4 +150,4 @@ echo $form->field($model, 'phone', [
 
 ## License
 
-**yii2-widget-activeform** is released under the BSD 3-Clause License. See the bundled `LICENSE.md` for details.
+**yii2-widget-activeform** is released under the BSD-3-Clause License. See the bundled `LICENSE.md` for details.

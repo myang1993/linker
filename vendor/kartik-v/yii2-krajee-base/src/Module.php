@@ -4,36 +4,33 @@
  * @package   yii2-krajee-base
  * @author    Kartik Visweswaran <kartikv2@gmail.com>
  * @copyright Copyright &copy; Kartik Visweswaran, Krajee.com, 2014 - 2018
- * @version   1.9.2
+ * @version   2.0.4
  */
 
 namespace kartik\base;
+
+use ReflectionException;
+use yii\base\InvalidConfigException;
+use yii\base\Module as YiiModule;
 
 /**
  * Base module class for Krajee extensions
  *
  * @author Kartik Visweswaran <kartikv2@gmail.com>
- * @since 1.9.2
  */
-class Module extends \yii\base\Module
+class Module extends YiiModule implements BootstrapInterface
 {
     use TranslationTrait;
-
-    /**
-     * @var array the the internalization configuration for this widget
-     */
-    public $i18n = [];
-
-    /**
-     * @var string translation message file category name for i18n
-     */
-    protected $_msgCat = '';
+    use BootstrapTrait;
 
     /**
      * @inheritdoc
+     * @throws InvalidConfigException
+     * @throws ReflectionException
      */
     public function init()
     {
+        $this->initBsVersion();
         parent::init();
         $this->initI18N();
     }

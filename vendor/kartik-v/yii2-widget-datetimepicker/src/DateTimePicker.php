@@ -4,7 +4,7 @@
  * @copyright Copyright &copy; Kartik Visweswaran, Krajee.com, 2014 - 2018
  * @package yii2-widgets
  * @subpackage yii2-widget-datetimepicker
- * @version 1.4.5
+ * @version 1.4.8
  */
 
 namespace kartik\datetime;
@@ -154,13 +154,24 @@ class DateTimePicker extends InputWidget
                 "Invalid value for the property 'type'. Must be an integer between 1 and 5."
             );
         }
+
         if ($this->autoDefaultTimezone && empty($this->pluginOptions['timezone']) && !empty(Yii::$app->getTimeZone())) {
             $this->pluginOptions['timezone'] = Yii::$app->getTimeZone();
         }
         $isBs4 = $this->isBs4();
+        if ($this->type == self::TYPE_INLINE) {
+            $this->pluginOptions['linkField'] = $this->options['id'];
+            if (!empty($this->pluginOptions['format'])) {
+                $this->pluginOptions['linkFormat'] = $this->pluginOptions['format'];
+            }
+        }
         $this->pluginOptions = array_replace_recursive([
             'icontype' => $isBs4 ? 'fas' : 'glyphicon',
-            'fontAwesome' => $isBs4 ? true : false,
+            'fontAwesome' => $isBs4,
+            'icons' => [
+                'leftArrow' => $isBs4 ? 'fa-arrow-left' : 'glyphicon-arrow-left',
+                'rightArrow' => $isBs4 ? 'fa-arrow-right' : 'glyphicon-arrow-right',
+            ],
         ], $this->pluginOptions);
         $this->renderDateTimePicker();
     }
@@ -176,7 +187,7 @@ class DateTimePicker extends InputWidget
         $this->initIcon('remove', 'remove', 'times');
         $s = DIRECTORY_SEPARATOR;
         $this->initI18N(__DIR__);
-        $this->setLanguage('bootstrap-datetimepicker.', __DIR__ . "{$s}assets{$s}", null, '.min.js');
+        $this->setLanguage('bootstrap-datetimepicker.', __DIR__ . "{$s}assets{$s}", null, '.js');
         $this->parseDateFormat('datetime');
         if (empty($this->_container['id'])) {
             $this->_container['id'] = $this->options['id'] . '-datetime';
@@ -203,15 +214,9 @@ class DateTimePicker extends InputWidget
         }
         $view = $this->getView();
         if (!empty($this->_langFile)) {
-            DateTimePickerAsset::register($view)->js[] = $this->_langFile;
+            DateTimePickerAsset::registerBundle($view, $this->bsVersion)->js[] = $this->_langFile;
         } else {
-            DateTimePickerAsset::register($view);
-        }
-        if ($this->type == self::TYPE_INLINE) {
-            $this->pluginOptions['linkField'] = $this->options['id'];
-            if (!empty($this->pluginOptions['format'])) {
-                $this->pluginOptions['linkFormat'] = $this->pluginOptions['format'];
-            }
+            DateTimePickerAsset::registerBundle($view, $this->bsVersion);
         }
         if ($this->type == self::TYPE_INPUT) {
             $this->registerPlugin($this->pluginName);
@@ -244,11 +249,11 @@ class DateTimePicker extends InputWidget
     protected function renderInput()
     {
         if ($this->type == self::TYPE_INLINE) {
-            if (empty($this->options['readonly'])) {
+            if (!isset($this->options['readonly'])) {
                 $this->options['readonly'] = true;
             }
-            if (empty($this->options['class'])) {
-                $this->options['class'] = 'form-control input-sm text-center';
+            if (!isset($this->options['class'])) {
+                $this->options['class'] = 'form-control text-center';
             }
         } else {
             Html::addCssClass($this->options, 'form-control');
