@@ -22,6 +22,11 @@ $this->params['breadcrumbs'][] = $this->title;
                     'class' => 'glyphicon glyphicon-pencil pull-right',
                     'style' => 'margin-left:50px;'
                 ]) ?>
+                <?= Html::a('参与的项目', '/project/index?ProjectSearch[adviser_name]=' . $this->title, [
+                    'class' => 'btn btn-primary add_button pull-right',
+                    'style' => 'margin-left:50px;',
+                    'target' => '_blank;'
+                ]) ?>
                 <?php Modal::begin([
                     'header' => '<h4 class="modal-title text-center"><strong>选择项目</strong></h4>',
                     'id' => 'add-advisers',
