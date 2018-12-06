@@ -320,5 +320,5 @@ $('#file').change(function(){
 });
 
 JS;
-$this->registerJs($jsqq);
+$this->registerJs($js);
 ?>
