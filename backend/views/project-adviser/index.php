@@ -76,11 +76,16 @@ $this->params['breadcrumbs'][] = Yii::t('app', '财务');
                 },
             ],
             [
+                'class' => 'kartik\grid\EditableColumn',
                 'label' => Yii::t('app', '收客户费用'),
                 'attribute' => 'customer_fee',
-                'value' => function ($model) {
-                    return $model->project->unit_price * $model->hour * $model->fee_rate;
-                },
+                'value' => 'customer_fee',
+                'editableOptions' => function ($model, $key, $index) {
+                    return [
+                        'asPopover' => false,
+                        'inputType' => \kartik\editable\Editable::INPUT_TEXT,
+                    ];
+                }
             ],
             [
                 'label' => Yii::t('app', '专家姓名'),

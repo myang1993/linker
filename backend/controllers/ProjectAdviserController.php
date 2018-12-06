@@ -54,45 +54,19 @@ class ProjectAdviserController extends Controller
         $searchModel = new ProjectAdviserSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         if (Yii::$app->request->post('hasEditable')) {
-            // instantiate your book model for saving
             $id = Yii::$app->request->post('editableKey');
             $model = $this->findModel($id);
 
-            // store a default json response as desired by editable
-            $out = Json::encode(['output' => '', 'message' => '保存中...']);
+            $out = \yii\helpers\Json::encode(['output' => '', 'message' => '保存中...']);
 
-            // fetch the first entry in posted data (there should only be one entry
-            // anyway in this array for an editable submission)
-            // - $posted is the posted data for Book without any indexes
-            // - $post is the converted array for single model validation
             $posted = current($_POST['ProjectAdviser']);
             $post = ['ProjectAdviser' => $posted];
 
-            // load model like any single model validation
             if ($model->load($post)) {
-                // can save model or do something before saving model
                 $model->save();
-
-                // custom output to return to be displayed as the editable grid cell
-                // data. Normally this is empty - whereby whatever value is edited by
-                // in the input by user is updated automatically.
                 $output = '';
-
-                // specific use case where you need to validate a specific
-                // editable column posted when you have more than one
-                // EditableColumn in the grid view. We evaluate here a
-                // check to see if buy_amount was posted for the Book model
-                // if (isset($posted['buy_amount'])) {
-                // $output = Yii::$app->formatter->asDecimal($model->buy_amount, 2);
-                // }
-
-                // similarly you can check if the name attribute was posted as well
-                // if (isset($posted['name'])) {
-                // $output = ''; // process as you need
-                // }
-                $out = Json::encode(['output' => $output, 'message' => '保存成功']);
+                $out = \yii\helpers\Json::encode(['output' => $output, 'message' => '保存成功']);
             }
-            // return ajax json encoded response and exit
             echo $out;
             return;
         }
@@ -145,11 +119,11 @@ class ProjectAdviserController extends Controller
         $model = $this->findModel($post['id']);
 
         if ($model->load(Yii::$app->request->post())) {
-            if (isset($post['state']) && $post['state'] == 5) {
+            if (isset($post['state']) && $post['state'] == 6) {
                 $adviser = $model->adviser;
                 $adviser->setAttribute('times', $adviser->times + 1);
                 $adviser->save(false);
-                $model->customer_fee = $model->hour * $model->project->unit_price;
+                $model->customer_fee = $model->hour * $model->project->customer->$post['pay_type'];
             }
             if ($model->save()) {
                 return $this->redirect(['project/update', 'id' => $id]);
