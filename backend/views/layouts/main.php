@@ -39,13 +39,22 @@ AppAsset::register($this);
         ],
     ]);
 
-    $menuItems = [
-        ['label' => Yii::t('app', 'Home'), 'url' => ['/site/index']],
-    ];
-
     if (Yii::$app->user->isGuest) {
+        $menuItems = [
+            ['label' => Yii::t('app', 'Home'), 'url' => ['/site/index']],
+        ];
         $menuItems[] = ['label' => Yii::t('app', 'Login'), 'url' => ['/site/login']];
+    } elseif (Yii::$app->user->identity->updated_at <= Yii::$app->user->identity->created_at){
+        $menuItems[] = ['label' => '修改密码', 'url' => ['/site/update-pass']];
+        $menuItems[] = '<li>'
+            . Html::beginForm(['/site/logout'], 'post')
+            . Html::submitButton(Yii::t('app', 'Logout') . '(' . Yii::$app->user->identity->username . ')', ['class' => 'btn btn-link logout'])
+            . Html::endForm()
+            . '</li>';
     } else {
+        $menuItems = [
+            ['label' => Yii::t('app', 'Home'), 'url' => ['/site/index']],
+        ];
         if (Yii::$app->user->identity->username == 'admin') {
             $menuItems[] = ['label' => Yii::t('app', 'Create'), 'url' => ['/site/create']];
         }
@@ -61,14 +70,16 @@ AppAsset::register($this);
             . Html::submitButton(Yii::t('app', 'Logout') . '(' . Yii::$app->user->identity->username . ')', ['class' => 'btn btn-link logout'])
             . Html::endForm()
             . '</li>';
+        $menuItems[] = ['label' => '个人信息', 'url' => ['/site/profile']];
+        $menuItems[] = ['label' => '修改密码', 'url' => ['/site/update-pass']];
+        $menuItems[] = [
+            'label' => Yii::t('app', 'Language'),
+            'items' => [
+                ['label' => '中文', 'url' => ['/site/language', 'lang' => 'zh_CN']],
+                ['label' => 'English', 'url' => ['/site/language', 'lang' => 'en_US']],
+            ]
+        ];
     }
-    $menuItems[] = [
-        'label' => Yii::t('app', 'Language'),
-        'items' => [
-            ['label' => '中文', 'url' => ['/site/language', 'lang' => 'zh_CN']],
-            ['label' => 'English', 'url' => ['/site/language', 'lang' => 'en_US']],
-        ]
-    ];
     echo Nav::widget([
         'encodeLabels' => false,
         'options' => ['class' => 'navbar-nav navbar-left'],

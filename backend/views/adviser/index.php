@@ -91,7 +91,7 @@ $project = new \backend\models\Project();
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
+//        'filterModel' => $searchModel,
         'options' => ['id' => 'adviser_list'],
         'columns' => [
             [

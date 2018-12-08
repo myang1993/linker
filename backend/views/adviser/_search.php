@@ -51,9 +51,18 @@ $trade = new Trade();
             'prompt' => '--请选择子行业--',
         ]
     ) ?>
+    <?= $form->field($model, 'name_zh')->textInput() ?>
+    <?= $form->field($model, 'company')->textInput() ?>
+    <?= $form->field($model, 'position')->textInput() ?>
+    <?= $form->field($model, 'mobile_phone')->textInput() ?>
+    <?= $form->field($model, 'describe')->textInput() ?>
 
     <div class="form-group" style="vertical-align: top;">
-        <?= Html::submitButton(Yii::t('app', 'Search'), ['class' => 'btn btn-primary']) ?>
+        <?= Html::submitButton(Yii::t('app', 'Search'), ['class' => 'btn btn-primary search1']) ?>
+    </div>
+    <div class="form-group" style="vertical-align: top;">
+        <input type="hidden" name="mode" id="mode" value="1">
+        <?= Html::submitButton('模糊搜索', ['class' => 'btn btn-primary search2']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>
@@ -119,6 +128,15 @@ $this->registerJs(
                 addContent("trade", trade, child_trade, "trade/list", "typeid");
             }
             init();
+            
+            $(".search1").click(function(){
+                $("#mode").val(2);
+                $(this).submit();
+            });
+            $(".search2").click(function(){
+                $("#mode").val(1);
+                $(this).submit();
+            });
         });'
 );
 ?>

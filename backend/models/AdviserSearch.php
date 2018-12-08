@@ -16,6 +16,7 @@ class AdviserSearch extends Adviser
     public $city_name;
     public $trade_name;
     public $child_trade_name;
+    public $mode; //1.模糊匹配
     /**
      * {@inheritdoc}
      */
@@ -30,9 +31,9 @@ class AdviserSearch extends Adviser
     public function rules()
     {
         return [
-            [['id', 'source_type', 'fee_phone_type', 'fee_road_type', 'fee_face_type', 'update_time'], 'integer'],
-            [['name_zh', 'name_en', 'mobile_phone', 'tele_phone', 'email', 'wechat', 'linkedin', 'company', 'position', 'describe', 'expertise', 'bank_card_name', 'bank_card_addr', 'bank_card_no', 'remark','province_name','city_name','province','city','trade_name','child_trade_name','trade','child_trade','city_name','profile'], 'safe'],
-            [['fee_phone', 'fee_road', 'fee_face'], 'number'],
+            [['id', 'source_type', 'fee_phone_type', 'fee_road_type', 'fee_face_type', 'update_time','mode'], 'integer'],
+            [['name_zh', 'name_en', 'mobile_phone', 'tele_phone', 'email', 'wechat', 'linkedin', 'company', 'position', 'describe', 'expertise', 'bank_card_name', 'bank_card_addr', 'bank_card_no', 'remark','province_name','city_name','province','city','trade_name','child_trade_name','trade','child_trade','city_name','profile','mode'], 'safe'],
+            [['fee_phone', 'fee_road', 'fee_face','mode'], 'number'],
         ];
     }
 
@@ -87,26 +88,49 @@ class AdviserSearch extends Adviser
             'child_trade'=>$this->child_trade,
         ]);
 
-        $query->andFilterWhere(['like', 'name_zh', $this->name_zh])
-            ->andFilterWhere(['like', 'name_en', $this->name_en])
-            ->andFilterWhere(['like', 'mobile_phone', $this->mobile_phone])
-            ->andFilterWhere(['like', 'tele_phone', $this->tele_phone])
-            ->andFilterWhere(['like', 'email', $this->email])
-            ->andFilterWhere(['like', 'wechat', $this->wechat])
-            ->andFilterWhere(['like', 'linkedin', $this->linkedin])
-            ->andFilterWhere(['like', 'company', $this->company])
-            ->andFilterWhere(['like', 'position', $this->position])
-            ->andFilterWhere(['like', 'describe', $this->describe])
-            ->andFilterWhere(['like', 'expertise', $this->expertise])
-            ->andFilterWhere(['like', 'bank_card_name', $this->bank_card_name])
-            ->andFilterWhere(['like', 'bank_card_addr', $this->bank_card_addr])
-            ->andFilterWhere(['like', 'bank_card_no', $this->bank_card_no])
-            ->andFilterWhere(['like', 't_province.name', $this->province_name])
-            ->andFilterWhere(['like', 't_city.name', $this->city_name])
-            ->andFilterWhere(['like', 't_trade.name', $this->trade_name])
-            ->andFilterWhere(['like', 't_child_trade.name', $this->child_trade_name])
-            ->andFilterWhere(['like', 'profile', $this->profile])
-            ->andFilterWhere(['like', 'remark', $this->remark]);
+        if (isset($params['mode']) && $params['mode'] == 1) {
+            $query->orFilterWhere(['like', 'name_zh', $this->name_zh])
+                ->orFilterWhere(['like', 'name_en', $this->name_en])
+                ->orFilterWhere(['like', 'mobile_phone', $this->mobile_phone])
+                ->orFilterWhere(['like', 'tele_phone', $this->tele_phone])
+                ->orFilterWhere(['like', 'email', $this->email])
+                ->orFilterWhere(['like', 'wechat', $this->wechat])
+                ->orFilterWhere(['like', 'linkedin', $this->linkedin])
+                ->orFilterWhere(['like', 'company', $this->company])
+                ->orFilterWhere(['like', 'position', $this->position])
+                ->orFilterWhere(['like', 'describe', $this->describe])
+                ->orFilterWhere(['like', 'expertise', $this->expertise])
+                ->orFilterWhere(['like', 'bank_card_name', $this->bank_card_name])
+                ->orFilterWhere(['like', 'bank_card_addr', $this->bank_card_addr])
+                ->orFilterWhere(['like', 'bank_card_no', $this->bank_card_no])
+                ->orFilterWhere(['like', 't_province.name', $this->province_name])
+                ->orFilterWhere(['like', 't_city.name', $this->city_name])
+                ->orFilterWhere(['like', 't_trade.name', $this->trade_name])
+                ->orFilterWhere(['like', 't_child_trade.name', $this->child_trade_name])
+                ->orFilterWhere(['like', 'profile', $this->profile])
+                ->orFilterWhere(['like', 'remark', $this->remark]);
+        } else {
+            $query->andFilterWhere(['like', 'name_zh', $this->name_zh])
+                ->andFilterWhere(['like', 'name_en', $this->name_en])
+                ->andFilterWhere(['like', 'mobile_phone', $this->mobile_phone])
+                ->andFilterWhere(['like', 'tele_phone', $this->tele_phone])
+                ->andFilterWhere(['like', 'email', $this->email])
+                ->andFilterWhere(['like', 'wechat', $this->wechat])
+                ->andFilterWhere(['like', 'linkedin', $this->linkedin])
+                ->andFilterWhere(['like', 'company', $this->company])
+                ->andFilterWhere(['like', 'position', $this->position])
+                ->andFilterWhere(['like', 'describe', $this->describe])
+                ->andFilterWhere(['like', 'expertise', $this->expertise])
+                ->andFilterWhere(['like', 'bank_card_name', $this->bank_card_name])
+                ->andFilterWhere(['like', 'bank_card_addr', $this->bank_card_addr])
+                ->andFilterWhere(['like', 'bank_card_no', $this->bank_card_no])
+                ->andFilterWhere(['like', 't_province.name', $this->province_name])
+                ->andFilterWhere(['like', 't_city.name', $this->city_name])
+                ->andFilterWhere(['like', 't_trade.name', $this->trade_name])
+                ->andFilterWhere(['like', 't_child_trade.name', $this->child_trade_name])
+                ->andFilterWhere(['like', 'profile', $this->profile])
+                ->andFilterWhere(['like', 'remark', $this->remark]);
+        }
 
         $dataProvider->setSort([
             'attributes' => [

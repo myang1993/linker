@@ -89,6 +89,8 @@ class SiteController extends Controller
                 Yii::$app->session->setFlash('success', Yii::t('app', 'New password saved.'));
 
                 return $this->goHome();
+            } elseif (Yii::$app->user->identity->updated_at <= Yii::$app->user->identity->created_at) {
+                $this->redirect(['site/update-pass']);
             }
 
             return $this->render('index', [
@@ -116,7 +118,7 @@ class SiteController extends Controller
             if (Yii::$app->user->identity->updated_at > Yii::$app->user->identity->created_at) {
                 return $this->goBack();
             } else {
-                return 1;
+                $this->redirect(['site/update-pass']);
             }
         } else {
             $model->password = '';
@@ -199,5 +201,45 @@ class SiteController extends Controller
         } else {
             return 0;
         }
+    }
+
+    /**
+     * @return string|\yii\web\Response
+     */
+    public function actionUpdatePass()
+    {
+        if (!Yii::$app->user->isGuest) {
+            $model = Yii::$app->user->identity;
+            $reset = new ResetPasswordForm();
+
+            if ($reset->load(Yii::$app->request->post()) && $reset->validate() && $reset->resetPassword()) {
+                Yii::$app->session->setFlash('success', Yii::t('app', 'New password saved.'));
+
+                return $this->goHome();
+            }
+
+            return $this->render('update_pass', [
+                'model' => $model,
+                'reset' => $reset,
+            ]);
+        }
+
+        $this->redirect(['site/login']);
+    }
+
+    /**
+     * 个人信息
+     * @return string
+     */
+    public function actionProfile()
+    {
+        if (!Yii::$app->user->isGuest) {
+            $model = Yii::$app->user->identity;
+            return $this->render('profile', [
+                'model' => $model,
+            ]);
+        }
+
+        $this->redirect(['site/login']);
     }
 }
