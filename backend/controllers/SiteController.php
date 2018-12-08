@@ -113,7 +113,11 @@ class SiteController extends Controller
 
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            return $this->goBack();
+            if (Yii::$app->user->identity->updated_at > Yii::$app->user->identity->created_at) {
+                return $this->goBack();
+            } else {
+                return 1;
+            }
         } else {
             $model->password = '';
 
@@ -185,4 +189,15 @@ class SiteController extends Controller
     //         'username' => $username,
     //     ]);
     // }
+
+    public function actionFirstLogin() {
+        if (Yii::$app->user->isGuest) {
+            return 2;//还未登录
+        }
+        if(Yii::$app->user->identity->updated_at > Yii::$app->user->identity->created_at) {
+            return 1;
+        } else {
+            return 0;
+        }
+    }
 }

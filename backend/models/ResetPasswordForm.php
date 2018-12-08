@@ -111,6 +111,7 @@ class ResetPasswordForm extends Model
     public function resetPassword()
     {
         $this->admin->setPassword($this->newpassword);
+        $this->admin->updated_at = time();
 
         return $this->admin->save(false);
     }
