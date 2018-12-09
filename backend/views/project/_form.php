@@ -183,78 +183,81 @@ $customer = new Customer();
     } ?>
     <div class="hr"></div>
     <h3 class="title">研究员</h3>
-    <?= \yii\grid\GridView::widget([
-        'dataProvider' => $projectBoffinProvider,
-        'columns' => [
-            'id',
-            [
-                'label' => '研究员ID',
-                'format' => 'raw',
-                'value' => 'boffin_id'
-            ],
-            [
-                'label' => '研究员名称',
-                'format' => 'raw',
-                'value' => function ($data) {
-                    return $data->boffin->name_zh;
-                },
-            ],
-            [
-                'label' => Yii::t('app', 'English Name'),
-                'value' => function ($data) {
-                    return $data->boffin->name_en;
-                },
-            ],
-            [
-                'label' => Yii::t('app', 'Position'),
-                'value' => function ($data) {
-                    return $data->boffin->position;
-                },
-            ],
-            [
-                'label' => Yii::t('app', 'E-mail'),
-                'value' => function ($data) {
-                    return $data->boffin->email;
-                },
-            ],
-            [
-                'label' => Yii::t('app', 'Mobile Phone'),
-                'value' => function ($data) {
-                    return $data->boffin->mobile_phone;
-                },
-            ],
-            [
-                'label' => Yii::t('app', 'Tele Phone'),
-                'value' => function ($data) {
-                    return $data->boffin->tele_phone;
-                },
-            ],
-            [
-                'label' => Yii::t('app', 'Wechat'),
-                'value' => function ($data) {
-                    return $data->boffin->wechat;
-                },
-            ],
-            [
-                'label' => Yii::t('app', 'Linkedin'),
-                'value' => function ($data) {
-                    return $data->boffin->linkedin;
-                },
-            ],
-            [
-                'contentOptions' => ['style' => 'overflow:hidden;text-overflow:ellipsis;white-space:inherit'],
-                'headerOptions' => ['width' => '2%'],
-                'class' => 'yii\grid\ActionColumn',
-                'template' => '{delete}',
-                'buttons' => [
-                    'delete' => function ($url, $data, $key) {
-                        $url = Url::toRoute(['project-boffin/delete', 'id' => $data->id, 'project_id' => $data->project_id]);
-                        return Html::a('<span class="glyphicon glyphicon-trash"></span>', $url, ['data-confirm' => 'Are you sure you want to delete this item?', 'title' => 'Delete', 'data-method' => 'post']);
+     <?php
+    if (Yii::$app->controller->action->id == 'update') {
+        echo \yii\grid\GridView::widget([
+            'dataProvider' => $projectBoffinProvider,
+            'columns' => [
+                'id',
+                [
+                    'label' => '研究员ID',
+                    'format' => 'raw',
+                    'value' => 'boffin_id'
+                ],
+                [
+                    'label' => '研究员名称',
+                    'format' => 'raw',
+                    'value' => function ($data) {
+                        return $data->boffin->name_zh;
                     },
                 ],
+                [
+                    'label' => Yii::t('app', 'English Name'),
+                    'value' => function ($data) {
+                        return $data->boffin->name_en;
+                    },
+                ],
+                [
+                    'label' => Yii::t('app', 'Position'),
+                    'value' => function ($data) {
+                        return $data->boffin->position;
+                    },
+                ],
+                [
+                    'label' => Yii::t('app', 'E-mail'),
+                    'value' => function ($data) {
+                        return $data->boffin->email;
+                    },
+                ],
+                [
+                    'label' => Yii::t('app', 'Mobile Phone'),
+                    'value' => function ($data) {
+                        return $data->boffin->mobile_phone;
+                    },
+                ],
+                [
+                    'label' => Yii::t('app', 'Tele Phone'),
+                    'value' => function ($data) {
+                        return $data->boffin->tele_phone;
+                    },
+                ],
+                [
+                    'label' => Yii::t('app', 'Wechat'),
+                    'value' => function ($data) {
+                        return $data->boffin->wechat;
+                    },
+                ],
+                [
+                    'label' => Yii::t('app', 'Linkedin'),
+                    'value' => function ($data) {
+                        return $data->boffin->linkedin;
+                    },
+                ],
+                [
+                    'contentOptions' => ['style' => 'overflow:hidden;text-overflow:ellipsis;white-space:inherit'],
+                    'headerOptions' => ['width' => '2%'],
+                    'class' => 'yii\grid\ActionColumn',
+                    'template' => '{delete}',
+                    'buttons' => [
+                        'delete' => function ($url, $data, $key) {
+                            $url = Url::toRoute(['project-boffin/delete', 'id' => $data->id, 'project_id' => $data->project_id]);
+                            return Html::a('<span class="glyphicon glyphicon-trash"></span>', $url, ['data-confirm' => 'Are you sure you want to delete this item?', 'title' => 'Delete', 'data-method' => 'post']);
+                        },
+                    ],
+                ],
             ],
-        ],
-    ]); ?>
+        ]);
+    }?>
 
     <?php
     $projectBoffin = new ProjectBoffin();
@@ -356,6 +359,12 @@ $customer = new Customer();
             'style' => 'float:right',
         ]);
         ?>
+        <?php
+        echo Html::a('<i class="glyphicon glyphicon-envelope"></i>发送邮件', "/project/send?customer_id=" . $model->customer_id, [
+            'class' => 'btn btn btn-primary',
+            'style' => 'float:right',
+        ]);
+        ?>
     </h3>
     <?php
     if (Yii::$app->controller->action->id == 'update') {
@@ -372,7 +381,7 @@ $customer = new Customer();
                     'label' => Yii::t('app', 'Chinese Name'),
                     'format' => 'raw',
                     'value' => function ($data) {
-                        return Html::a($data->adviser->name_zh, "/adviser/view?id=" . $data->adviser->id);;
+                        return Html::a($data->adviser->name_zh, "/adviser/view?id=" . $data->adviser->id);
 
                     },
                     'contentOptions' => ['style' => 'overflow:hidden;text-overflow:ellipsis;white-space:inherit'],

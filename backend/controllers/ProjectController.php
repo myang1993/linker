@@ -2,7 +2,9 @@
 
 namespace backend\controllers;
 
+use app\models\EmailLog;
 use backend\models\AdviserSearch;
+use backend\models\CustomerBoffin;
 use backend\models\ProjectAdviserSearch;
 use backend\models\ProjectBoffinSearch;
 use phpDocumentor\Reflection\DocBlock\Tags\Var_;
@@ -163,4 +165,32 @@ class ProjectController extends Controller
         }
         exit();
     }
+
+    public function actionSend($customer_id)
+    {
+
+        $model = new EmailLog();
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['view', 'id' => $model->id]);
+        }
+        $customer_email = CustomerBoffin::find()->select('email')->asArray()->all();
+        $customer_email = implode(';',array_filter(array_column($customer_email,'email')));
+        return $this->render('send_email', [
+            'model' => $model,
+            'customer_email' => $customer_email,
+        ]);
+
+        $mail= Yii::$app->mailer->compose();
+        $mail->setTo('1151167065@qq.com');
+        $mail->setSubject("邮件测试");
+//$mail->setTextBody('zheshisha ');   //发布纯文字文本
+        $mail->setHtmlBody("<br>问我我我我我");    //发布可以带html标签的文本
+        if($mail->send())
+            echo "success";
+        else
+            echo "failse";
+        die();
+    }
+
 }
