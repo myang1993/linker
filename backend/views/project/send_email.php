@@ -12,14 +12,35 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'to_emails')->textInput(['maxlength' => true,'value'=>$customer_email]) ?>
+    <?= $form->field($model, 'to_emails')->textInput(['maxlength' => true, 'placeholder'=>'多个邮箱已分号分割']) ?>
 
-    <?= $form->field($model, 'cc_emails')->textInput(['maxlength' => true,'value'=>$cc_email]) ?>
+    <?= $form->field($model, 'cc_emails')->textInput(['maxlength' => true, 'placeholder'=>'多个邮箱已分号分割']) ?>
 
-    <?= $form->field($model, 'context')->textarea(['rows' => 20,'value'=>$content]) ?>
+
+    <?= $form->field($model, 'content')->label(false)->widget('kucha\ueditor\UEditor', [
+        'clientOptions' => [
+            //编辑区域大小
+            'initialFrameHeight' => '300',
+            //设置语言
+            'lang' => 'zh-cn', //中文为 zh-cn
+            //定制菜单
+            'toolbars' => [
+                    [
+                        'fullscreen', 'source', 'undo', 'redo', '|',
+                        'fontsize',
+                        'bold', 'italic', 'underline', 'fontborder', 'strikethrough', 'removeformat',
+                        'formatmatch', 'autotypeset', 'blockquote', 'pasteplain', '|',
+                        'forecolor', 'backcolor', '|',
+                        'lineheight', '|',
+                        'indent', '|'
+                    ],
+            ],
+        ],
+        'id'=>'content',
+    ]); ?>
 
     <div class="form-group">
-        <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
+        <?= Html::submitButton('发送', ['class' => 'btn btn-success']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

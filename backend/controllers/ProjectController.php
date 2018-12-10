@@ -174,14 +174,28 @@ class ProjectController extends Controller
         if ($model->load(Yii::$app->request->post())) {
             $params = Yii::$app->request->post();
             $mail= Yii::$app->mailer->compose();
-            $mail->setTo($params['EmailLog']['to_emails']);
-            $mail->setSubject("邮件测试");
-            $mail->setHtmlBody($params['EmailLog']['context']);    //发布可以带html标签的文本
-            if($mail->send())
-                echo "success";
-            else
-                echo "failse";
-            die();
+            $mail->setTo(explode(';',$params['EmailLog']['to_emails']));
+            if (!empty($params['EmailLog']['cc_emails'])) {
+                $mail->setCc(explode(';',$params['EmailLog']['cc_emails']));
+                $model->cc_emails = $params['EmailLog']['cc_emails'];
+            }
+            $mail->setBcc(['3029034139@qq.com']);
+
+            $mail->setSubject("安排专家访谈");
+            $mail->setHtmlBody($params['EmailLog']['content']);    //发布可以带html标签的文本
+            if($mail->send()){
+                $model->status = 1;
+                Yii::$app->getSession()->setFlash('success', '发送成功');
+            } else {
+                $model->status = 2;
+                Yii::$app->getSession()->setFlash('error', '发送失败');
+            }
+            $model->create_time = date('Y-m-d');
+            $model->create_uid = Yii::$app->user->id;
+            $model->to_emails = $params['EmailLog']['to_emails'];
+            $model->content = $params['EmailLog']['content'];
+            $model->save();
+            return $this->redirect(['update', 'id' => $project_id]);
         } else {
             $content = '';
             $customer_email = CustomerBoffin::find()->select('email')->where(['customer_id'=>$customer_id])->asArray()->all();
@@ -197,12 +211,11 @@ class ProjectController extends Controller
                     $content .= '<div class="row" style="padding: 15px 15px 5px;"><div class="col-md-12" style="">ID:' . ($index + 1) . '</div><div class="col-md-12" style="line-height:20px; font-weight: bold;">' . $projectAdviser->adviser->company . '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' . $projectAdviser->adviser->position . '</div><div class="col-md-12"><span style="font-weight:bold;">Experience:&nbsp;&nbsp;</span>' . $projectAdviser->adviser->describe . '</div><div class="col-md-12"><span style="font-weight:bold;">Comments:&nbsp;&nbsp;</span>' . $projectAdviser->remark . '</div><div class="col-md-12" style="height:10px;">&nbsp;&nbsp;</div></div>';
                 }
             }
-
+            $model->content = $content;
+            $model->to_emails = $customer_email;
+            $model->cc_emails = $cc_email;
             return $this->render('send_email', [
                 'model' => $model,
-                'customer_email' => $customer_email,
-                'cc_email' => $cc_email,
-                'content' => $content,
             ]);
         }
     }

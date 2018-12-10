@@ -23,7 +23,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'bcc_emails') ?>
 
-    <?= $form->field($model, 'context') ?>
+    <?= $form->field($model, 'content') ?>
 
     <?php // echo $form->field($model, 'status') ?>
 
