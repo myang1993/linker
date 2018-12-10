@@ -360,7 +360,7 @@ $customer = new Customer();
         ]);
         ?>
         <?php
-        echo Html::a('<i class="glyphicon glyphicon-envelope"></i>发送邮件', "/project/send?customer_id=" . $model->customer_id, [
+        echo Html::a('<i class="glyphicon glyphicon-envelope"></i>发送邮件', "/project/send?customer_id=" . $model->customer_id.'&project_id='.$model->id, [
             'class' => 'btn btn btn-primary',
             'style' => 'float:right',
         ]);

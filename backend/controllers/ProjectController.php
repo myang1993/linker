@@ -166,31 +166,45 @@ class ProjectController extends Controller
         exit();
     }
 
-    public function actionSend($customer_id)
+    public function actionSend($customer_id,$project_id)
     {
 
         $model = new EmailLog();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        }
-        $customer_email = CustomerBoffin::find()->select('email')->asArray()->all();
-        $customer_email = implode(';',array_filter(array_column($customer_email,'email')));
-        return $this->render('send_email', [
-            'model' => $model,
-            'customer_email' => $customer_email,
-        ]);
+        if ($model->load(Yii::$app->request->post())) {
+            $params = Yii::$app->request->post();
+            $mail= Yii::$app->mailer->compose();
+            $mail->setTo($params['EmailLog']['to_emails']);
+            $mail->setSubject("邮件测试");
+            $mail->setHtmlBody($params['EmailLog']['context']);    //发布可以带html标签的文本
+            if($mail->send())
+                echo "success";
+            else
+                echo "failse";
+            die();
+        } else {
+            $content = '';
+            $customer_email = CustomerBoffin::find()->select('email')->where(['customer_id'=>$customer_id])->asArray()->all();
+            $customer_email = implode(';',array_filter(array_column($customer_email,'email')));
+            $cc_email = 'bruce.huang@linkerintel.com;scott.yang@linkerintel.com';
 
-        $mail= Yii::$app->mailer->compose();
-        $mail->setTo('1151167065@qq.com');
-        $mail->setSubject("邮件测试");
-//$mail->setTextBody('zheshisha ');   //发布纯文字文本
-        $mail->setHtmlBody("<br>问我我我我我");    //发布可以带html标签的文本
-        if($mail->send())
-            echo "success";
-        else
-            echo "failse";
-        die();
+            //邮件内容
+            if (!empty(Project::findOne($project_id)->projectBoffins[0])) {
+                $content =  Project::findOne($project_id)->projectBoffins[0]->boffin->name_zh . '你好：<br>&nbsp;&nbsp;&nbsp;&nbsp;我是Linker的' . Yii::$app->user->identity->username
+                    . '，下面几位专家您看是否合适，如果有需要约访的，欢迎您随时联系我，谢谢。<br>';
+
+                foreach (Project::findOne($project_id)->projectAdvisers as $index => $projectAdviser) {
+                    $content .= '<div class="row" style="padding: 15px 15px 5px;"><div class="col-md-12" style="">ID:' . ($index + 1) . '</div><div class="col-md-12" style="line-height:20px; font-weight: bold;">' . $projectAdviser->adviser->company . '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' . $projectAdviser->adviser->position . '</div><div class="col-md-12"><span style="font-weight:bold;">Experience:&nbsp;&nbsp;</span>' . $projectAdviser->adviser->describe . '</div><div class="col-md-12"><span style="font-weight:bold;">Comments:&nbsp;&nbsp;</span>' . $projectAdviser->remark . '</div><div class="col-md-12" style="height:10px;">&nbsp;&nbsp;</div></div>';
+                }
+            }
+
+            return $this->render('send_email', [
+                'model' => $model,
+                'customer_email' => $customer_email,
+                'cc_email' => $cc_email,
+                'content' => $content,
+            ]);
+        }
     }
 
 }
