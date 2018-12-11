@@ -119,9 +119,9 @@ $project = new \backend\models\Project();
                     'style' => 'min-width: 60px;'
                 ]
             ],
-            [
-                'attribute' => 'mobile_phone',
-            ],
+//            [
+//                'attribute' => 'mobile_phone',
+//            ],
             [
                 'attribute' => 'describe',
                 'contentOptions' => function($data){
@@ -130,22 +130,22 @@ $project = new \backend\models\Project();
                     return $arr;
                 }
             ],
-            [
-                'attribute' => 'expertise',
-                'contentOptions' => function($data){
-                    $arr = [];
-                    $arr['title'] = $data->expertise;
-                    return $arr;
-                }
-            ],
-            [
-                'attribute' => 'profile',
-                'contentOptions' => function($data){
-                    $arr = [];
-                    $arr['title'] = $data->profile;
-                    return $arr;
-                }
-            ],
+//            [
+//                'attribute' => 'expertise',
+//                'contentOptions' => function($data){
+//                    $arr = [];
+//                    $arr['title'] = $data->expertise;
+//                    return $arr;
+//                }
+//            ],
+//            [
+//                'attribute' => 'profile',
+//                'contentOptions' => function($data){
+//                    $arr = [];
+//                    $arr['title'] = $data->profile;
+//                    return $arr;
+//                }
+//            ],
             [
                 'label' => Yii::t('app', '省份'),
                 'attribute' => 'province_name',
@@ -178,17 +178,17 @@ $project = new \backend\models\Project();
                 },
                 // 'filter' => [],
             ],
+//            [
+//                'attribute' => 'update_time',
+//                'value' => function($data){
+//                    return date('Y-m-d H:i', $data->update_time);
+//                },
+//                'contentOptions' => [
+//                    'style' => 'min-width: 130px;'
+//                ]
+//            ],
             [
-                'attribute' => 'update_time',
-                'value' => function($data){
-                    return date('Y-m-d H:i', $data->update_time);
-                },
-                'contentOptions' => [
-                    'style' => 'min-width: 130px;'
-                ]
-            ],
-            [
-                'attribute' => 'remark',
+                'label' => 'Comments',
                 'value' => function ($data) {
                     return \app\models\AdviserComments::getNewComments($data->id) ? \app\models\AdviserComments::getNewComments($data->id)->comments : '';
                 },
@@ -199,12 +199,12 @@ $project = new \backend\models\Project();
                     'style' => 'min-width: 80px;'
                 ]
             ],
-            [
-                'attribute' => 'operator',
-                'contentOptions' => [
-                    'style' => 'min-width: 130px;'
-                ]
-            ],
+//            [
+//                'attribute' => 'operator',
+//                'contentOptions' => [
+//                    'style' => 'min-width: 130px;'
+//                ]
+//            ],
            [
                'class' => 'yii\grid\ActionColumn',
                'template' => '{delete}',

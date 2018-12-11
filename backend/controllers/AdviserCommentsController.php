@@ -2,6 +2,7 @@
 
 namespace backend\controllers;
 
+use backend\models\Adviser;
 use Yii;
 use app\models\AdviserComments;
 use app\models\AdviserCommentsSearch;
@@ -66,6 +67,7 @@ class AdviserCommentsController extends Controller
     {
         $model = new AdviserComments();
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            Adviser::updateAll(['remark'=>$model->comments],'id=:id',[':id'=>$model->adviser_id]);
             return $this->redirect(['/adviser/view', 'id' => $model->adviser_id]);
         }
 

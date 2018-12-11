@@ -2,6 +2,7 @@
 
 namespace backend\controllers;
 
+use backend\models\Adviser;
 use Yii;
 use app\models\AdviserResume;
 use app\models\AdviserResumeSearch;
