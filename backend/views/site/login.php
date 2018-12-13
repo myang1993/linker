@@ -11,12 +11,12 @@ $this->title = 'Login';
 ?>
 <div class="site-login">
     <div class="box">
-        <h3><?= Html::encode($this->title) ?></h3>
+        <h3>雾弘后台管理系统</h3>
 
         <!-- <p>Please fill out the following fields to login</p> -->
 
-        <div class="row">
-            <div class="col-lg-12">
+        <div class="row login-form">
+            <div class="col-lg-12" style="padding-left: 30px;padding-right: 30px;">
                 <?php $form = ActiveForm::begin([
                         'id' => 'login-form',
                         'options' => [

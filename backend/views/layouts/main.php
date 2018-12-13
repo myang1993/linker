@@ -31,11 +31,13 @@ AppAsset::register($this);
 <div class="wrap">
     <?php
     NavBar::begin([
-        'brandLabel' =>'Linker',
+        'brandLabel' => Html::img('@web/img/logo.png', ['style' => 'width: 40px; margin-top: -10px;']),
+        // 'brandLabel' => '雾弘后台管理系统',
         'brandUrl' => Yii::$app->homeUrl,
         'innerContainerOptions' => ['class' => 'container-fluid'],
         'options' => [
             'class' => 'navbar-inverse navbar-fixed-top',
+
         ],
     ]);
 
@@ -105,7 +107,7 @@ AppAsset::register($this);
     <div class="container-fluid">
         <p class="pull-left">&copy; <?= Html::encode('Linker') ?> <?= date('Y') ?></p>
 
-        <p class="pull-right hide"><?= Yii::powered() ?></p>
+        <p class="pull-right"></p>
     </div>
 </footer>
 
