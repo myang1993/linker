@@ -169,8 +169,7 @@ class CustomerBoffinController extends Controller
      */
     public function actionDelete($id)
     {
-        $post = Yii::$app->request->post();
-
+        $post = Yii::$app->request->queryParams();
         $this->findModel($post['id'])->delete();
 
         if (Yii::$app->request->isAjax && isset($post['delete'])) {

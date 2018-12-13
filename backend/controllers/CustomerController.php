@@ -9,6 +9,8 @@ use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use backend\models\CustomerBoffin;
+use backend\models\CustomerBoffinSearch;
 
 /**
  * CustomerController implements the CRUD actions for Customer model.
@@ -134,8 +136,13 @@ class CustomerController extends Controller
             // return $this->redirect(['update', 'model' => $model]);
         }
 
+        $searchModel = new CustomerBoffinSearch();
+        $dataProvider = $searchModel->search(['CustomerBoffinSearch' => ['customer_id' => $id]]);
+
         return $this->render('update', [
             'model' => $model,
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
         ]);
     }
 

@@ -7,7 +7,7 @@ use Yii;
 /**
  * This is the model class for table "{{%customer_boffin}}".
  *
- * @property int $id 客户ID
+ * @property int $id ID
  * @property int $customer_id 客户ID
  * @property string $name_zh 中文名
  * @property string $name_en 英文名
