@@ -183,7 +183,7 @@ $customer = new Customer();
     } ?>
     <div class="hr"></div>
     <h3 class="title">研究员</h3>
-     <?php
+    <?php
     if (Yii::$app->controller->action->id == 'update') {
         echo \yii\grid\GridView::widget([
             'dataProvider' => $projectBoffinProvider,
@@ -257,7 +257,7 @@ $customer = new Customer();
                 ],
             ],
         ]);
-    }?>
+    } ?>
 
     <?php
     $projectBoffin = new ProjectBoffin();
@@ -359,11 +359,11 @@ $customer = new Customer();
             'style' => 'float:right',
         ]);
         ?>
-<!--        --><?php
-//        echo Html::a('<i class="glyphicon glyphicon-envelope"></i>发送邮件', "/project/send?customer_id=" . $model->customer_id.'&project_id='.$model->id, [
-//            'class' => 'btn btn btn-primary',
-//            'style' => 'float:right',
-//        ]);
+        <!--        --><?php
+        //        echo Html::a('<i class="glyphicon glyphicon-envelope"></i>发送邮件', "/project/send?customer_id=" . $model->customer_id.'&project_id='.$model->id, [
+        //            'class' => 'btn btn btn-primary',
+        //            'style' => 'float:right',
+        //        ]);
         ?>
     </h3>
     <?php
@@ -496,18 +496,21 @@ $customer = new Customer();
                     'template' => '{update}',
                     'buttons' => [
                         'update' => function ($url, $model, $key) {
-//                            $url = Url::toRoute(['project-adviser/update', 'id' => $model->id]);
-                            return Html::a('<span class="glyphicon glyphicon-pencil"></span>', '#', [
-                                'class' => 'updateAdviser',
-                                'id' => 'update_project_adviser',
-                                'data-toggle' => 'modal',
-                                'data-target' => '#update-advisers1',
-                                'data-id' => $model->id,
-                                'data-adviser-id' => $model->adviser->id,
-                                'data-adviser-fee' => $model->fee,
-                                'data-fee-type' => $model->fee_type,
-                                'data-pay-type' => $model->pay_type,
-                                'style' => 'float:right',]);
+                            if ($model->state == 6 || $model->state == 7) {
+                                return false;
+                            } else {
+                                return Html::a('<span class="glyphicon glyphicon-pencil"></span>', '#', [
+                                    'class' => 'updateAdviser',
+                                    'id' => 'update_project_adviser',
+                                    'data-toggle' => 'modal',
+                                    'data-target' => '#update-advisers1',
+                                    'data-id' => $model->id,
+                                    'data-adviser-id' => $model->adviser->id,
+                                    'data-adviser-fee' => $model->fee,
+                                    'data-fee-type' => $model->fee_type,
+                                    'data-pay-type' => $model->pay_type,
+                                    'style' => 'float:right',]);
+                            }
                         },
                     ],
                 ],
@@ -588,7 +591,7 @@ $customer = new Customer();
                     'attribute' => 'state',
                     'value' => $projectAdviser->state == 0 ? '' : $projectAdviser->stateType($projectAdviser->state),
                     'format' => 'raw',
-                    'options' => ['id' => 'state' . $index],
+                    'options' => ['id' => 'state' . $projectAdviser->id, 'class' => 'modal2-state'],
                     'type' => DetailView::INPUT_SELECT2,
                     'widgetOptions' => [
                         'data' => $projectAdviser->stateType($projectAdviser->state, 2),
@@ -618,6 +621,7 @@ $customer = new Customer();
                             'autoclose' => true,
                             'format' => 'yyyy-MM-dd HH:mm',
                             'todayHighlight' => true,
+                            'startDate' => date('Y-m-d'),
                         ]
                     ],
                     'valueColOptions' => ['style' => 'width:60%']
@@ -754,7 +758,7 @@ $customer = new Customer();
                 'attribute' => 'state',
                 'format' => 'raw',
                 'type' => DetailView::INPUT_SELECT2,
-                'options' => ['id' => 'modal2-state', 'placeholder' => '-- ' . Yii::t('app', 'Please select')],
+                'options' => ['id' => 'modal2-state', 'class' => 'modal2-state', 'placeholder' => '-- ' . Yii::t('app', 'Please select')],
                 'widgetOptions' => [
                     'data' => $projectAdviser->stateType(),
                     'pluginOptions' => ['allowClear' => true, 'width' => '100%'],
@@ -779,6 +783,7 @@ $customer = new Customer();
                         'format' => 'yyyy-MM-dd HH:mm',
                         'todayHighlight' => true,
                         'id' => 'pay_date',
+                        'startDate' => date('Y-m-d'),
                     ]
                 ],
                 'valueColOptions' => ['style' => 'width:60%']
@@ -791,6 +796,7 @@ $customer = new Customer();
                 'value' => $projectAdviser->fee_rate,
                 'valueColOptions' => ['style' => 'width:60%']
             ],
+            'cost',
             [
                 'attribute' => 'fee',
                 'format' => 'raw',
@@ -853,7 +859,6 @@ $this->registerJs(
             //设置参与者的值
             var arr = "' . $model->participants . '";
             arr = arr.split("，");
-            console.log(arr);
             $("#project-participants").val(arr).trigger("change");
 
             var ctm_p = $("#customer-price");
@@ -943,7 +948,6 @@ $this->registerJs(
             $("#modal2-adviser-id").on("change", function() {
                 sel2.empty();
                 var val = $(this).val();
-                console.log(val);
                 if(val){
                     $.ajax({
                         url: "/adviser/info",
@@ -1041,6 +1045,8 @@ $js = <<<JS
 $('.updateAdviser').click(function(){
     var index = $(this).parent().parent().find('td').eq(0).text();
     $(this).attr('data-target','#update-advisers'+index);
+    $('select').removeClass('update_cls');
+    $('#state' + index).addClass('update_cls');
     var adviser_id = $(this).attr('data-adviser-id');
     var adviser_fee = $(this).attr('data-adviser-fee');
     var data_fee_type = $(this).attr('data-fee-type');
@@ -1086,6 +1092,11 @@ $('.updateAdviser').click(function(){
             });
 
 });
+
+$("#add-advisers").click(function() {
+    $('select').removeClass('update_cls');
+    $('#modal2-state').addClass('update_cls');
+})
 
 JS;
 $this->registerJs($js);

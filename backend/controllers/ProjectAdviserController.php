@@ -127,7 +127,11 @@ class ProjectAdviserController extends Controller
             }
             if ($model->save()) {
                 return $this->redirect(['project/update', 'id' => $id]);
+            }else {
+                print_r($model->getErrors());exit;
             }
+        }else {
+            print_r($model->getErrors());exit;
         }
 
         return $this->redirect(['project/update', 'id' => $id]);
@@ -230,6 +234,23 @@ class ProjectAdviserController extends Controller
     public function actionAdviser($keyword)
     {
         echo json_encode((new Adviser())->getAdviserByKeyWord(urldecode($keyword)),JSON_UNESCAPED_UNICODE);
+        exit();
+    }
+
+    /**
+     * 批量修改财务状态
+     */
+    public function actionUpdateStatus() {
+        $queryParams = Yii::$app->request->queryParams;
+        $queryParams['project_adviser_list'] = [120];
+        if (empty($queryParams['project_adviser_list']) || !is_array($queryParams['project_adviser_list']) || empty($queryParams['adviser_pay']) || empty($queryParams['bill_out']) || empty($queryParams['referee_pay'])) {
+            echo json_encode(['status' => -1, 'message' => '信息有误'], JSON_UNESCAPED_UNICODE);
+        } else {
+            $project_adviser_list = implode(',',$queryParams['project_adviser_list']);
+            $sql = "update project_adviser set adviser_pay = {$queryParams['adviser_pay']},bill_out = {$queryParams['bill_out']},referee_pay={$queryParams['referee_pay']} where id in ({$project_adviser_list})";
+           Yii::$app->db->createCommand($sql)->execute();
+           echo json_encode(['status' => 0, 'message' => 'success'], JSON_UNESCAPED_UNICODE);
+        }
         exit();
     }
 }

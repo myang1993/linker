@@ -10,6 +10,7 @@ return [
     'name' => 'Application Name',
     'id' => 'app-backend',
     'basePath' => dirname(__DIR__),
+    'language' => 'zh-CN',
     'timeZone' => 'Asia/Shanghai',
     'controllerNamespace' => 'backend\controllers',
     'bootstrap' => ['log'],

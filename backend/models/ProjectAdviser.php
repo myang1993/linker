@@ -64,7 +64,17 @@ class ProjectAdviser extends \yii\db\ActiveRecord
             [['remark'], 'string', 'max' => 1024],
             [['pay_remark'], 'string', 'max' => 256],
             [['pay_type'], 'string', 'max' => 50],
-            [['hour', 'cost', 'customer_fee'], 'safe'],
+            [['customer_fee'],'safe'],
+            [
+                ['hour','cost'],
+                'required',
+                'when' => function($model) {
+                    return $model->state== 6;
+                },
+                'whenClient' => "function (attribute, value) {
+                    return $('.update_cls').val() == '6';
+                }",
+            ],
         ];
     }
 
@@ -118,8 +128,8 @@ class ProjectAdviser extends \yii\db\ActiveRecord
     {
         $typeList = [1 => 'not contacted', 2 => 'contacted', 3 => 'recommended', 4 => 'arranged', 5 => 'rescheduled', 6 => 'completed', 7 => 'deleted'];
         if ($mode == 2) {
-            $lenght = count($typeList) - $type;
-            return array_slice($typeList, $type, $lenght, true);
+            $length = count($typeList) - ($type-1);
+            return array_slice($typeList, $type-1, $length, true);
         } else {
             return $retVal = $type ? $typeList[$type] : $typeList;
         }
@@ -165,9 +175,9 @@ class ProjectAdviser extends \yii\db\ActiveRecord
      */
     public function addAdviserProject($adviser_id, $project_id)
     {
-        $adviserInfo = (new Adviser())->getInfo($adviser_id,'all');
+        $adviserInfo = (new Adviser())->getInfo($adviser_id, 'all');
         if (!$adviserInfo) {
-            return ;
+            return;
         }
         $this->project_id = $project_id;
         $this->adviser_id = $adviser_id;
@@ -176,7 +186,7 @@ class ProjectAdviser extends \yii\db\ActiveRecord
         $this->fee = $adviserInfo->fee_phone;
         $this->fee_type = $adviserInfo->fee_phone_type;
         if (!$this->save()) {
-            Yii::error('批量添加错误:'.json_encode($this->getErrors(), JSON_UNESCAPED_UNICODE));
+            Yii::error('批量添加错误:' . json_encode($this->getErrors(), JSON_UNESCAPED_UNICODE));
         }
     }
 
@@ -187,9 +197,9 @@ class ProjectAdviser extends \yii\db\ActiveRecord
         $type = $model->priceType();
         $tax_type = $model->taxType();
         $data = [
-            $info['fee_face'] => '('.$tax_type[$info['tax_type']].') ' . Yii::t('app', 'Face Interview Price') . $info['fee_face'] . '(' . $type[$info['fee_face_type']] . ')',
-            $info['fee_phone'] => '('.$tax_type[$info['tax_type']].') ' . Yii::t('app', 'Telephone Interview Price') . $info['fee_phone'] . '(' . $type[$info['fee_phone_type']] . ')',
-            $info['fee_road'] => '('.$tax_type[$info['tax_type']].') ' . Yii::t('app', 'Roadshow Interview Price') . $info['fee_road'] . '(' . $type[$info['fee_road_type']] . ')',
+            $info['fee_face'] => '(' . $tax_type[$info['tax_type']] . ') ' . Yii::t('app', 'Face Interview Price') . $info['fee_face'] . '(' . $type[$info['fee_face_type']] . ')',
+            $info['fee_phone'] => '(' . $tax_type[$info['tax_type']] . ') ' . Yii::t('app', 'Telephone Interview Price') . $info['fee_phone'] . '(' . $type[$info['fee_phone_type']] . ')',
+            $info['fee_road'] => '(' . $tax_type[$info['tax_type']] . ') ' . Yii::t('app', 'Roadshow Interview Price') . $info['fee_road'] . '(' . $type[$info['fee_road_type']] . ')',
         ];
         return $data;
 

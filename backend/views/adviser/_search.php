@@ -56,8 +56,8 @@ $trade = new Trade();
     <?= $form->field($model, 'position')->textInput() ?>
     <?= $form->field($model, 'mobile_phone')->textInput() ?>
     <?= $form->field($model, 'describe')->textInput() ?>
-    <?= $form->field($model, 'describe')->textInput() ?>
-    <?= $form->field($model, 'describe')->textInput() ?>
+    <?= $form->field($model, 'expertise')->textInput() ?>
+    <?= $form->field($model, 'profile')->textInput() ?>
 
     <div class="form-group" style="vertical-align: top;">
         <?= Html::submitButton(Yii::t('app', 'Search'), ['class' => 'btn btn-primary search1']) ?>

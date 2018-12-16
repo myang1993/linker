@@ -2,6 +2,7 @@
 
 namespace backend\models;
 
+use app\models\AdviserResume;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
@@ -71,6 +72,15 @@ class AdviserSearch extends Adviser
             return $dataProvider;
         }
 
+        if (!empty($this->profile)) {
+            $adviser_id_arr = AdviserResume::find()->select('adviser_id')->orFilterWhere(['like', 'company', $this->profile])->orFilterWhere(['like', 'position', $this->profile])->asArray()->all();
+            if (empty($adviser_id_arr)) {
+                $adviser_id_arr = [0];
+            } else {
+                $adviser_id_arr = array_column($adviser_id_arr,'adviser_id');
+            }
+        }
+
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
@@ -89,6 +99,9 @@ class AdviserSearch extends Adviser
         ]);
 
         if (isset($params['mode']) && $params['mode'] == 1) {
+            if (isset($adviser_id_arr)) {
+                $query->orFilterWhere(['in', 'adviser.id', $adviser_id_arr]);
+            }
             $query->orFilterWhere(['like', 'name_zh', $this->name_zh])
                 ->orFilterWhere(['like', 'name_en', $this->name_en])
                 ->orFilterWhere(['like', 'mobile_phone', $this->mobile_phone])
@@ -107,9 +120,12 @@ class AdviserSearch extends Adviser
                 ->orFilterWhere(['like', 't_city.name', $this->city_name])
                 ->orFilterWhere(['like', 't_trade.name', $this->trade_name])
                 ->orFilterWhere(['like', 't_child_trade.name', $this->child_trade_name])
-                ->orFilterWhere(['like', 'profile', $this->profile])
+//                ->orFilterWhere(['like', 'profile', $this->profile])
                 ->orFilterWhere(['like', 'remark', $this->remark]);
         } else {
+            if (isset($adviser_id_arr)) {
+                $query->andFilterWhere(['in', 'adviser.id', $adviser_id_arr]);
+            }
             $query->andFilterWhere(['like', 'name_zh', $this->name_zh])
                 ->andFilterWhere(['like', 'name_en', $this->name_en])
                 ->andFilterWhere(['like', 'mobile_phone', $this->mobile_phone])
@@ -128,7 +144,7 @@ class AdviserSearch extends Adviser
                 ->andFilterWhere(['like', 't_city.name', $this->city_name])
                 ->andFilterWhere(['like', 't_trade.name', $this->trade_name])
                 ->andFilterWhere(['like', 't_child_trade.name', $this->child_trade_name])
-                ->andFilterWhere(['like', 'profile', $this->profile])
+//                ->andFilterWhere(['like', 'profile', $this->profile])
                 ->andFilterWhere(['like', 'remark', $this->remark]);
         }
 

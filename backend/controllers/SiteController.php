@@ -1,6 +1,7 @@
 <?php
 namespace backend\controllers;
 
+use insolita\migrik\gii\StructureGenerator;
 use Yii;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
@@ -237,6 +238,53 @@ class SiteController extends Controller
             $model = Yii::$app->user->identity;
             return $this->render('profile', [
                 'model' => $model,
+            ]);
+        }
+
+        $this->redirect(['site/login']);
+    }
+
+    public function actionHome()
+    {
+        if (!Yii::$app->user->isGuest) {
+            $model = Yii::$app->user->identity;
+            $db = Yii::$app->db;
+            $user_id = Yii::$app->user->id;
+            $date = strtotime(date('Y-m'));
+            $hours = $db->createCommand("select sum(hour) hours from project_adviser where selector_id = {$user_id} and state = 6 and date >= {$date}")->queryAll();
+            $calls = $db->createCommand("select count(*) calls from project_adviser where selector_id = {$user_id} and state in (4,6) and date >= {$date}")->queryAll();
+            $AllCalls = $db->createCommand("select count(*) calls,selector_id from project_adviser where state in (4,6) and date >= {$date} GROUP BY selector_id ORDER BY calls desc")->queryAll();
+            $i = 0;
+            if (!empty($AllCalls)) {
+                foreach ($AllCalls as $key=>$value) {
+                   if ($value['selector_id'] == $user_id) {
+                       if (isset($AllCalls[$key-1]) && $AllCalls[$key-1]['calls'] > $value['calls']) {
+                           $order = $key+1-$i;
+                       } elseif (isset($AllCalls[$key-1]) && $AllCalls[$key-1]['calls'] == $value['calls']) {
+                           $order = $key-$i;
+                       } else {
+                           $order = 1;
+                       }
+                   } else {
+                       if (isset($AllCalls[$key-1]) && $AllCalls[$key-1]['calls'] == $value['calls']) {
+                           $i++;
+                       }
+                   }
+                }
+            }
+            $new_hours = $db->createCommand("select sum(hour) hours from project_adviser a join adviser b on a.adviser_id= b.id where selector_id = {$user_id} and a.state = 6 and a.date >= {$date} and b.update_time >= {$date}")->queryAll();
+            if (empty($new_hours[0]['hours'])) {
+                $new_hours = 0;
+            } else {
+                $new_hours = $new_hours[0]['hours'];
+            }
+            return $this->render('home', [
+                'model' => $model,
+                'hours' => isset($hours[0]['hours']) ?$hours[0]['hours']:0,
+                'calls' => isset($calls[0]['calls']) ?$calls[0]['calls']:0,
+                'order' => isset($order) ?$order:'',
+                'rate'=> isset($hours[0]['hours']) ?$new_hours/$hours[0]['hours']:0
+
             ]);
         }
 

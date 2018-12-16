@@ -290,7 +290,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             'convertFormat' => true,
                             'pluginOptions' => [
                                 'autoclose' => true,
-                                'format' => 'yyyy-MM-dd',
+                                'format' => 'yyyy-MM',
                                 'todayHighlight' => true,
                             ]
                         ],
@@ -306,7 +306,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             'convertFormat' => true,
                             'pluginOptions' => [
                                 'autoclose' => true,
-                                'format' => 'yyyy-MM-dd',
+                                'format' => 'yyyy-MM',
                                 'todayHighlight' => true,
                             ]
                         ],
