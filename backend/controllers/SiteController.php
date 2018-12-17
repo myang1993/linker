@@ -272,7 +272,7 @@ class SiteController extends Controller
                    }
                 }
             }
-            $new_hours = $db->createCommand("select sum(hour) hours from project_adviser a join adviser b on a.adviser_id= b.id where selector_id = {$user_id} and a.state = 6 and a.date >= {$date} and b.update_time >= {$date}")->queryAll();
+            $new_hours = $db->createCommand("select sum(hour) hours from project_adviser a join adviser b on a.adviser_id= b.id where selector_id = {$user_id} and a.state = 6 and a.date >= {$date} and b.create_time >= {$date}")->queryAll();
             if (empty($new_hours[0]['hours'])) {
                 $new_hours = 0;
             } else {
