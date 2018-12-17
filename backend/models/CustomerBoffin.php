@@ -54,7 +54,7 @@ class CustomerBoffin extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => Yii::t('app', '客户ID'),
+            'id' => Yii::t('app', '研究员ID'),
             'customer_id' => Yii::t('app', '客户ID'),
             'name_zh' => Yii::t('app', '中文名'),
             'name_en' => Yii::t('app', '英文名'),

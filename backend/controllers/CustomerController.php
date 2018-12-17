@@ -116,7 +116,7 @@ class CustomerController extends Controller
             return $this->redirect(['update', 'id' => $model->id]);
         }
 
-        return $this->render('update', [
+        return $this->render('create', [
             'model' => $model,
         ]);
     }

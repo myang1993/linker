@@ -131,7 +131,7 @@ class CustomerBoffinController extends Controller
         $model = new CustomerBoffin();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['customer/update', 'id' => $id]);
+            return $this->redirect(['customer/update', 'id' => $model->customer_id]);
         }
 
         return $this->render('create', [
@@ -152,7 +152,7 @@ class CustomerBoffinController extends Controller
         $model = $this->findModel($post['id']);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['customer/update', 'id' => $id]);
+            return $this->redirect(['customer/update', 'id' => $model->customer_id]);
         }
 
         return $this->render('update', [

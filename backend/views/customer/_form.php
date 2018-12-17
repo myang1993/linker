@@ -123,52 +123,127 @@ use yii\grid\GridView;
         echo Html::tag('p', '请先保存客户信息，再添加研究员信息', ['class' => 'note bg-danger']);
     } ?>
 
-<?= GridView::widget([
-        'dataProvider' => $dataProvider,
-        'columns' => [
-            'id',
-            'customer_id',
-            'name_zh',
-            'name_en',
-            'position',
-            'email:email',
-            'mobile_phone',
-            'tele_phone',
-            'wechat',
-            'linkedin',
+    <?php
+    if (Yii::$app->controller->action->id == 'update') {
+        echo GridView::widget([
+            'dataProvider' => $dataProvider,
+            'columns' => [
+                'id',
+                'customer_id',
+                'name_zh',
+                'name_en',
+                'position',
+                'email:email',
+                'mobile_phone',
+                'tele_phone',
+                'wechat',
+                'linkedin',
 
-            [
-                'contentOptions' => ['style' => 'overflow:hidden;text-overflow:ellipsis;white-space:inherit'],
-                'headerOptions' => ['width' => '2%'],
-                'class' => 'yii\grid\ActionColumn',
-                'template' => '{update}',
-                'buttons' => [
-                    'update' => function ($url, $model, $key) {
-                        return Html::a('<span class="glyphicon glyphicon-pencil"></span>', '#', [
-                            'class' => 'updateAdviser',
-                            'id' => 'update_project_adviser',
-                            'data-toggle' => 'modal',
-                            'data-target' => '#update-advisers1',
-                            'data-id' => $model->id,
-                          
-                            'style' => 'float:right',]);
-                    },
+                [
+                    'contentOptions' => ['style' => 'overflow:hidden;text-overflow:ellipsis;white-space:inherit'],
+                    'headerOptions' => ['width' => '2%'],
+                    'class' => 'yii\grid\ActionColumn',
+                    'template' => '{update}',
+                    'buttons' => [
+                        'update' => function ($url, $model, $key) {
+                            return Html::a('<span class="glyphicon glyphicon-pencil"></span>', '#', [
+                                'class' => 'updateCustomerBoffin',
+                                'id' => 'update_customer_boffin',
+                                'data-toggle' => 'modal',
+                                'data-target' => '#update_customer_boffin' . $model->id,
+                                'data-id' => $model->id,
+
+                                'style' => 'float:right',]);
+                        },
+                    ],
+                ],
+                [
+                    'contentOptions' => ['style' => 'overflow:hidden;text-overflow:ellipsis;white-space:inherit'],
+                    'headerOptions' => ['width' => '2%'],
+                    'class' => 'yii\grid\ActionColumn',
+                    'template' => '{delete}',
+                    'buttons' => [
+                        'delete' => function ($url, $model, $key) {
+                            $url = Url::toRoute(['customer-boffin/delete', 'id' => $model->id]);
+                            return Html::a('<span class="glyphicon glyphicon-trash"></span>', $url, ['data-confirm' => 'Are you sure you want to delete this item?', 'title' => 'Delete', 'data-method' => 'post']);
+                        },
+                    ],
                 ],
             ],
-            [
-                'contentOptions' => ['style' => 'overflow:hidden;text-overflow:ellipsis;white-space:inherit'],
-                'headerOptions' => ['width' => '2%'],
-                'class' => 'yii\grid\ActionColumn',
-                'template' => '{delete}',
-                'buttons' => [
-                    'delete' => function ($url, $model, $key) {
-                        $url = Url::toRoute(['customer-boffin/delete', 'id' => $model->id]);
-                        return Html::a('<span class="glyphicon glyphicon-trash"></span>', $url, ['data-confirm' => 'Are you sure you want to delete this item?', 'title' => 'Delete', 'data-method' => 'post']);
-                    },
-                ],
+        ]);
+    } ?>
+
+    <?php
+    //编辑研究员信息
+    ?>
+    <!-- // Url::toRoute(['adviser/info', 'id' => '']) -->
+    <?php
+    foreach ($model->customerBoffins as $index => $customerBoffin) {
+        Modal::begin([
+            'header' => '<h4 class="modal-title">' . Yii::t('app', 'Update Customer Boffin') . '</h4>',
+            'id' => 'update_customer_boffin' . ($customerBoffin->id),
+            'options' => ['tabindex' => false]
+        ]);
+        echo DetailView::widget([
+            'options' => [
+                'class' => 'form-inline form',
             ],
-        ],
-    ]); ?>
+            'model' => $customerBoffin,
+            'condensed' => true,
+            'hover' => true,
+            'mode' => DetailView::MODE_EDIT,
+            'panel' => [
+                'heading' => '<i id="icon_triangle' . $index . '" class="glyphicon glyphicon-triangle-top"></i>' . Yii::t('app', 'Update Customer Boffin') . '：' . $customerBoffin->name_zh,
+                'type' => DetailView::TYPE_INFO,
+            ],
+            'attributes' => [
+                [
+                    'attribute' => 'id',
+                    'type' => DetailView::INPUT_HIDDEN,
+                ],
+                [
+                    'attribute' => 'name_zh',
+                    'value' => $customerBoffin->name_zh,
+                ],
+                [
+                    'attribute' => 'name_en',
+                    'value' => $customerBoffin->name_en,
+                ],
+                [
+                    'attribute' => 'position',
+                    'value' => $customerBoffin->position,
+                ],
+                [
+                    'attribute' => 'email',
+                    'value' => $customerBoffin->email,
+                ],
+                [
+                    'attribute' => 'mobile_phone',
+                    'value' => $customerBoffin->mobile_phone,
+                ],
+                [
+                    'attribute' => 'tele_phone',
+                    'value' => $customerBoffin->tele_phone,
+                ],
+                [
+                    'attribute' => 'wechat',
+                    'value' => $customerBoffin->wechat,
+                ],
+                [
+                    'attribute' => 'linkedin',
+                    'value' => $customerBoffin->linkedin,
+                ]
+            ],
+            'deleteOptions' => [
+                'params' => ['id' => $customerBoffin->id, 'delete' => true],
+                'url' => Url::toRoute(['customer-boffin/delete', 'id' => $customerBoffin->id]),
+            ],
+            'formOptions' => [
+                'action' => Url::toRoute(['customer-boffin/update', 'id' => $customerBoffin->id]),
+            ],
+        ]);
+        Modal::end();
+    } ?>
 
 
     <?php Modal::begin([
@@ -211,3 +286,15 @@ use yii\grid\GridView;
     <?php Modal::end(); ?>
 
 </div>
+
+<?php
+
+$js = <<<JS
+$('.updateCustomerBoffin').click(function(){
+    var index = $(this).parent().parent().find('td').eq(0).text();
+    $(this).attr('data-target','#update_customer_boffin'+index);
+});
+
+JS;
+$this->registerJs($js);
+?>
