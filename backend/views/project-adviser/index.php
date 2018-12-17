@@ -18,6 +18,7 @@ $this->params['breadcrumbs'][] = Yii::t('app', '财务');
 <div class="project-adviser-index list">
 
     <h1><?= Html::encode($this->title) ?></h1>
+    <?php echo $this->render('_search', ['model' => $searchModel]); ?>
     <?php
     echo GridView::widget([
         'id' => 'finance-list',
@@ -72,7 +73,7 @@ $this->params['breadcrumbs'][] = Yii::t('app', '财务');
                 'label' => Yii::t('app', '收费访谈小时数'),
                 'attribute' => 'cost_time',
                 'value' => function ($model) {
-                    return isset($model->hour)&&isset($model->fee_rate)?$model->hour * $model->fee_rate:'测试';
+                    return $model->hour * $model->fee_rate;
                 },
             ],
             [

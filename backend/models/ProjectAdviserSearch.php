@@ -41,6 +41,8 @@ class ProjectAdviserSearch extends ProjectAdviser
     public $referee_bank_card;
     public $referee_bank_addr;
     public $referee_pay;
+    public $start_date;
+    public $end_date;
 
     /**
      * {@inheritdoc}
@@ -49,7 +51,7 @@ class ProjectAdviserSearch extends ProjectAdviser
     {
         return [
             [['id', 'project_id', 'adviser_id', 'state', 'date'], 'integer'],
-            [['remark', 'pay_remark', 'project_name', 'adviser_name', 'project_date', 'referee_pay', 'adviser_pay', 'customer'], 'safe'],
+            [['remark', 'pay_remark', 'project_name', 'adviser_name', 'project_date', 'referee_pay', 'adviser_pay', 'customer','start_date','end_date'], 'safe'],
         ];
     }
 
@@ -96,7 +98,7 @@ class ProjectAdviserSearch extends ProjectAdviser
             'project_id' => $this->project_id,
             'adviser_id' => $this->adviser_id,
             'state' => 6,
-            'date' => $this->date,
+//            'date' => $this->date,
             'referee_pay' => $this->referee_pay,
             'adviser_pay' => $this->adviser_pay,
         ]);
@@ -105,6 +107,12 @@ class ProjectAdviserSearch extends ProjectAdviser
         $query->andFilterWhere(['like', 't1.name_zh', $this->adviser_name]);
         $query->andFilterWhere(['like', 'remark', $this->remark]);
         $query->andFilterWhere(['like', 'pay_remark', $this->pay_remark]);
+        if (!empty($this->start_date)) {
+            $query->andFilterCompare('project_adviser.date', strtotime($this->start_date), '>=');
+        }
+        if (!empty($this->end_date)) {
+            $query->andFilterCompare('project_adviser.date', strtotime($this->end_date), '<=');
+        }
 
         $dataProvider->setSort([
             'attributes' => [
@@ -122,6 +130,7 @@ class ProjectAdviserSearch extends ProjectAdviser
                 ],
             ]
         ]);
+//        echo $query->createCommand()->getRawSql();exit;
         return $dataProvider;
     }
 
