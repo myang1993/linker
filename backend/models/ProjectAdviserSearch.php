@@ -95,7 +95,7 @@ class ProjectAdviserSearch extends ProjectAdviser
             'id' => $this->id,
             'project_id' => $this->project_id,
             'adviser_id' => $this->adviser_id,
-            'state' => 5,
+            'state' => 6,
             'date' => $this->date,
             'referee_pay' => $this->referee_pay,
             'adviser_pay' => $this->adviser_pay,

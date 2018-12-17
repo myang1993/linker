@@ -72,7 +72,7 @@ $this->params['breadcrumbs'][] = Yii::t('app', '财务');
                 'label' => Yii::t('app', '收费访谈小时数'),
                 'attribute' => 'cost_time',
                 'value' => function ($model) {
-                    return $model->hour * $model->fee_rate;
+                    return isset($model->hour)&&isset($model->fee_rate)?$model->hour * $model->fee_rate:'测试';
                 },
             ],
             [
