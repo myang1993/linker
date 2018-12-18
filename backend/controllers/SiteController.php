@@ -1,6 +1,8 @@
 <?php
 namespace backend\controllers;
 
+use backend\models\Project;
+use backend\models\ProjectAdviser;
 use insolita\migrik\gii\StructureGenerator;
 use Yii;
 use yii\web\Controller;
@@ -94,13 +96,14 @@ class SiteController extends Controller
                 $this->redirect(['site/update-pass']);
             }
 
-            return $this->render('index', [
-                'model' => $model,
-                'reset' => $reset,
-            ]);
+//            return $this->render('index', [
+//                'model' => $model,
+//                'reset' => $reset,
+//            ]);
+            $this->redirect(['site/home']);
+        } else {
+            $this->redirect(['site/login']);
         }
-
-        $this->redirect(['site/login']);
     }
 
     /**
@@ -147,7 +150,7 @@ class SiteController extends Controller
         if ($model->load(Yii::$app->request->post())) {
             if ($model->signup()) {
                 // if (Yii::$app->getUser()->login($user)) {
-                    return $this->goHome();
+                return $this->goHome();
                 // }
             }
         } else {
@@ -256,20 +259,20 @@ class SiteController extends Controller
             $AllCalls = $db->createCommand("select count(*) calls,selector_id from project_adviser where state in (4,6) and date >= {$date} GROUP BY selector_id ORDER BY calls desc")->queryAll();
             $i = 0;
             if (!empty($AllCalls)) {
-                foreach ($AllCalls as $key=>$value) {
-                   if ($value['selector_id'] == $user_id) {
-                       if (isset($AllCalls[$key-1]) && $AllCalls[$key-1]['calls'] > $value['calls']) {
-                           $order = $key+1-$i;
-                       } elseif (isset($AllCalls[$key-1]) && $AllCalls[$key-1]['calls'] == $value['calls']) {
-                           $order = $key-$i;
-                       } else {
-                           $order = 1;
-                       }
-                   } else {
-                       if (isset($AllCalls[$key-1]) && $AllCalls[$key-1]['calls'] == $value['calls']) {
-                           $i++;
-                       }
-                   }
+                foreach ($AllCalls as $key=> $value) {
+                    if ($value['selector_id'] == $user_id) {
+                        if (isset($AllCalls[$key-1]) && $AllCalls[$key-1]['calls'] > $value['calls']) {
+                            $order = $key+1-$i;
+                        } elseif (isset($AllCalls[$key-1]) && $AllCalls[$key-1]['calls'] == $value['calls']) {
+                            $order = $key-$i;
+                        } else {
+                            $order = 1;
+                        }
+                    } else {
+                        if (isset($AllCalls[$key-1]) && $AllCalls[$key-1]['calls'] == $value['calls']) {
+                            $i++;
+                        }
+                    }
                 }
             }
             $new_hours = $db->createCommand("select sum(hour) hours from project_adviser a join adviser b on a.adviser_id= b.id where selector_id = {$user_id} and a.state = 6 and a.date >= {$date} and b.create_time >= {$date}")->queryAll();
@@ -289,5 +292,15 @@ class SiteController extends Controller
         }
 
         $this->redirect(['site/login']);
+    }
+
+    public function actionBatchCustomerFee()
+    {
+        $lists = ProjectAdviser::find()->where(['state' => 6])->asArray()->all();
+        foreach ($lists as $key => $value) {
+            $customer_fee = Project::find()->joinWith('customer as a', true)->where(['project.id' => $value['project_id']])->asArray()->one();
+            $fee = $value['hour'] * $value['fee_rate'] * $customer_fee['customer'][$value['pay_type']];
+            ProjectAdviser::updateAll(['customer_fee' => $fee], ['id' => $value['id']]);
+        }
     }
 }

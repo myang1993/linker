@@ -30,6 +30,8 @@ class Admin extends ActiveRecord implements IdentityInterface
     const STATUS_ACTIVE = 10;
     const ROLE_USER = 10;
     const AUTH_KEY = '123456';
+    public $password;
+    public $password_compare;
 
     /**
      * {@inheritdoc}

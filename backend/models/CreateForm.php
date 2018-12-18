@@ -80,4 +80,34 @@ class CreateForm extends Model
 
         return null;
     }
+
+    public function update()
+    {
+        if ($this->validate()) {
+            $admin = new Admin();
+            $admin->username = $this->username;
+            $admin->email = $this->email;
+            $admin->department = $this->department;
+            $admin->mobile_phone = $this->mobile_phone;
+            $admin->setPassword($this->password);
+            $admin->updated_at = $this->updated_at;
+            $admin->generateAuthKey();
+            $admin->save(false);
+
+            /**
+             * 添加鉴权
+             * 访问鉴权
+             * if (\Yii::$app->user->can('createPost')) {
+             * // create post
+             * }
+             */
+            // $auth = \Yii::$app->authManager;
+            // $authorRole = $auth->getRole('author');
+            // $auth->assign($authorRole, $admin->getId());
+
+            return $admin;
+        }
+
+        return null;
+    }
 }

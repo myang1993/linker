@@ -2,6 +2,7 @@
 
 namespace backend\controllers;
 
+use backend\models\CreateForm;
 use Yii;
 use backend\models\Admin;
 use backend\models\AdminSearch;
@@ -12,7 +13,7 @@ use yii\filters\VerbFilter;
 /**
  * AdminController implements the CRUD actions for Admin model.
  */
-class AdminController extends Controller
+class UserController extends Controller
 {
     /**
      * {@inheritdoc}
@@ -84,15 +85,24 @@ class AdminController extends Controller
      */
     public function actionUpdate($id)
     {
-        $model = $this->findModel($id);
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if (Yii::$app->request->isPost) {
+            $model = new CreateForm();
+            $model->load($_POST);
+            if ($model->load(Yii::$app->request->post())) {
+                if ($model->signup()) {
+                    return $this->goHome();
+                }
+            } else {
+                return $this->render('update', [
+                    'model' => $model,
+                ]);
+            }
+        } else {
+            $model = $this->findModel($id);
+            return $this->render('update', [
+                'model' => $model,
+            ]);
         }
-
-        return $this->render('update', [
-            'model' => $model,
-        ]);
     }
 
     /**

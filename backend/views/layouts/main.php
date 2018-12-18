@@ -58,7 +58,7 @@ AppAsset::register($this);
             ['label' => Yii::t('app', 'Home'), 'url' => ['/site/index']],
         ];
         if (Yii::$app->user->identity->username == 'admin') {
-            $menuItems[] = ['label' => Yii::t('app', 'Create'), 'url' => ['/site/create']];
+            $menuItems[] = ['label' => '用户', 'url' => ['/user/index']];
         }
         $menuItems[] = ['label' => Yii::t('app', 'Project Items'), 'url' => ['/project']];
         $menuItems[] = ['label' => Yii::t('app', 'Customers'), 'url' => ['/customer']];
