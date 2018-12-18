@@ -123,7 +123,7 @@ class ProjectAdviserController extends Controller
                 $adviser = $model->adviser;
                 $adviser->setAttribute('times', $adviser->times + 1);
                 $adviser->save(false);
-                $model->customer_fee = $model->hour * $model->project->customer->$post['pay_type'];
+                $model->customer_fee = $model->hour * $model->fee_rate * $model->project->customer->$post['pay_type'];
             }
             if ($model->save()) {
                 return $this->redirect(['project/update', 'id' => $id]);
