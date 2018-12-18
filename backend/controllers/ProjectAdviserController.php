@@ -242,13 +242,19 @@ class ProjectAdviserController extends Controller
      */
     public function actionUpdateStatus() {
         $queryParams = Yii::$app->request->queryParams;
-        $queryParams['project_adviser_list'] = [120];
         if (empty($queryParams['project_adviser_list']) || !is_array($queryParams['project_adviser_list']) || empty($queryParams['adviser_pay']) || empty($queryParams['bill_out']) || empty($queryParams['referee_pay'])) {
             echo json_encode(['status' => -1, 'message' => '信息有误'], JSON_UNESCAPED_UNICODE);
         } else {
             $project_adviser_list = implode(',',$queryParams['project_adviser_list']);
-            $sql = "update project_adviser set adviser_pay = {$queryParams['adviser_pay']},bill_out = {$queryParams['bill_out']},referee_pay={$queryParams['referee_pay']} where id in ({$project_adviser_list})";
-           Yii::$app->db->createCommand($sql)->execute();
+            if (!empty($queryParams['adviser_pay'])) {
+                Yii::$app->db->createCommand("update project_adviser set adviser_pay = {$queryParams['adviser_pay']} where id in ({$project_adviser_list})")->execute();
+            }
+            if (!empty($queryParams['bill_out'])) {
+                Yii::$app->db->createCommand("update project_adviser set bill_out = {$queryParams['bill_out']} where id in ({$project_adviser_list})")->execute();
+            }
+            if (!empty($queryParams['referee_pay'])) {
+                Yii::$app->db->createCommand("update project_adviser set referee_pay = {$queryParams['referee_pay']} where id in ({$project_adviser_list})")->execute();
+            }
            echo json_encode(['status' => 0, 'message' => 'success'], JSON_UNESCAPED_UNICODE);
         }
         exit();
