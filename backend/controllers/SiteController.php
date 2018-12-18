@@ -94,10 +94,11 @@ class SiteController extends Controller
                 $this->redirect(['site/update-pass']);
             }
 
-            return $this->render('index', [
-                'model' => $model,
-                'reset' => $reset,
-            ]);
+//            return $this->render('index', [
+//                'model' => $model,
+//                'reset' => $reset,
+//            ]);
+            $this->redirect(['site/home']);
         }
 
         $this->redirect(['site/login']);
