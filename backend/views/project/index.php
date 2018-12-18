@@ -27,7 +27,7 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'attribute' => 'id',
                 'contentOptions' => [
-                    'style' => 'width: 80px;'
+                    'style' => 'width: 60px;'
                 ]
             ],
             [
@@ -51,7 +51,12 @@ $this->params['breadcrumbs'][] = $this->title;
                     'style' => 'width: 120px;'
                 ]
             ],
-            'participants',
+            [
+                'attribute' => 'participants',
+                'contentOptions' => [
+                    'style' => 'width: 120px;'
+                ]
+            ],
             [
                 'attribute' => 'status',
                 'filter' => $searchModel->statusType(0),
@@ -87,7 +92,10 @@ $this->params['breadcrumbs'][] = $this->title;
                     }
                     $unique = array_unique($selector);
                     return implode('，', $unique);
-                }
+                },
+                'contentOptions' => [
+                    'style' => 'width: 120px;'
+                ]
             ],
             [
                 'label' => Yii::t('app', '参与研究员'),
@@ -102,7 +110,10 @@ $this->params['breadcrumbs'][] = $this->title;
                     }
                     $unique = array_unique($selector);
                     return implode('，', $unique);
-                }
+                },
+                'contentOptions' => [
+                    'style' => 'width: 120px;'
+                ]
             ],
             [
                 'class' => 'yii\grid\ActionColumn',

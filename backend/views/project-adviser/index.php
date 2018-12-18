@@ -25,7 +25,12 @@ $this->params['breadcrumbs'][] = Yii::t('app', '财务');
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
-//            ['class' => 'kartik\grid\SerialColumn'],
+            // ['class' => 'kartik\grid\CheckboxColumn'],
+            
+            [
+                'class' => 'kartik\grid\CheckboxColumn',
+                'headerOptions' => ['class' => 'kartik-sheet-style']
+            ],
             'id',
             [
                 'label' => Yii::t('app', '日期'),
@@ -73,7 +78,8 @@ $this->params['breadcrumbs'][] = Yii::t('app', '财务');
                 'label' => Yii::t('app', '收费访谈小时数'),
                 'attribute' => 'cost_time',
                 'value' => function ($model) {
-                    return $model->hour * $model->fee_rate;
+                    // return $model->hour * $model->fee_rate;
+                    return $model->hour;
                 },
             ],
             [
@@ -305,7 +311,10 @@ $this->params['breadcrumbs'][] = Yii::t('app', '财务');
         'floatHeader' => false,
         'showPageSummary' => false,
         'panel' => [
-            'type' => GridView::TYPE_PRIMARY
+            'type' => GridView::TYPE_PRIMARY,
+            'after' => '<div id="opts"><span id="pay" class="btn btn-primary">出账单</span>
+            <span id="adviser_fee" class="btn btn-primary" style="margin-left:20px;">专家成本</span>
+            <span id="recommend_fee" class="btn btn-primary" style="margin-left:20px;">推荐费</span></div>'
         ],
     ]);
     ?>
@@ -323,6 +332,43 @@ $this->params['breadcrumbs'][] = Yii::t('app', '财务');
 $js = <<<JS
 $('#file').change(function(){
     $("#import_xls").submit();
+});
+
+$("#opts").on("click", function(event) {
+  var target = event.target.id;
+
+  var array = $('#grid').yiiGridView('getSelectedRows');
+  var data = {};
+  if(array.length){
+    alert("请选择");
+    return false;
+  }
+
+  if(target == 'pay') {
+    data['bill_out'] = true;
+  }
+  if(target == 'adviser_fee') {
+    data['adviser_pay'] = true;
+  }
+  if(target == 'recommend_fee') {
+    data['referee_pay'] = true;
+  }
+
+  if(!type) {
+    return false;
+  }
+  data['project_adviser_list'] = array;
+  $.ajax({
+        url: "/project-adviser/update-status",
+        dataType: "json",
+        method: "GET",
+        data: data,
+        success: function(result){
+           data = {}; 
+        }
+    });
+
+
 });
 
 JS;

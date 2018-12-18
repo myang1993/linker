@@ -8,13 +8,14 @@ use yii\widgets\ActiveForm;
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
-<div class="project-adviser-search">
+<div class="project-adviser-search search">
 
     <?php $form = ActiveForm::begin([
         'action' => ['index'],
         'method' => 'get',
         'options' => [
-            'data-pjax' => 1
+            'data-pjax' => 1,
+            'class' => 'form-inline form',
         ],
     ]); ?>
 
