@@ -100,9 +100,12 @@ $project = new \backend\models\Project();
             [
                 'attribute' => 'name_zh',
                 'format' => 'raw',
-                'contentOptions' => [
-                    'style' => 'min-width: 60px;'
-                ],
+                'contentOptions' => function($data){
+                    $arr = [];
+                    $arr['title'] = $data->name_zh;
+                    $arr['style'] = 'max-width: 80px';
+                    return $arr;
+                },
                 'value' => function($data){
                     return Html::a($data->name_zh, "/adviser/view?id=".$data->id);
                 }
@@ -110,13 +113,13 @@ $project = new \backend\models\Project();
             [
                 'attribute' => 'company',
                 'contentOptions' => [
-                    'style' => 'min-width: 60px;'
+                    'style' => 'max-width: 120px;'
                 ]
             ],
             [
                 'attribute' => 'position',
                 'contentOptions' => [
-                    'style' => 'min-width: 60px;'
+                    'style' => 'max-width: 120px;'
                 ]
             ],
 //            [
@@ -176,6 +179,9 @@ $project = new \backend\models\Project();
                 'value' => function($model){
                     return $model->child_trade ? Trade::findOne($model->child_trade)->name: '';
                 },
+                'contentOptions' => [
+                    'style' => 'max-width: 140px;'
+                ]
                 // 'filter' => [],
             ],
 //            [
@@ -196,7 +202,7 @@ $project = new \backend\models\Project();
             [
                 'attribute' => 'times',
                 'contentOptions' => [
-                    'style' => 'min-width: 80px;'
+                    'style' => 'max-width: 60px;'
                 ]
             ],
 //            [

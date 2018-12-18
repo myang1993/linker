@@ -9,7 +9,7 @@ use dosamigos\datepicker\DatePicker;
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
-<div class="project-search search">
+<div class="project-adviser-search search">
 
     <?php $form = ActiveForm::begin([
         'action' => ['index'],

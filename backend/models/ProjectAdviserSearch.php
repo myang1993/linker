@@ -130,6 +130,7 @@ class ProjectAdviserSearch extends ProjectAdviser
                 ],
             ]
         ]);
+        $query->orderBy(['id' => SORT_DESC]);
 //        echo $query->createCommand()->getRawSql();exit;
         return $dataProvider;
     }
