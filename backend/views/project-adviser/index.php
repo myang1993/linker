@@ -6,7 +6,10 @@ use yii\helpers\Url;
 use yii\widgets\Pjax;
 use yii\widgets\LinkPager;
 use backend\models\Admin;
-
+use yii\bootstrap\Modal;
+// use kartik\widgets\Switchinput;
+use kartik\switchinput\SwitchInput;
+use yii\bootstrap\BootstrapAsset;
 /* @var $this yii\web\View */
 /* @var $searchModel backend\models\ProjectAdviserSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -312,19 +315,36 @@ $this->params['breadcrumbs'][] = Yii::t('app', '财务');
         'showPageSummary' => false,
         'panel' => [
             'type' => GridView::TYPE_PRIMARY,
-            'after' => '<div id="opts"><span id="pay" class="btn btn-primary">出账单</span>
-            <span id="adviser_fee" class="btn btn-primary" style="margin-left:20px;">专家成本</span>
-            <span id="recommend_fee" class="btn btn-primary" style="margin-left:20px;">推荐费</span></div>'
-        ],
+            'after' => '<div id="opts"><button  class="btn btn-primary add_button" data-toggle="modal" data-target="#modal-finance">批量更改状态</button></div>'
+        ], 
     ]);
     ?>
 
-    <?php
-    // echo $this->render('_list', [
-    //     'dataProvider' => $dataProvider,
-    //     'searchModel' => $searchModel,
-    // ]);
-    ?>
+    <?php Modal::begin([
+            'header' => '<h4 class="modal-title text-center"><strong>选择项目</strong></h4>',
+            'id' => 'modal-finance',
+            // 'toggleButton' => ['label' => '更改状态', 'class' => 'btn btn-primary add_button'],
+            'options' => ['tabindex' => false]
+        ]); ?>
+
+    <?php echo '<label class="control-label">是否出账单</label>'; ?>
+    <?php echo SwitchInput::widget(['name'=>'status_1','type' => SwitchInput::RADIO,'items' => [
+        ['label' => 'YES', 'value' => 1],
+        ['label' => 'NO', 'value' => 3],
+    ],'value'=>true]); ?>
+    <?php echo '<label class="control-label">是否支付专家成本</label>'; ?>
+    <?php echo SwitchInput::widget(['name'=>'status_1', 'value'=>true, 'class'=> 'inline']); ?>
+    <?php echo '<label class="control-label">是否支付推荐费</label>'; ?>
+    <?php echo SwitchInput::widget(['name'=>'status_1', 'value'=>true]); ?>
+
+
+            <div class="has-error text-center" style="font-size: 18px;"><p class="modal_tip help-block help-block-error"></p></div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary modal-save" id="modal-finance-save">Save</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+
+    <?php Modal::end(); ?>
 </div>
 
 <?php
@@ -334,8 +354,9 @@ $('#file').change(function(){
     $("#import_xls").submit();
 });
 
-$("#opts").on("click", function(event) {
-  var target = event.target.id;
+$("#modal-finance-save").on("click", function() {
+
+$("#modal-finance").
 
   var array = $('#grid').yiiGridView('getSelectedRows');
   var data = {};
