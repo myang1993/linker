@@ -9,7 +9,7 @@ use backend\models\Admin;
 use yii\bootstrap\Modal;
 // use kartik\widgets\Switchinput;
 use kartik\switchinput\SwitchInput;
-use yii\bootstrap\BootstrapAsset;
+use kartik\switchinput\SwitchInputAsset;
 /* @var $this yii\web\View */
 /* @var $searchModel backend\models\ProjectAdviserSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -327,26 +327,59 @@ $this->params['breadcrumbs'][] = Yii::t('app', '财务');
             'options' => ['tabindex' => false]
         ]); ?>
 
-    <?php echo '<label class="control-label">是否出账单</label>'; ?>
-    <?php echo SwitchInput::widget(['name'=>'status_1','type' => SwitchInput::RADIO,'items' => [
-        ['label' => 'YES', 'value' => 1],
-        ['label' => 'NO', 'value' => 3],
-    ],'value'=>true]); ?>
-    <?php echo '<label class="control-label">是否支付专家成本</label>'; ?>
-    <?php echo SwitchInput::widget(['name'=>'status_1', 'value'=>true, 'class'=> 'inline']); ?>
-    <?php echo '<label class="control-label">是否支付推荐费</label>'; ?>
-    <?php echo SwitchInput::widget(['name'=>'status_1', 'value'=>true]); ?>
-
-
-            <div class="has-error text-center" style="font-size: 18px;"><p class="modal_tip help-block help-block-error"></p></div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary modal-save" id="modal-finance-save">Save</button>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            </div>
+        <?php echo '<label class="control-label col-md-4 text-right">是否出账单</label>'; ?>
+        <div style="display: inline-block;">
+            <?php echo SwitchInput::widget([
+                'name'=>'pay',
+                'inlineLabel'=> true,
+                'pluginOptions'=>[
+                    'onText'=>'YES',
+                    'offText'=>'NO'
+                ],
+                'pluginEvents' => [
+                    "switchChange.bootstrapSwitch" => "function() {var v = this.checked ? 2 : 1;$(this).val(v);}",
+                ]
+            ]); ?>
+        </div></br>
+        <?php echo '<label class="control-label col-md-4 text-right">是否支付专家成本</label>'; ?>
+        <div style="display: inline-block;">
+            <?php echo SwitchInput::widget([
+                'name'=>'adviser_fee', 
+                'inlineLabel' => false,
+                'options' => [
+                    'style'=>'display:inline-block'
+                ],
+                'pluginOptions'=>[
+                    'onText'=>'YES',
+                    'offText'=>'NO'
+                ],
+                'pluginEvents' => [
+                    "switchChange.bootstrapSwitch" => "function() {var v = this.checked ? 2 : 1;$(this).val(v);}",
+                ]
+            ]); ?>
+        </div></br>
+        <?php echo '<label class="control-label col-md-4 text-right">是否支付推荐费</label>'; ?>
+        <div style="display: inline-block;">
+            <?php echo SwitchInput::widget([
+                'name'=>'recommend_fee', 
+                'inlineLabel' => false,
+                'pluginOptions'=>[
+                    'onText'=>'YES',
+                    'offText'=>'NO'
+                ],
+                'pluginEvents' => [
+                    "switchChange.bootstrapSwitch" => "function() {var v = this.checked ? 2 : 1;$(this).val(v);}",
+                ]
+            ]); ?>
+        </div>
+        <div class="has-error text-center" style="font-size: 18px;"><p class="modal_tip help-block help-block-error"></p></div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-primary modal-save" id="modal-finance-save">Save</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
 
     <?php Modal::end(); ?>
 </div>
-
 <?php
 
 $js = <<<JS
@@ -355,29 +388,21 @@ $('#file').change(function(){
 });
 
 $("#modal-finance-save").on("click", function() {
-
-$("#modal-finance").
-
-  var array = $('#grid').yiiGridView('getSelectedRows');
+  var array = [];
+  $('#finance-list').find("input[type=checkbox]:checked").each(function () {
+    array.push($(this).parent().closest('tr').data('key'));
+  });
+  console.log('-----', array, array.length);
   var data = {};
-  if(array.length){
+  if(!array.length){
     alert("请选择");
     return false;
   }
 
-  if(target == 'pay') {
-    data['bill_out'] = true;
-  }
-  if(target == 'adviser_fee') {
-    data['adviser_pay'] = true;
-  }
-  if(target == 'recommend_fee') {
-    data['referee_pay'] = true;
-  }
+  data['bill_out'] = $('input[name="pay"]').val();
+  data['adviser_pay'] = $('input[name="adviser_fee"]').val();
+  data['referee_pay'] = $('input[name="recommend_fee"]').val();
 
-  if(!type) {
-    return false;
-  }
   data['project_adviser_list'] = array;
   $.ajax({
         url: "/project-adviser/update-status",
@@ -385,7 +410,11 @@ $("#modal-finance").
         method: "GET",
         data: data,
         success: function(result){
-           data = {}; 
+           data = {};
+           $('modal-finance').modal("hide");
+        },
+        error: function(result) {
+            console.log(result);
         }
     });
 
