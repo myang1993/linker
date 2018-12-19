@@ -89,7 +89,7 @@ class UserController extends Controller
         if (Yii::$app->request->isPost) {
             if ($model->load(Yii::$app->request->post())) {
                 if ($model->update()) {
-                    return $this->goHome();
+                    $this->redirect(['user/index']);
                 }
             } else {
                 return $this->render('update', [
