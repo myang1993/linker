@@ -292,6 +292,8 @@ $this->params['breadcrumbs'][] = $this->title;
                                 'autoclose' => true,
                                 'format' => 'yyyy-MM',
                                 'todayHighlight' => true,
+                                'maxViewMode'=>2,
+                                'minViewMode'=>1
                             ]
                         ],
                         'valueColOptions' => ['style' => 'width:60%']
@@ -308,6 +310,8 @@ $this->params['breadcrumbs'][] = $this->title;
                                 'autoclose' => true,
                                 'format' => 'yyyy-MM',
                                 'todayHighlight' => true,
+                                'maxViewMode'=>2,
+                                'minViewMode'=>1
                             ]
                         ],
                         'valueColOptions' => ['style' => 'width:60%']
