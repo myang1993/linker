@@ -9,6 +9,7 @@ use backend\models\Admin;
  */
 class CreateForm extends Model
 {
+    public $uid;
     public $username;
     public $email;
     public $department;
@@ -27,14 +28,14 @@ class CreateForm extends Model
             [['username', 'email', 'department', 'mobile_phone', 'password', 'password_compare'], 'trim'],
             [['username', 'email', 'department', 'mobile_phone', 'password', 'password_compare'], 'required'],
 
-            [['username', 'email', 'mobile_phone'], 'unique', 'targetClass' => 'backend\models\Admin', 'message' => '{attribute}已经被占用了'],
+            [['username', 'email', 'mobile_phone'], 'unique', 'targetClass' => 'backend\models\Admin', 'message' => '{attribute}已经被占用了', 'on' => 'create'],
 
             ['username', 'string', 'min' => 2, 'max' => 255],
 
             ['department', 'string', 'min' => 2, 'max' => 255],
 
             ['email', 'string', 'max' => 255],
-            ['email', 'unique', 'targetClass' => 'backend\models\Admin', 'message' => 'This email address has already been taken.'],
+            ['email', 'unique', 'targetClass' => 'backend\models\Admin', 'message' => 'This email address has already been taken.', 'on' => 'create'],
 
             ['mobile_phone', 'match', 'pattern' => '/^1[0-9]{10}$/', 'message' => '{attribute}必须为1开头的11位纯数字'],
 
@@ -44,6 +45,7 @@ class CreateForm extends Model
             ['created_at', 'default', 'value' => time()],
 
             ['updated_at', 'default', 'value' => time()],
+            [['uid'], 'safe'],
         ];
     }
 
@@ -54,6 +56,7 @@ class CreateForm extends Model
     {
         if ($this->validate()) {
             $admin = new Admin();
+            $admin->id = $this->uid;
             $admin->username = $this->username;
             $admin->email = $this->email;
             $admin->department = $this->department;
@@ -84,7 +87,7 @@ class CreateForm extends Model
     public function update()
     {
         if ($this->validate()) {
-            $admin = new Admin();
+            $admin = \backend\models\Admin::findOne($this->uid);
             $admin->username = $this->username;
             $admin->email = $this->email;
             $admin->department = $this->department;

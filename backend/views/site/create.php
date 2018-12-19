@@ -14,7 +14,6 @@ $this->params['breadcrumbs'][] = $this->title;
     <h3 class="title"><?= Html::encode($this->title) ?></h3>
 
     <p>Please fill out the following fields to create:</p>
-
     <?php $form = ActiveForm::begin([
         'id' => 'form-signup',
         'enableAjaxValidation' => true,
@@ -27,7 +26,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'class' => 'form-inline form',
         ],
     ]); ?>
-
+    <!--        --><?php //echo $form->errorSummary($model); ?>
         <?= $form->field($model, 'username')->textInput(['autofocus' => true]) ?>
 
         <?= $form->field($model, 'email') ?>

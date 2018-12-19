@@ -141,6 +141,7 @@ class SiteController extends Controller
     public function actionCreate()
     {
         $model = new CreateForm();
+        $model->setScenario('create');
         $model->load($_POST);
         if (Yii::$app->request->isAjax) {
             Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;

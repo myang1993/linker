@@ -85,11 +85,10 @@ class UserController extends Controller
      */
     public function actionUpdate($id)
     {
+        $model = new CreateForm();
         if (Yii::$app->request->isPost) {
-            $model = new CreateForm();
-            $model->load($_POST);
             if ($model->load(Yii::$app->request->post())) {
-                if ($model->signup()) {
+                if ($model->update()) {
                     return $this->goHome();
                 }
             } else {
@@ -98,7 +97,12 @@ class UserController extends Controller
                 ]);
             }
         } else {
-            $model = $this->findModel($id);
+            $admin = $this->findModel($id);
+            $model->uid = $admin->id;
+            $model->username = $admin->username;
+            $model->email = $admin->email;
+            $model->department = $admin->department;
+            $model->mobile_phone = $admin->mobile_phone;
             return $this->render('update', [
                 'model' => $model,
             ]);
