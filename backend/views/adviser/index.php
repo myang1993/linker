@@ -21,7 +21,7 @@ $project = new \backend\models\Project();
 ?>
 <div class="adviser-index list">
 
-    <h3 class="title"><?= Html::encode($this->title) ?></h3>
+    <!-- <h3 class="title"><?= Html::encode($this->title) ?></h3> -->
     <?php Pjax::begin(); ?>
     <?php echo $this->render('_search', ['model' => $searchModel]); ?>
 
