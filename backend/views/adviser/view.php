@@ -85,7 +85,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
 <style type="text/css">
     .adviser_info.box .form-group {
-        min-width: 300px;
+        min-width: 400px;
     }
 </style>
             <div class="adviser_info box form-inline" style="padding: 20px 0;overflow: hidden;">
@@ -105,13 +105,13 @@ $this->params['breadcrumbs'][] = $this->title;
                     <label class=" control-label text-center">行业:</label>
                       <p class="form-control-static"><?php echo ($model->trade ? Trade::findOne($model->trade)->name . ' ' : ' ') . ($model->child_trade ? Trade::findOne($model->child_trade)->name . ' ' : ' ') ?></p>
                 </div>
-                <div class="form-group">
-                    <label class=" control-label text-center <?php echo $model->source_type == 3 ? '' : 'hide'?>" >顾问来源:</label>
-                      <p class="form-control-static <?php echo $model->source_type == 3 ? '' : 'hide'?>"><?php echo $model->source_type == 0 ? '' : $model->SourceType($model->source_type) ?></p>
+                <div class="form-group <?php echo $model->source_type == 3 ? '' : 'hide'?>">
+                    <label class=" control-label text-center" >顾问来源:</label>
+                      <p class="form-control-static"><?php echo $model->source_type == 0 ? '' : $model->SourceType($model->source_type) ?></p>
                 </div>
-                <div class="form-group">
-                    <label class="control-label text-center <?php echo $model->source_type == 3 ? '' : 'hide'?>">推荐人:</label>
-                      <p class="form-control-static <?php echo $model->source_type == 3 ? '' : 'hide'?>"><?php echo $model->getInfo(intval($model->referee)) ?></p>
+                <div class="form-group <?php echo $model->source_type == 3 ? '' : 'hide'?>">
+                    <label class="control-label text-center ">推荐人:</label>
+                      <p class="form-control-static"><?php echo $model->getInfo(intval($model->referee)) ?></p>
                 </div>
                 <div class="form-group">
                     <label class="control-label text-center">推荐费:</label>
@@ -157,6 +157,10 @@ $this->params['breadcrumbs'][] = $this->title;
                     <label class=" control-label text-center">首次录入人员:</label>
                       <p class="form-control-static"><?php echo $model->operator ?></p>
                     </div>
+                <div class="form-group">
+                    <label class=" control-label text-center">合作次数:</label>
+                      <p class="form-control-static"><?php echo $model->times ?></p>
+                    </div>                    
                 </div>
             </div>
 
