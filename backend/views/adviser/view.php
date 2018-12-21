@@ -82,62 +82,89 @@ $this->params['breadcrumbs'][] = $this->title;
 
                 <?php Modal::end(); ?>
             </h3>
-            <?= DetailView::widget([
-                'model' => $model,
-                'attributes' => [
-                    'name_zh',
-                    'name_en',
-                    [
-                        'label' => '地址',
-                        'value' => ($model->province ? Area::findOne($model->province)->name . ' ' : ' ') . ($model->city ? Area::findOne($model->city)->name . ' ' : ' ') . ($model->district ? Area::findOne($model->district)->name : ' '),
-                    ],
-                    [
-                        'label' => '行业',
-                        'value' => ($model->trade ? Trade::findOne($model->trade)->name . ' ' : ' ') . ($model->child_trade ? Trade::findOne($model->child_trade)->name . ' ' : ' '),
-                    ],
-                    [
-                        'attribute' => 'source_type',
-                        'value' => $model->source_type == 0 ? '' : $model->SourceType($model->source_type),
-                    ],
-                    [
-                        'attribute' => 'referee',
-                        'value' => $model->getInfo(intval($model->referee)),
-                        'visible' => $model->source_type == 3
-                    ],
-                    [
-                        'attribute' => 'referee_fee',
-                        'visible' => $model->source_type == 3
-                    ],
-                    'mobile_phone',
-                    'tele_phone',
-                    'email',
-                    'wechat',
-                    'linkedin',
-                    [
-                        'attribute' => 'tax_type',
-                        'value' => $model->tax_type == 0 ? '' : $model->taxType($model->tax_type),
-                    ],
-                    [
-                        'attribute' => 'fee_phone',
-                        'value' => $model->fee_phone . "（" . ($model->fee_phone_type == 0 ? '' : $model->priceType($model->fee_phone_type)) . "）",
-                    ],
-                    [
-                        'attribute' => 'fee_road',
-                        'value' => $model->fee_road . "（" . ($model->fee_road_type == 0 ? '' : $model->priceType($model->fee_road_type)) . "）",
-                    ],
-                    [
-                        'attribute' => 'fee_face',
-                        'value' => $model->fee_face . "（" . ($model->fee_face_type == 0 ? '' : $model->priceType($model->fee_face_type)) . "）",
-                    ],
-                    'operator'
-                ],
-                'options' => ['class' => 'table table-hover table-noborder']
-            ]) ?>
+
+<style type="text/css">
+    .adviser_info.box .form-group {
+        min-width: 300px;
+    }
+</style>
+            <div class="adviser_info box form-inline" style="padding: 20px 0;overflow: hidden;">
+                <div class="form-group">
+                    <label class="control-label text-center">中文姓名:</label>
+                    <p class="form-control-static"><?php echo $model->name_zh ?></p>
+                </div>
+                <div class="form-group">
+                    <label class="control-label text-center">英文姓名:</label>
+                    <p class="form-control-static"><?php echo $model->name_en ?></p>
+                </div>
+                <div class="form-group">
+                    <label class="control-label text-center">地址:</label>
+                      <p class="form-control-static"><?php echo ($model->province ? Area::findOne($model->province)->name . ' ' : ' ') . ($model->city ? Area::findOne($model->city)->name . ' ' : ' ') . ($model->district ? Area::findOne($model->district)->name : ' ') ?></p>
+                </div>
+                <div class="form-group">
+                    <label class=" control-label text-center">行业:</label>
+                      <p class="form-control-static"><?php echo ($model->trade ? Trade::findOne($model->trade)->name . ' ' : ' ') . ($model->child_trade ? Trade::findOne($model->child_trade)->name . ' ' : ' ') ?></p>
+                </div>
+                <div class="form-group">
+                    <label class=" control-label text-center <?php echo $model->source_type == 3 ? '' : 'hide'?>" >顾问来源:</label>
+                      <p class="form-control-static <?php echo $model->source_type == 3 ? '' : 'hide'?>"><?php echo $model->source_type == 0 ? '' : $model->SourceType($model->source_type) ?></p>
+                </div>
+                <div class="form-group">
+                    <label class="control-label text-center <?php echo $model->source_type == 3 ? '' : 'hide'?>">推荐人:</label>
+                      <p class="form-control-static <?php echo $model->source_type == 3 ? '' : 'hide'?>"><?php echo $model->getInfo(intval($model->referee)) ?></p>
+                </div>
+                <div class="form-group">
+                    <label class="control-label text-center">推荐费:</label>
+                      <p class="form-control-static"><?php echo $model->referee_fee ?></p>
+                </div>
+                <div class="form-group">
+                    <label class="control-label text-center">手机:</label>
+                      <p class="form-control-static"><?php echo $model->mobile_phone ?></p>
+                </div>
+                <div class="form-group">
+                    <label class=" control-label text-center">座机:</label>
+                      <p class="form-control-static"><?php echo $model->tele_phone ?></p>
+                </div>
+                <div class="form-group">
+                    <label class=" control-label text-center">邮箱:</label>
+                      <p class="form-control-static"><?php echo $model->email ?></p>
+                </div>
+                <div class="form-group">
+                    <label class="control-label text-center">微信:</label>
+                      <p class="form-control-static"><?php echo $model->wechat ?></p>
+                    </div>
+                <div class="form-group">
+                    <label class="control-label text-center">领英:</label>
+                      <p class="form-control-static"><?php echo $model->linkedin ?></p>
+                    </div>
+                <div class="form-group">
+                    <label class="control-label text-center">纳税类型:</label>
+                      <p class="form-control-static"><?php echo $model->tax_type == 0 ? '' : $model->taxType($model->tax_type) ?></p>
+                    </div>
+                <div class="form-group">
+                    <label class=" control-label text-center">电话访谈费率:</label>
+                      <p class="form-control-static"><?php echo $model->fee_phone . "（" . ($model->fee_phone_type == 0 ? '' : $model->priceType($model->fee_phone_type)) . "）" ?></p>
+                    </div>
+                <div class="form-group">
+                    <label class="control-label text-center">路演访谈费率:</label>
+                      <p class="form-control-static"><?php echo  $model->fee_road . "（" . ($model->fee_road_type == 0 ? '' : $model->priceType($model->fee_road_type)) . "）" ?></p>
+                    </div>
+                <div class="form-group">
+                    <label class="control-label text-center">面谈访谈费率:</label>
+                      <p class="form-control-static"><?php echo $model->fee_face . "（" . ($model->fee_face_type == 0 ? '' : $model->priceType($model->fee_face_type)) . "）" ?></p>
+                    </div>
+                <div class="form-group">
+                    <label class=" control-label text-center">首次录入人员:</label>
+                      <p class="form-control-static"><?php echo $model->operator ?></p>
+                    </div>
+                </div>
+            </div>
 
             <div class="hr"></div>
 
             <?= \yii\grid\GridView::widget([
                 'dataProvider' => $dataProvider,
+                'summary' => '',
                 'columns' => [
                     'comments',
                     [
@@ -224,6 +251,7 @@ $this->params['breadcrumbs'][] = $this->title;
             <div class="hr"></div>
             <?= \yii\grid\GridView::widget([
                 'dataProvider' => $dataAdviserResume,
+                'summary' => '',
                 'columns' => [
                     'company',
                     'position',
