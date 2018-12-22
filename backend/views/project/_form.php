@@ -431,7 +431,7 @@ $customer = new Customer();
                 [
                     'contentOptions' => ['style' => 'overflow:hidden;text-overflow:ellipsis;white-space:inherit'],
                     'headerOptions' => ['width' => '9%'],
-                    'label' => Yii::t('app', '备注'),
+                    'label' => Yii::t('app', 'Comments'),
                     'value' => 'remark'
                 ],
                 [
@@ -601,6 +601,7 @@ $customer = new Customer();
                     'valueColOptions' => ['style' => 'width:60%']
                 ],
                 [
+                    'label' => 'Comments',
                     'attribute' => 'remark',
                     'value' => $projectAdviser->adviser->remark,
                 ],
@@ -766,6 +767,7 @@ $customer = new Customer();
                 'valueColOptions' => ['style' => 'width:60%']
             ],
             [
+                'label' => 'Comments',
                 'attribute' => 'remark',
                 'options' => ['id' => 'modal2-remark'],
             ],
