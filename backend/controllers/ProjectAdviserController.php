@@ -240,12 +240,13 @@ class ProjectAdviserController extends Controller
     /**
      * 批量修改财务状态
      */
-    public function actionUpdateStatus() {
+    public function actionUpdateStatus()
+    {
         $queryParams = Yii::$app->request->queryParams;
         if (empty($queryParams['project_adviser_list']) || !is_array($queryParams['project_adviser_list']) || empty($queryParams['adviser_pay']) || empty($queryParams['bill_out']) || empty($queryParams['referee_pay'])) {
             echo json_encode(['status' => -1, 'message' => '信息有误'], JSON_UNESCAPED_UNICODE);
         } else {
-            $project_adviser_list = implode(',',$queryParams['project_adviser_list']);
+            $project_adviser_list = implode(',', $queryParams['project_adviser_list']);
             if (!empty($queryParams['adviser_pay'])) {
                 Yii::$app->db->createCommand("update project_adviser set adviser_pay = {$queryParams['adviser_pay']} where id in ({$project_adviser_list})")->execute();
             }
@@ -255,8 +256,23 @@ class ProjectAdviserController extends Controller
             if (!empty($queryParams['referee_pay'])) {
                 Yii::$app->db->createCommand("update project_adviser set referee_pay = {$queryParams['referee_pay']} where id in ({$project_adviser_list})")->execute();
             }
-           echo json_encode(['status' => 0, 'message' => 'success'], JSON_UNESCAPED_UNICODE);
+            echo json_encode(['status' => 0, 'message' => 'success'], JSON_UNESCAPED_UNICODE);
         }
+        exit();
+    }
+
+    /**
+     * 批量修改财务价格
+     */
+    public function actionUpdateFee()
+    {
+        $queryParams = Yii::$app->request->queryParams;
+        if (empty($queryParams['id']) || empty($queryParams['customer_fee'])) {
+            echo json_encode(['status' => -1, 'message' => '信息有误'], JSON_UNESCAPED_UNICODE);
+            exit;
+        }
+        Yii::$app->db->createCommand("update project_adviser set customer_fee = {$queryParams['customer_fee']} where id = {$queryParams['id']}")->execute();
+        echo json_encode(['status' => 0, 'message' => 'success'], JSON_UNESCAPED_UNICODE);
         exit();
     }
 }
