@@ -49,6 +49,7 @@ use dosamigos\datepicker\DatePicker;
             ]
         ]
     )->label(Yii::t('app', 'End Time')); ?>
+</br>
     <?= $form->field($model, 'project_name') ?>
     <?= $form->field($model, 'adviser_name') ?>
     <?= $form->field($model, 'bill_out')->dropDownList(['0' => '请选择', 1 => '否', 2 => '是']) ?>
