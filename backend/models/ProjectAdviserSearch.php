@@ -51,7 +51,7 @@ class ProjectAdviserSearch extends ProjectAdviser
     {
         return [
             [['id', 'project_id', 'adviser_id', 'state', 'date'], 'integer'],
-            [['remark', 'pay_remark', 'project_name', 'adviser_name', 'project_date', 'referee_pay', 'adviser_pay', 'customer','start_date','end_date'], 'safe'],
+            [['remark', 'pay_remark', 'project_name', 'adviser_name', 'project_date', 'referee_pay', 'adviser_pay', 'customer', 'start_date', 'end_date', 'bill_out'], 'safe'],
         ];
     }
 
@@ -98,11 +98,16 @@ class ProjectAdviserSearch extends ProjectAdviser
             'project_id' => $this->project_id,
             'adviser_id' => $this->adviser_id,
             'state' => 6,
-//            'date' => $this->date,
-            'referee_pay' => $this->referee_pay,
-            'adviser_pay' => $this->adviser_pay,
         ]);
-
+        if ($this->bill_out) {
+            $query->andFilterWhere(['bill_out' => $this->bill_out]);
+        }
+        if ($this->adviser_pay) {
+            $query->andFilterWhere(['adviser_pay' => $this->adviser_pay]);
+        }
+        if ($this->referee_pay) {
+            $query->andFilterWhere(['referee_pay' => $this->referee_pay]);
+        }
         $query->andFilterWhere(['like', 't0.name', $this->project_name]);
         $query->andFilterWhere(['like', 't1.name_zh', $this->adviser_name]);
         $query->andFilterWhere(['like', 'remark', $this->remark]);
@@ -154,5 +159,19 @@ class ProjectAdviserSearch extends ProjectAdviser
         ]);
 
         return $dataProvider;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function attributeLabels()
+    {
+        return [
+            'project_name' => Yii::t('app', '项目名称'),
+            'adviser_name' => Yii::t('app', '顾问'),
+            'adviser_pay' => Yii::t('app', '专家成本已出'),
+            'referee_pay' => Yii::t('app', '推荐费已出'),
+            'bill_out' => Yii::t('app', '账单已出'),
+        ];
     }
 }

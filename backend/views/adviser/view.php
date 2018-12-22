@@ -247,7 +247,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'position',
                     'describe',
                     'expertise',
-                    'profile',
+//                    'profile',
                 ],
                 'options' => ['class' => 'table table-hover table-noborder']
             ]) ?>
