@@ -65,7 +65,7 @@ class ProjectAdviserController extends Controller
             if ($model->load($post)) {
                 $model->save();
                 $output = '';
-                $out = \yii\helpers\Json::encode(['output' => $output, 'message' => '保存成功']);
+                $out = \yii\helpers\Json::encode(['output' => $output, 'message' => '']);
             }
             echo $out;
             return;

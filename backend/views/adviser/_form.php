@@ -5,6 +5,8 @@ use yii\widgets\ActiveForm;
 use kartik\select2\Select2;
 use backend\models\Admin;
 use backend\models\Trade;
+use yii\web\JsExpression;
+
 /* @var $this yii\web\View */
 /* @var $model backend\models\Adviser */
 /* @var $form yii\widgets\ActiveForm */
@@ -98,10 +100,29 @@ $trade = new Trade();
         ]
     ])->widget(Select2::classname(), [
         'data' => $model->getAdviser(),
-        'pluginOptions' => ['allowClear' => true, 'width' => '100%'],
+        'pluginOptions' => [
+            'allowClear' => true, 
+            'width' => '100%',
+            'minimumInputLength' => 2,
+            'language' => [
+                'errorLoading' => new JsExpression("function () { return 'Waiting for results...'; }"),
+            ],
+            'ajax' => [
+                'url' => '/project-adviser/adviser',
+                'dataType' => 'json',
+                'delay' => 250,
+                'data' => new JsExpression('function(params) { return {keyword:params.term}; }'),
+                'processResults' => new JsExpression('function(data) {return {results: data};}')
+            ],
+            'escapeMarkup' => new JsExpression('function (markup) {return markup; }'),
+            'templateResult' => new JsExpression('function(city) {return city.text; }'),
+            'templateSelection' => new JsExpression('function (city) {return city.text; }'),
+        ],
         'options' => ['placeholder' => 'Select a state ...'],
         ]
     ) ?>
+
+
     <?= $form->field($model, 'referee_fee', [
         'options' => [
             'class' => 'hide form-group'

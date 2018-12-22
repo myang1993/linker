@@ -94,6 +94,7 @@ $this->params['breadcrumbs'][] = Yii::t('app', '财务');
                     return [
                         'asPopover' => false,
                         'inputType' => \kartik\editable\Editable::INPUT_TEXT,
+                        'options' => ['class'=>'form-control']
                     ];
                 }
             ],
@@ -412,6 +413,7 @@ $("#modal-finance-save").on("click", function() {
         success: function(result){
            data = {};
            $('modal-finance').modal("hide");
+           window.location.reload();
         },
         error: function(result) {
             console.log(result);
