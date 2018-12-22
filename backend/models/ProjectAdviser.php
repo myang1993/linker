@@ -100,9 +100,9 @@ class ProjectAdviser extends \yii\db\ActiveRecord
             'fee' => Yii::t('app', '访谈费率'),
             'fee_type' => Yii::t('app', '费率类型'),
             'fee_rate' => Yii::t('app', '顾问倍率'),
-            'adviser_pay' => Yii::t('app', '专家成本是否已支出'),
-            'referee_pay' => Yii::t('app', '推荐费是否已支出'),
-            'bill_out' => Yii::t('app', '账单是否已出'),
+            'adviser_pay' => Yii::t('app', '专家成本已出'),
+            'referee_pay' => Yii::t('app', '推荐费已出'),
+            'bill_out' => Yii::t('app', '账单已出'),
             'customer_fee' => Yii::t('app', '收客户费用'),
         ];
     }
