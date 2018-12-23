@@ -147,7 +147,8 @@ $this->params['breadcrumbs'][] = Yii::t('app', '财务');
                         'data' => [1 => '否', 2 => '是'],
                         'inputType' => \kartik\editable\Editable::INPUT_DROPDOWN_LIST,
                     ];
-                }
+                },
+                'filter' => ['1' => '否', '2' => '是']
             ],
             [
                 'label' => Yii::t('app', '项目类型'),
@@ -222,7 +223,8 @@ $this->params['breadcrumbs'][] = Yii::t('app', '财务');
                         'data' => [1 => '否', 2 => '是'],
                         'inputType' => \kartik\editable\Editable::INPUT_DROPDOWN_LIST,
                     ];
-                }
+                },
+                'filter' => ['1' => '否', '2' => '是']
             ],
             [
                 'label' => Yii::t('app', '是否有推荐人'),
@@ -278,7 +280,8 @@ $this->params['breadcrumbs'][] = Yii::t('app', '财务');
                         'inputType' => \kartik\editable\Editable::INPUT_DROPDOWN_LIST,
                         'options' => ['class' => 'form-control', 'placeholder' => 'Enter person name...'],
                     ];
-                }
+                },
+                'filter' => ['1' => '否', '2' => '是']
 
             ]
         ],

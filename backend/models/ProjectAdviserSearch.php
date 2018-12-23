@@ -44,11 +44,6 @@ class ProjectAdviserSearch extends ProjectAdviser
     public $start_date;
     public $end_date;
 
-    public $result = [
-        '否' => '1',
-        '是' => '2',
-    ];
-
     /**
      * {@inheritdoc}
      */
@@ -117,14 +112,14 @@ class ProjectAdviserSearch extends ProjectAdviser
             $query->andFilterWhere(['in', 't0.customer_id', $customer_id_arr]);
         }
 
-        if ($this->bill_out && !empty($this->result[$this->bill_out])) {
-            $query->andFilterWhere(['bill_out' => $this->result[$this->bill_out]]);
+        if ($this->bill_out) {
+            $query->andFilterWhere(['bill_out' => $this->bill_out]);
         }
-        if ($this->adviser_pay && !empty($this->result[$this->adviser_pay])) {
-            $query->andFilterWhere(['adviser_pay' => $this->result[$this->adviser_pay]]);
+        if ($this->adviser_pay) {
+            $query->andFilterWhere(['adviser_pay' => $this->adviser_pay]);
         }
-        if ($this->referee_pay && !empty($this->result[$this->referee_pay])) {
-            $query->andFilterWhere(['referee_pay' => $this->result[$this->referee_pay]]);
+        if ($this->referee_pay) {
+            $query->andFilterWhere(['referee_pay' => $this->referee_pay]);
         }
         $query->andFilterWhere(['like', 't0.name', $this->project_name]);
         $query->andFilterWhere(['like', 't1.name_zh', $this->adviser_name]);
