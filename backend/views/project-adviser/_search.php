@@ -49,12 +49,6 @@ use dosamigos\datepicker\DatePicker;
             ]
         ]
     )->label(Yii::t('app', 'End Time')); ?>
-</br>
-    <?= $form->field($model, 'project_name') ?>
-    <?= $form->field($model, 'adviser_name') ?>
-    <?= $form->field($model, 'bill_out')->dropDownList(['0' => '请选择', 1 => '否', 2 => '是']) ?>
-    <?= $form->field($model, 'adviser_pay')->dropDownList(['0' => '请选择', 1 => '否', 2 => '是']) ?>
-    <?= $form->field($model, 'referee_pay')->dropDownList(['0' => '请选择', 1 => '否', 2 => '是']) ?>
 
     <div class="form-group form-group-btn" style="vertical-align: top;">
         <?= Html::submitButton(Yii::t('app', 'Search'), ['class' => 'btn btn-primary']) ?>

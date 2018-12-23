@@ -84,6 +84,11 @@ class AdviserController extends Controller
         $model = new Adviser();
         $type = $model->priceType();
         $tax_type = $model->taxType();
+        $remark = AdviserComments::find()->where(['adviser_id' => $id])->orderBy(['create_time' => SORT_DESC])->one();
+
+        if (!empty($remark->comments)) {
+            $info['remark'] = $remark->comments;
+        }
 
         $info['fee_face_type_v'] = $info['fee_face_type'] == 0 ? $type[1] : $type[$info['fee_face_type']];
         $info['fee_phone_type_v'] = $info['fee_phone_type'] == 0 ? $type[1] : $type[$info['fee_phone_type']];

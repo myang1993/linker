@@ -243,7 +243,7 @@ class Adviser extends \yii\db\ActiveRecord
     public function getComment()
     {
         return $this->hasMany(AdviserComments::className(), ['adviser_id' => 'id'])
-            ->orderBy(['id' => SORT_DESC])->limit(1);
+            ->orderBy(['create_time' => SORT_DESC])->limit(1);
     }
 
     public function getAdviserResume()

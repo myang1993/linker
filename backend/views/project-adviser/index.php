@@ -26,7 +26,7 @@ $this->params['breadcrumbs'][] = Yii::t('app', '财务');
     echo GridView::widget([
         'id' => 'finance-list',
         'dataProvider' => $dataProvider,
-//        'filterModel' => $searchModel,
+        'filterModel' => $searchModel,
         'columns' => [
             // ['class' => 'kartik\grid\CheckboxColumn'],
             
