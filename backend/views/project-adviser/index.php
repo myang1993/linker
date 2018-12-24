@@ -24,6 +24,7 @@ $this->params['breadcrumbs'][] = Yii::t('app', '财务');
         width: fit-content;
         width: -webkit-fit-content;
         border: none;
+        min-height: 100%;
     }
     #finance-list .panel-heading {
         display: none;
