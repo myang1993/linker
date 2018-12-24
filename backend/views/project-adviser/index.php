@@ -29,6 +29,9 @@ $this->params['breadcrumbs'][] = Yii::t('app', '财务');
     #finance-list-container {
         overflow: initial !important;
     }
+    #finance-list .btn-toolbar.pull-right {
+        float: left !important;
+    }
 </style>
 <div class="project-adviser-index list">
 
