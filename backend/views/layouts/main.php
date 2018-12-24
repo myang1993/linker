@@ -101,16 +101,16 @@ AppAsset::register($this);
         <?= Alert::widget() ?>
         <?= $content ?>
     </div>
-    <footer class="footer">
-        <div class="container-fluid">
-            <p class="pull-left">&copy; <?= Html::encode('Linker') ?> <?= date('Y') ?></p>
-
-            <p class="pull-right"></p>
-        </div>
-    </footer>
+    
 </div>
 
+<footer class="footer">
+    <div class="container-fluid">
+        <p class="pull-left">&copy; <?= Html::encode('Linker') ?> <?= date('Y') ?></p>
 
+        <p class="pull-right"></p>
+    </div>
+</footer>
 
 <?php $this->endBody() ?>
 </body>
