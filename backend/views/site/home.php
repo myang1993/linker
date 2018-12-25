@@ -15,20 +15,25 @@ $this->title = Yii::t('app', 'Home');
 <div class="site-index">
     <div class="body-content">
         <div class="row">
-            <div class="col-md-4 col-md-offset-1 highlight box">
+            <div class="col-md-4 col-md-offset-1 highlight box form-inline">
                 <h3 class="text-center">个人信息</h3>
-                <p>
-                    <label>访谈小时数:</label><?=$hours ?>小时
-                </p>
-                <p>
-                    <label>安排Call个数:</label><?=$calls ?>
-                </p>
-                <p>
-                    <label>当前排名:</label><?=$order ?>
-                </p>
-                <p>
-                    <label>新专家率:</label><?=$rate ?>
-                </p>
+
+                <div class="form-group">
+                    <label class="control-label text-center">访谈小时数:</label>
+                    <p class="form-control-static"><strong><?=$hours ?></strong>小时</p>
+                </div></br>
+                <div class="form-group">
+                    <label class="control-label text-center">安排Call个数:</label>
+                    <p class="form-control-static"><strong><?=$calls ?></strong></p>
+                </div></br>
+                <div class="form-group">
+                    <label class="control-label text-center">当前排名:</label>
+                    <p class="form-control-static"><strong><?=$order ?></strong></p>
+                </div></br>
+                <div class="form-group">
+                    <label class="control-label text-center">新专家率:</label>
+                    <p class="form-control-static"><strong><?=$rate ?></strong></p>
+                </div>
             </div>
         </div>
 
