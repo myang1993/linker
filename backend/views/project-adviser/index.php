@@ -18,6 +18,24 @@ use kartik\switchinput\SwitchInputAsset;
 $this->title = Yii::t('app', '财务');
 $this->params['breadcrumbs'][] = Yii::t('app', '财务');
 ?>
+
+<style type="text/css">
+    #finance-list .panel {
+        width: fit-content;
+        width: -webkit-fit-content;
+        border: none;
+        min-height: 100%;
+    }
+    #finance-list .panel-heading {
+        display: none;
+    }
+    #finance-list-container {
+        overflow: initial !important;
+    }
+    #finance-list .btn-toolbar.pull-right {
+        float: left !important;
+    }
+</style>
 <div class="project-adviser-index list">
 
     <!-- <h1><?= Html::encode($this->title) ?></h1> -->

@@ -1,6 +1,8 @@
 html,
 body {
     height: 100%;
+    width: fit-content;
+    min-width: 100%;
 }
 
 .wrap {
@@ -8,7 +10,9 @@ body {
     height: auto;
     margin: 0 auto -60px;
     padding: 0 0 60px;
-    overflow: hidden;
+/*    width: -webkit-fit-content;
+    width: fit-content;*/
+    /*overflow: hidden;*/
 }
 
 .wrap > .container {
