@@ -20,7 +20,7 @@ $this->title = Yii::t('app', 'Home');
 
                 <div class="form-group">
                     <label class="control-label text-center">访谈小时数:</label>
-                    <p class="form-control-static"><strong><?=$hours ?></strong>小时</p>
+                    <p class="form-control-static"><strong><?= $hours ?></strong></p>
                 </div></br>
                 <div class="form-group">
                     <label class="control-label text-center">安排Call个数:</label>
