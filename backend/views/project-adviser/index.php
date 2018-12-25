@@ -35,6 +35,10 @@ $this->params['breadcrumbs'][] = Yii::t('app', '财务');
     #finance-list .btn-toolbar.pull-right {
         float: left !important;
     }
+    #finance-list-container table tr > td {
+        white-space: no-wrap;
+    }
+
 </style>
 <div class="project-adviser-index list">
 
@@ -59,6 +63,9 @@ $this->params['breadcrumbs'][] = Yii::t('app', '财务');
                 'value' => function ($data) {
                     return date('Y-m-d H:i', $data->date);
                 },
+                'contentOptions' => [
+                    'style' => 'width: 100px;'
+                ]
             ],
             [
                 'label' => Yii::t('app', '客户名称'),

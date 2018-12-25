@@ -8,6 +8,15 @@
 .site-index .box h3 {
 	margin: 80px 0;
 }
-.site-index .box p {
-	padding-left: 100px;
+.site-index  .form-group label {
+	width: 200px;
+	text-align: right;
+}
+.site-index  .form-group strong {
+	font-weight: bold;
+	font-size: 24px;
+	color: #ca861b;
+}
+.site-index  .form-group p {
+	margin-left: 20px;
 }

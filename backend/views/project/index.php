@@ -48,13 +48,13 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'attribute' => 'head',
                 'contentOptions' => [
-                    'style' => 'width: 120px;'
+                    'style' => 'width: 80px;'
                 ]
             ],
             [
                 'attribute' => 'participants',
                 'contentOptions' => [
-                    'style' => 'width: 120px;'
+                    'style' => 'width: 200px;'
                 ]
             ],
             [
@@ -64,7 +64,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     return $data->statusType($data->status);
                 },
                 'contentOptions' => [
-                    'style' => 'width: 120px;'
+                    'style' => 'width: 80px;'
                 ]
             ],
             [
@@ -72,12 +72,18 @@ $this->params['breadcrumbs'][] = $this->title;
                 'value' => function($data){
                     return date('Y-m-d', $data->start_time);
                 },
+                'contentOptions' => [
+                    'style' => 'width: 100px;'
+                ]                
             ],
             [
                 'attribute' => 'create_time',
                 'value' => function($data){
                     return date('Y-m-d', $data->create_time);
                 },
+                'contentOptions' => [
+                    'style' => 'width: 100px;'
+                ]
             ],
             [
                 'label' => Yii::t('app', '参与顾问'),
@@ -94,7 +100,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     return implode('，', $unique);
                 },
                 'contentOptions' => [
-                    'style' => 'width: 120px;'
+                    'style' => 'width: 200px;'
                 ]
             ],
             [
