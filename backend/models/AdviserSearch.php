@@ -98,6 +98,17 @@ class AdviserSearch extends Adviser
             'child_trade'=>$this->child_trade,
         ]);
 
+        if ($this->describe) {
+            $describe = explode(' ', $this->describe);
+            foreach ($describe as $value) {
+                if (isset($params['mode']) && $params['mode'] == 1) {
+                    $query->orFilterWhere(['like', 'describe', $value]);
+                } else {
+                    $query->andFilterWhere(['like', 'describe', $value]);
+                }
+            }
+        }
+
         if (isset($params['mode']) && $params['mode'] == 1) {
             if (isset($adviser_id_arr)) {
                 $query->orFilterWhere(['in', 'adviser.id', $adviser_id_arr]);
@@ -111,7 +122,6 @@ class AdviserSearch extends Adviser
                 ->orFilterWhere(['like', 'linkedin', $this->linkedin])
                 ->orFilterWhere(['like', 'company', $this->company])
                 ->orFilterWhere(['like', 'position', $this->position])
-                ->orFilterWhere(['like', 'describe', $this->describe])
                 ->orFilterWhere(['like', 'expertise', $this->expertise])
                 ->orFilterWhere(['like', 'bank_card_name', $this->bank_card_name])
                 ->orFilterWhere(['like', 'bank_card_addr', $this->bank_card_addr])
@@ -135,7 +145,6 @@ class AdviserSearch extends Adviser
                 ->andFilterWhere(['like', 'linkedin', $this->linkedin])
                 ->andFilterWhere(['like', 'company', $this->company])
                 ->andFilterWhere(['like', 'position', $this->position])
-                ->andFilterWhere(['like', 'describe', $this->describe])
                 ->andFilterWhere(['like', 'expertise', $this->expertise])
                 ->andFilterWhere(['like', 'bank_card_name', $this->bank_card_name])
                 ->andFilterWhere(['like', 'bank_card_addr', $this->bank_card_addr])

@@ -55,7 +55,7 @@ $trade = new Trade();
     <?= $form->field($model, 'company')->textInput() ?>
     <?= $form->field($model, 'position')->textInput() ?>
     <?= $form->field($model, 'mobile_phone')->textInput() ?>
-    <?= $form->field($model, 'describe')->textInput() ?>
+    <?= $form->field($model, 'describe')->textInput(['placeholder' => '多个背景以空格分割']) ?>
     <?= $form->field($model, 'expertise')->textInput() ?>
     <?= $form->field($model, 'profile')->textInput() ?>
 

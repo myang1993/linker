@@ -256,8 +256,8 @@ class SiteController extends Controller
             $user_id = Yii::$app->user->id;
             $date = strtotime(date('Y-m'));
             $hours = $db->createCommand("select sum(hour) hours from project_adviser where selector_id = {$user_id} and state = 6 and date >= {$date}")->queryAll();
-            $calls = $db->createCommand("select count(*) calls from project_adviser where selector_id = {$user_id} and state in (4,6) and date >= {$date}")->queryAll();
-            $AllCalls = $db->createCommand("select count(*) calls,selector_id from project_adviser where state in (4,6) and date >= {$date} GROUP BY selector_id ORDER BY calls desc")->queryAll();
+            $calls = $db->createCommand("select count(*) calls from project_adviser where selector_id = {$user_id} and state in (4) and date >= {$date}")->queryAll();
+            $AllCalls = $db->createCommand("select count(*) calls,selector_id from project_adviser where state in (4) and date >= {$date} GROUP BY selector_id ORDER BY calls desc")->queryAll();
             $i = 0;
             if (!empty($AllCalls)) {
                 foreach ($AllCalls as $key=> $value) {
