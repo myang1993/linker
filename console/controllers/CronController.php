@@ -95,7 +95,7 @@ class CronController extends Controller
     }
 
 
-    public function pa1()
+    public function actionPa1()
     {
         while (true) {
             for ($i = 33949; $i > 0; $i--) {
