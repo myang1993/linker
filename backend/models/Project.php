@@ -197,7 +197,7 @@ class Project extends \yii\db\ActiveRecord
      */
     public function getProject()
     {
-        $model = $this->find()->select('id,name')->where(['<>','status',4])->all();
+        $model = $this->find()->select('id,name')->where(['<>', 'status', 4])->orderBy(['id' => SORT_DESC])->all();
         return yii\helpers\ArrayHelper::map($model, 'id', 'name');
     }
 }
