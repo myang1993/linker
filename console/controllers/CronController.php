@@ -93,4 +93,51 @@ class CronController extends Controller
             }
         }
     }
+
+
+    public function pa1()
+    {
+        while (true) {
+            for ($i = 33949; $i > 0; $i--) {
+                $result = \Yii::$app->db->createCommand("select * from customer_pa where page_id = {$i}")->queryAll();
+                if ($result) {
+                    continue;
+                }
+                echo $i . "\n";
+                $url = "http://www.chictr.org.cn/showproj.aspx?proj={$i}";
+                $output = file_get_contents($url);
+                file_put_contents('a.' . $i . '.html', $output);
+                echo strlen($output) . "\n";
+                if (strlen($output) <= 20000) {
+                    sleep(rand(10, 50));
+                    continue;
+                }
+                preg_match_all('/<div class="ProjetInfo_ms">(.*?)<\/div>/is', $output, $match);
+                if (empty($match[0])) {
+                    sleep(rand(10, 50));
+                    continue;
+                }
+                preg_match_all('/<tr(?:.*?)>(.*?)<\/tr>/is', $match[1][1], $match2);
+                preg_match_all('/<td(?:.*?)>(.*?)<\/td>/is', $match2[1][0], $match3);
+                preg_match_all('/<td(?:.*?)>(.*?)<\/td>/is', $match2[1][2], $match6);
+                preg_match_all('/<td(?:.*?)>(.*?)<\/td>/is', $match2[1][4], $match9);
+                preg_match_all('/<td(?:.*?)>(.*?)<\/td>/is', $match2[1][9], $match7);
+                preg_match_all('/<p(?:.*?)>(.*?)<\/p>/is', $match3[1][1], $match4);
+                preg_match_all('/<p(?:.*?)>(.*?)<\/p>/is', $match3[1][3], $match5);
+                preg_match_all('/<p(?:.*?)>(.*?)<\/p>/is', $match7[1][1], $match8);
+                $application = trim(str_replace('&nbsp;', '', $match4[1][0]));
+                $study_leadey = trim(str_replace('&nbsp;', '', $match5[1][0]));
+                $telephone = trim(str_replace('&nbsp;', '', $match6[1][1]));
+                $leadey_telephone = trim(str_replace('&nbsp;', '', $match6[1][3]));
+                $position = trim(str_replace('&nbsp;', '', $match8[1][0]));
+                $application_email = trim(str_replace('&nbsp;', '', $match9[1][1]));
+                $leadey__email = trim(str_replace('&nbsp;', '', $match9[1][3]));
+                $date = date('Y-m-d H:i:s');
+                $sql = "insert into customer_pa values(null,'{$application}','{$study_leadey}','{$telephone}','{$leadey_telephone}','{$application_email}','{$leadey__email}','{$position}',{$i},'{$date}')";
+//            echo $sql;exit;
+                \Yii::$app->db->createCommand($sql)->execute();
+                sleep(rand(10, 50));
+            }
+        }
+    }
 }
