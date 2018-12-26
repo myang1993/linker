@@ -36,13 +36,13 @@ class CronController extends Controller
                     "Accept-Language: zh-CN,zh;q=0.9",
                     "Cache-Control:no-cache",
                     "Connection:keep-alive",
-                    "Cookie: ccpassport=5465cab91330ac6f2b283fa3f9233440; wzwsconfirm=89044899ff6f75a8e26a335349ee5f97; wzwstemplate=Mw==; wzwschallenge=-1; wzwsvtime={$time};",
+                    "Cookie: wzwsconfirm=7523f16210770dbd0a8390b7ea8a27fa; wzwstemplate=Ng==; ccpassport=5465cab91330ac6f2b283fa3f9233440; wzwschallenge=-1;wzwsvtime=1545783140; onlineusercount=1",
                     "Host:www.chictr.org.cn",
                     "Pragma:no-cache",
                     "Referer: http://www.chictr.org.cn/searchproj.aspx",
                     "Upgrade-Insecure-Requests: 1",
                     "User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.162 Safari/537.36",
-                    "X-FORWARDED-FOR:" . $this->Rand_IP() . ", CLIENT-IP:" . $this->Rand_IP()
+//                    "X-FORWARDED-FOR:" . $this->Rand_IP() . ", CLIENT-IP:" . $this->Rand_IP()
                 ];
 
                 $url = "http://www.chictr.org.cn/showproj.aspx?proj={$i}";
@@ -59,12 +59,12 @@ class CronController extends Controller
                 file_put_contents('a.' . $i . '.html', $output);
                 echo strlen($output) . "\n";
                 if (strlen($output) <= 20000) {
-                    sleep(120);
+                    sleep(10);
                     continue;
                 }
                 preg_match_all('/<div class="ProjetInfo_ms">(.*?)<\/div>/is', $output, $match);
                 if (empty($match[0])) {
-                    sleep(120);
+                    sleep(10);
                     continue;
                 }
                 preg_match_all('/<tr(?:.*?)>(.*?)<\/tr>/is', $match[1][1], $match2);
@@ -82,11 +82,11 @@ class CronController extends Controller
                 $position = trim(str_replace('&nbsp;', '', $match8[1][0]));
                 $application_email = trim(str_replace('&nbsp;', '', $match9[1][1]));
                 $leadey__email = trim(str_replace('&nbsp;', '', $match9[1][3]));
-
-                $sql = "insert into customer_pa values(null,'{$application}','{$study_leadey}','{$telephone}','{$leadey_telephone}','{$application_email}','{$leadey__email}','{$position}',{$i})";
+                $date = date('Y-m-d H:i:s');
+                $sql = "insert into customer_pa values(null,'{$application}','{$study_leadey}','{$telephone}','{$leadey_telephone}','{$application_email}','{$leadey__email}','{$position}',{$i},'{$date}')";
 //            echo $sql;exit;
                 \Yii::$app->db->createCommand($sql)->execute();
-                sleep(120);
+                sleep(10);
             }
         }
     }
