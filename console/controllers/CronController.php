@@ -29,14 +29,17 @@ class CronController extends Controller
                     continue;
                 }
                 echo $i . "\n";
-                $time = time();
+                $time = 1545830822;
+                if (time() - $time > 200) {
+                    $time = time();
+                }
                 $header = [
                     "Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8",
                     "Accept-Encoding: gzip, deflate",
                     "Accept-Language: zh-CN,zh;q=0.9",
                     "Cache-Control:no-cache",
                     "Connection:keep-alive",
-                    "Cookie: wzwsconfirm=7523f16210770dbd0a8390b7ea8a27fa; wzwstemplate=Ng==; ccpassport=5465cab91330ac6f2b283fa3f9233440; wzwschallenge=-1;wzwsvtime=1545783140; onlineusercount=1",
+                    "Cookie: wzwsconfirm=7523f16210770dbd0a8390b7ea8a27fa; wzwstemplate=Ng==; ccpassport=5465cab91330ac6f2b283fa3f9233440; wzwschallenge=-1;wzwsvtime={$time}; onlineusercount=1",
                     "Host:www.chictr.org.cn",
                     "Pragma:no-cache",
                     "Referer: http://www.chictr.org.cn/searchproj.aspx",
@@ -59,12 +62,12 @@ class CronController extends Controller
                 file_put_contents('a.' . $i . '.html', $output);
                 echo strlen($output) . "\n";
                 if (strlen($output) <= 20000) {
-                    sleep(10);
+                    sleep(rand(10, 60));
                     continue;
                 }
                 preg_match_all('/<div class="ProjetInfo_ms">(.*?)<\/div>/is', $output, $match);
                 if (empty($match[0])) {
-                    sleep(10);
+                    sleep(rand(10, 60));
                     continue;
                 }
                 preg_match_all('/<tr(?:.*?)>(.*?)<\/tr>/is', $match[1][1], $match2);
@@ -86,7 +89,7 @@ class CronController extends Controller
                 $sql = "insert into customer_pa values(null,'{$application}','{$study_leadey}','{$telephone}','{$leadey_telephone}','{$application_email}','{$leadey__email}','{$position}',{$i},'{$date}')";
 //            echo $sql;exit;
                 \Yii::$app->db->createCommand($sql)->execute();
-                sleep(10);
+                sleep(rand(10, 60));
             }
         }
     }
