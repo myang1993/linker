@@ -215,6 +215,12 @@ $trade = new Trade();
         ]
     ])->textArea(['maxlength' => true, 'class' => 'form-control form-field-5']) ?>
 
+    <?= $form->field($model, 'profile', [
+        'options' => [
+            'class' => 'form-group form-group-block ht_2'
+        ]
+    ])->textArea(['maxlength' => true, 'class' => 'form-control form-field-5']) ?>
+
     <div class="hr"></div>
 
     <h3 class="title"><?= Yii::t('app', 'Bank card Information') ?></h3>
