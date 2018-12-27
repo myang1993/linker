@@ -17,6 +17,7 @@ use Yii;
  */
 class AdviserResume extends \yii\db\ActiveRecord
 {
+    public $isnow = '';
     /**
      * {@inheritdoc}
      */
@@ -51,6 +52,7 @@ class AdviserResume extends \yii\db\ActiveRecord
             'begin_time' => '开始时间',
             'end_time' => '结束时间',
             'create_time' => '创建时间',
+            'isnow' => '至今',
         ];
     }
 

@@ -350,14 +350,14 @@ $this->params['breadcrumbs'][] = Yii::t('app', '财务');
     ?>
 
     <?php Modal::begin([
-            'header' => '<h4 class="modal-title text-center"><strong>选择项目</strong></h4>',
+            'header' => '<h4 class="modal-title text-center"><strong>修改状态</strong></h4>',
             'id' => 'modal-finance',
             // 'toggleButton' => ['label' => '更改状态', 'class' => 'btn btn-primary add_button'],
             'options' => ['tabindex' => false]
         ]); ?>
 
         <?php echo '<label class="control-label col-md-4 text-right">是否出账单</label>'; ?>
-        <div style="display: inline-block;">
+        <div class="text-center" style="display: inline-block;width:40%;">
             <?php echo SwitchInput::widget([
                 'name'=>'pay',
                 'inlineLabel'=> true,
@@ -371,7 +371,7 @@ $this->params['breadcrumbs'][] = Yii::t('app', '财务');
             ]); ?>
         </div></br>
         <?php echo '<label class="control-label col-md-4 text-right">是否支付专家成本</label>'; ?>
-        <div style="display: inline-block;">
+        <div class="text-center" style="display: inline-block;width:40%;">
             <?php echo SwitchInput::widget([
                 'name'=>'adviser_fee', 
                 'inlineLabel' => false,
@@ -388,7 +388,7 @@ $this->params['breadcrumbs'][] = Yii::t('app', '财务');
             ]); ?>
         </div></br>
         <?php echo '<label class="control-label col-md-4 text-right">是否支付推荐费</label>'; ?>
-        <div style="display: inline-block;">
+        <div class="text-center" style="display: inline-block;width:40%;">
             <?php echo SwitchInput::widget([
                 'name'=>'recommend_fee', 
                 'inlineLabel' => false,
@@ -428,23 +428,36 @@ $("#modal-finance-save").on("click", function() {
     return false;
   }
 
-  data['bill_out'] = $('input[name="pay"]').val();
-  data['adviser_pay'] = $('input[name="adviser_fee"]').val();
-  data['referee_pay'] = $('input[name="recommend_fee"]').val();
+//   data['bill_out'] = $('input[name="pay"]').val();
+//   data['adviser_pay'] = $('input[name="adviser_fee"]').val();
+//   data['referee_pay'] = $('input[name="recommend_fee"]').val();
 
   data['project_adviser_list'] = array;
   $.ajax({
         url: "/project-adviser/update-status",
         dataType: "json",
         method: "GET",
-        data: data,
-        success: function(result){
-           data = {};
-           $('modal-finance').modal("hide");
-           window.location.reload();
-        },
-        error: function(result) {
-            console.log(result);
+        data: data
+        // done: function(result){
+        //     alert(1);
+        //    data = {};
+        //    $('modal-finance').modal("hide");
+        //    window.location.reload();
+        // },
+        // fail: function(result) {
+        //     alert(2);
+        //     console.log(result);
+        //     $('.modal_tip ').text(result);
+        // }
+    }).done(function(result){
+        console.log(result.status);
+        if(result.status == 0) {
+            $('modal-finance').modal("hide");
+            data = {};
+            array = [];
+            window.location.reload();
+        }else {
+            $('.modal_tip ').text(result.message);
         }
     });
 
