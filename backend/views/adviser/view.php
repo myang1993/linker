@@ -6,6 +6,7 @@ use backend\models\Trade;
 use yii\bootstrap\Modal;
 use kartik\select2\Select2;
 use kartik\detail\DetailView;
+use kartik\switchinput\SwitchInput;
 use yii\web\JsExpression;
 /* @var $this yii\web\View */
 /* @var $model backend\models\Adviser */
@@ -263,7 +264,12 @@ $this->params['breadcrumbs'][] = $this->title;
                     'company',
                     'position',
                     'begin_time',
-                    'end_time',
+                    [
+                        'attribute' => 'end_time',
+                        'value' => function($model) {
+                            return empty($model->end_time) ? '至今' : $model->end_time;
+                        },
+                    ],
                     'create_time',
 //                    ['class' => 'yii\grid\ActionColumn'],
                 ],
@@ -274,7 +280,11 @@ $this->params['breadcrumbs'][] = $this->title;
             $adviserResume->adviser_id = $model->id;
             $adviserResume->create_time = date('Y-m-d H:i:s');
             ?>
+            <style>
+                #add_resume .still {
 
+                }
+            </style>
             <?php Modal::begin([
                 'header' => '<h4 class="modal-title" style="1000px">' . '添加简历' . '</h4>',
                 'toggleButton' => ['label' => '<i class="glyphicon glyphicon-plus"></i>' . '添加简历', 'class' => 'btn btn-primary'],
@@ -286,7 +296,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'condensed' => true,
                 'hover' => true,
                 'mode' => DetailView::MODE_EDIT,
-                'container' => ['id' => 'kv-demo'],
+                'container' => ['id' => 'add_resume'],
                 'panel' => [
                     'heading' => '',
                     'type' => DetailView::TYPE_PRIMARY,
@@ -345,9 +355,19 @@ $this->params['breadcrumbs'][] = $this->title;
                                 'autoclose' => true,
                                 'format' => 'yyyy-MM',
                                 'todayHighlight' => true,
+                                'todayBtn' => true,
                                 'maxViewMode'=>2,
                                 'minViewMode'=>1
                             ]
+                        ],
+                        'valueColOptions' => ['style' => 'width:60%']
+                    ],
+                    [
+                        'attribute'=>'isnow', 
+                        'label'=>false,
+                        'format'=>'raw',
+                        'type'=>DetailView::INPUT_CHECKBOX,
+                        'widgetOptions' => [
                         ],
                         'valueColOptions' => ['style' => 'width:60%']
                     ],
@@ -418,6 +438,15 @@ $this->registerJs('
                     }
 
                 });
+            });
+            var endtime = $("#add_resume").find("tbody > tr").eq(6);
+            $("#adviserresume-isnow").change(function(){
+                console.log("--------------",$(this).is(":checked"));
+                if($(this).is(":checked")) {
+                    endtime.hide();
+                }else {
+                    endtime.show();
+                }
             });
         })
     ')
