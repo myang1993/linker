@@ -27,6 +27,11 @@ $this->title = Yii::t('app', 'Home');
                     <p class="form-control-static"><strong><?=$calls ?></strong></p>
                 </div></br>
                 <div class="form-group">
+                    <label class="control-label text-center">完成Call个数:</label>
+                    <p class="form-control-static"><strong><?= $complete_calls ?></strong></p>
+                </div>
+                </br>
+                <div class="form-group">
                     <label class="control-label text-center">当前排名:</label>
                     <p class="form-control-static"><strong><?=$order ?></strong></p>
                 </div></br>
