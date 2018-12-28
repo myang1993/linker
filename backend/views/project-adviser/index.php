@@ -36,7 +36,7 @@ $this->params['breadcrumbs'][] = Yii::t('app', '财务');
         float: left !important;
     }
     #finance-list-container table tr > td {
-        white-space: no-wrap;
+        white-space: nowrap;
     }
 
 </style>
@@ -428,9 +428,9 @@ $("#modal-finance-save").on("click", function() {
     return false;
   }
 
-//   data['bill_out'] = $('input[name="pay"]').val();
-//   data['adviser_pay'] = $('input[name="adviser_fee"]').val();
-//   data['referee_pay'] = $('input[name="recommend_fee"]').val();
+  data['bill_out'] = $('input[name="pay"]').val();
+  data['adviser_pay'] = $('input[name="adviser_fee"]').val();
+  data['referee_pay'] = $('input[name="recommend_fee"]').val();
 
   data['project_adviser_list'] = array;
   $.ajax({
@@ -438,17 +438,6 @@ $("#modal-finance-save").on("click", function() {
         dataType: "json",
         method: "GET",
         data: data
-        // done: function(result){
-        //     alert(1);
-        //    data = {};
-        //    $('modal-finance').modal("hide");
-        //    window.location.reload();
-        // },
-        // fail: function(result) {
-        //     alert(2);
-        //     console.log(result);
-        //     $('.modal_tip ').text(result);
-        // }
     }).done(function(result){
         console.log(result.status);
         if(result.status == 0) {
