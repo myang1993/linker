@@ -38,7 +38,11 @@ $this->params['breadcrumbs'][] = Yii::t('app', '财务');
     #finance-list-container table tr > td {
         white-space: nowrap;
     }
-
+    #opts {
+        position: fixed;
+        top: 100px;
+        right: 10px;
+    }
 </style>
 <div class="project-adviser-index list">
 
@@ -192,6 +196,9 @@ $this->params['breadcrumbs'][] = Yii::t('app', '财务');
             [
                 'label' => Yii::t('app', '备注'),
                 'attribute' => 'remark',
+                'contentOptions' => [
+                    'style' => 'white-space: inherit;'
+                ]
             ],
             [
                 'label' => Yii::t('app', '专家费率'),
