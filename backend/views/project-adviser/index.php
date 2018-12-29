@@ -39,7 +39,7 @@ $this->params['breadcrumbs'][] = Yii::t('app', '财务');
         white-space: nowrap;
     }
     #opts {
-        position: fixed;
+        position: absolute;
         top: 100px;
         right: 10px;
     }
