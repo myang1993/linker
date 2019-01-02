@@ -140,6 +140,11 @@ $this->params['breadcrumbs'][] = Yii::t('app', '财务');
                 'value' => function ($model) {
                     return $model->adviser->position;
                 },
+                'contentOptions' => function($data){
+                    $arr = [];
+                    $arr['style'] = 'white-space: initial;display: -webkit-box;-webkit-box-orient: vertical;-webkit-line-clamp: 3;overflow: hidden;';
+                    return $arr;
+                }
             ],
             [
                 'label' => Yii::t('app', '专家公司'),
@@ -196,9 +201,13 @@ $this->params['breadcrumbs'][] = Yii::t('app', '财务');
             [
                 'label' => Yii::t('app', '备注'),
                 'attribute' => 'remark',
-                'contentOptions' => [
-                    'style' => 'white-space: inherit;'
-                ]
+                'contentOptions' => function($data){
+                    $arr = [];
+                    $arr['title'] = $data->remark;
+                    $arr['style'] = 'max-width: 160px;white-space: initial;display: -webkit-box;-webkit-box-orient: vertical;-webkit-line-clamp: 3;overflow: hidden;';
+                    return $arr;
+                }
+
             ],
             [
                 'label' => Yii::t('app', '专家费率'),
