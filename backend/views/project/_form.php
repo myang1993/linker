@@ -961,15 +961,15 @@ $this->registerJs(
                             $("#modal2-remark").val(data.remark);
                             $("#modal2-pay_remark").val(data.pay_remark);
                             var tmp = [];
-                            tmp[0] = "<option value="+data.fee_face+" data-type="+data.fee_face_type+" data-pay=fee_face>("+data.tax_type_v+") ' . Yii::t('app', 'Face Interview Price') . ' "+data.fee_face+" ("+data.fee_face_type_v+")</option>";
-                            tmp[1] = "<option value="+data.fee_phone+" data-type="+data.fee_phone_type+" data-pay=fee_phone>("+data.tax_type_v+") ' . Yii::t('app', 'Telephone Interview Price') . ' "+data.fee_phone+" ("+data.fee_phone_type_v+")</option>";
+                            tmp[0] = "<option value="+data.fee_phone+" data-type="+data.fee_phone_type+" data-pay=fee_phone>("+data.tax_type_v+") ' . Yii::t('app', 'Telephone Interview Price') . ' "+data.fee_phone+" ("+data.fee_phone_type_v+")</option>";
+                            tmp[1] = "<option value="+data.fee_face+" data-type="+data.fee_face_type+" data-pay=fee_face>("+data.tax_type_v+") ' . Yii::t('app', 'Face Interview Price') . ' "+data.fee_face+" ("+data.fee_face_type_v+")</option>";
                             tmp[2] = "<option value="+data.fee_road+" data-type="+data.fee_road_type+" data-pay=fee_road>("+data.tax_type_v+") ' . Yii::t('app', 'Roadshow Interview Price') . ' "+data.fee_road+" ("+data.fee_road_type_v+")</option>";
 
                             for(var i=0;i<3;i++){
                                 sel2.append(tmp[i]);
                             }
 
-                            fee_type.val(data.fee_face_type);
+                            fee_type.val(data.fee_phone_type);
                             pay_type.val("fee_face");
                             adv_cmp.text(data.company);
                             adv_pos.text(data.position);

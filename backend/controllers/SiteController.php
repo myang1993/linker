@@ -257,7 +257,8 @@ class SiteController extends Controller
             $date = strtotime(date('Y-m'));
             $hours = $db->createCommand("select sum(hour) hours from project_adviser where selector_id = {$user_id} and state = 6 and date >= {$date}")->queryAll();
             $calls = $db->createCommand("select count(*) calls from project_adviser where selector_id = {$user_id} and state in (4) and date >= {$date}")->queryAll();
-            $AllCalls = $db->createCommand("select count(*) calls,selector_id from project_adviser where state in (4) and date >= {$date} GROUP BY selector_id ORDER BY calls desc")->queryAll();
+            $complete_calls = $db->createCommand("select count(*) calls from project_adviser where selector_id = {$user_id} and state in (6) and date >= {$date}")->queryAll();
+            $AllCalls = $db->createCommand("select count(*) calls,selector_id from project_adviser where state in (6) and date >= {$date} GROUP BY selector_id ORDER BY calls desc")->queryAll();
             $i = 0;
             if (!empty($AllCalls)) {
                 foreach ($AllCalls as $key=> $value) {
@@ -286,6 +287,7 @@ class SiteController extends Controller
                 'model' => $model,
                 'hours' => isset($hours[0]['hours']) ?$hours[0]['hours']:0,
                 'calls' => isset($calls[0]['calls']) ?$calls[0]['calls']:0,
+                'complete_calls' => isset($complete_calls[0]['calls']) ? $complete_calls[0]['calls'] : 0,
                 'order' => isset($order) ?$order:'',
                 'rate'=> isset($hours[0]['hours']) ?$new_hours/$hours[0]['hours']:0
 
