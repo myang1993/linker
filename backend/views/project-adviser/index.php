@@ -307,15 +307,12 @@ $this->params['breadcrumbs'][] = Yii::t('app', '财务');
                 'attribute' => 'referee_pay',
                 'vAlign' => 'middle',
                 'value' => function ($model) {
-                    return $model->adviser_pay == 1 ? '否' : '是';
+                    return $model->referee_pay == 1 ? '否' : '是';
                 },
                 'editableOptions' => function ($model, $key, $index) {
                     return [
                         'name' => 'referee_pay',
                         'size' => 'md',
-                        'formOptions' => [
-                            'action' => ['prject-adviser/update', 'id' => $model->id]
-                        ],
                         'asPopover' => false,
                         'data' => [1 => '否', 2 => '是'],
                         'inputType' => \kartik\editable\Editable::INPUT_DROPDOWN_LIST,
