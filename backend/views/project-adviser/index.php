@@ -445,7 +445,9 @@ $("#modal-finance-save").on("click", function() {
   data['adviser_pay'] = $('input[name="adviser_fee"]').val();
   data['referee_pay'] = $('input[name="recommend_fee"]').val();
 
-  data['project_adviser_list'] = array;
+  data['project_adviser_list'] = array.filter(function(item) {
+    return item;
+  });
   $.ajax({
         url: "/project-adviser/update-status",
         dataType: "json",
