@@ -143,6 +143,7 @@ $this->params['breadcrumbs'][] = Yii::t('app', '财务');
                 'contentOptions' => function($data){
                     $arr = [];
                     $arr['style'] = 'white-space: initial;display: -webkit-box;-webkit-box-orient: vertical;-webkit-line-clamp: 3;overflow: hidden;';
+                    $arr['title'] = $data->adviser->position;
                     return $arr;
                 }
             ],
@@ -152,6 +153,11 @@ $this->params['breadcrumbs'][] = Yii::t('app', '财务');
                 'value' => function ($model) {
                     return $model->adviser->company;
                 },
+                'contentOptions' => function($data){
+                    $arr = [];
+                    $arr['style'] = 'white-space: initial;';
+                    return $arr;
+                }
             ],
             [
                 'label' => Yii::t('app', '客户单价'),
