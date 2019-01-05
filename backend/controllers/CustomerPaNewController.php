@@ -161,24 +161,54 @@ class CustomerPaNewController extends Controller
         curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1); //加入重定向处理,加了重定向直接空白
         $output = curl_exec($ch);
         curl_close($ch);
-        file_put_contents('aaaaaaaaaaaa.html',$output);
-        list($header, $body) = explode("\r\n\r\n", $output);
-        preg_match('/eval(.*)<\/script>/is',$body,$match);
+        file_put_contents('aaaaaaaaaaaa.html', $output);
+        $html = explode("\r\n\r\n", $output);
+        if (isset($html[1])) {
+            $header = $html[0];
+            $body = $html[1];
+        } else {
+            echo json_encode([0]);
+            exit;
+        }
+        preg_match('/eval(.*)<\/script>/is', $body, $match);
         preg_match_all("/set\-cookie:([^\r\n]*)/i", $header, $matches_cookie);
         if (isset($match[1])) {
-            echo json_encode([$match[1],explode(';', $matches_cookie[1][0])[0]]);
+            echo json_encode([$match[1], explode(';', $matches_cookie[1][0])[0]]);
+            exit;
         } else {
-            echo json_encode([0,explode(';', $matches_cookie[1][0])[0]]);
+            echo json_encode([0]);
+            exit;
         }
     }
 
     public function actionStep2()
     {
         $post = Yii::$app->request->post();
-        $dynamicurl = $post['dynamicurl'];
-        $wzwsconfirm = $post['wzwsconfirm'];
-        $wzwstemplate = $post['wzwstemplate'];
-        $wzwschallenge = $post['wzwschallenge'];
+        if (isset($post['dynamicurl'])) {
+            $dynamicurl = $post['dynamicurl'];
+        } else {
+            echo json_encode(['status' => 0]);
+            exit;
+        }
+        if (isset($post['wzwsconfirm'])) {
+            $wzwsconfirm = $post['wzwsconfirm'];
+        } else {
+            echo json_encode(['status' => 0]);
+            exit;
+        }
+        if (isset($post['wzwstemplate'])) {
+            $wzwstemplate = $post['wzwstemplate'];
+        } else {
+            echo json_encode(['status' => 0]);
+            exit;
+        }
+        if (isset($post['wzwschallenge'])) {
+            $wzwschallenge = $post['wzwschallenge'];
+        } else {
+            echo json_encode(['status' => 0]);
+            exit;
+        }
+
         $header = [
             "Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8",
             "Accept-Encoding: gzip, deflate",
@@ -193,7 +223,7 @@ class CustomerPaNewController extends Controller
             "User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.162 Safari/537.36",
         ];
 
-        $url = "http://www.chictr.org.cn".$dynamicurl;
+        $url = "http://www.chictr.org.cn" . $dynamicurl;
 
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $url);
@@ -203,19 +233,27 @@ class CustomerPaNewController extends Controller
         curl_setopt($ch, CURLOPT_ENCODING, 'gzip'); //加入gzip解析
         $output = curl_exec($ch);
         curl_close($ch);
-        file_put_contents('step2.html',$output);
-        list($header, $body) = explode("\r\n\r\n", $output);
-        preg_match_all("/set\-cookie:([^\r\n]*)/i", $header, $matches_cookie);
-        Yii::info('matchs_cookie'.json_encode($matches_cookie));
-        if (isset($matches_cookie[1][2])) {
-            $this->actionStep3(explode(';',$matches_cookie[1][0])[0],explode(';',$matches_cookie[1][2])[0],$wzwsconfirm,$wzwstemplate);
+        file_put_contents('step2.html', $output);
+        $html = explode("\r\n\r\n", $output);
+        if (isset($html[1])) {
+            $header = $html[0];
         } else {
-            echo json_encode(['status'=>1]);exit;
+            echo json_encode(['status' => 0]);
+            exit;
+        }
+        preg_match_all("/set\-cookie:([^\r\n]*)/i", $header, $matches_cookie);
+        Yii::info('matchs_cookie' . json_encode($matches_cookie));
+        if (isset($matches_cookie[1][2])) {
+            $this->actionStep3(explode(';', $matches_cookie[1][0])[0], explode(';', $matches_cookie[1][2])[0], $wzwsconfirm, $wzwstemplate);
+        } else {
+            echo json_encode(['status' => 0]);
+            exit;
         }
     }
 
-    public function actionStep3($ccpassport,$wzwsvtime,$wzwsconfirm,$wzwstemplate) {
-        $rst= [];
+    public function actionStep3($ccpassport, $wzwsvtime, $wzwsconfirm, $wzwstemplate)
+    {
+        $rst = [];
         $header = [
             "Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8",
             "Accept-Encoding: gzip, deflate",
@@ -231,7 +269,7 @@ class CustomerPaNewController extends Controller
         ];
 
         $result = \Yii::$app->db->createCommand("select * from customer_pa_new order by page_id asc limit 1")->queryAll();
-        for ($i = 1; $i <=30; $i++) {
+        for ($i = 1; $i <= 30; $i++) {
             $page_id = $result[0]['page_id'] - $i;
             $url = "http://www.chictr.org.cn/showproj.aspx?proj={$page_id}";
 
@@ -270,15 +308,15 @@ class CustomerPaNewController extends Controller
             $application_address = trim(str_replace('&nbsp;', '', $match11[1][0]));
             $study_leadey_address = trim(str_replace('&nbsp;', '', $match12[1][0]));
             $rst[] = [
-                'application'=>$application,
-                'study_leadey'=>$study_leadey,
-                'telephone'=>$telephone,
-                'leadey_telephone'=>$leadey_telephone,
-                'position'=>$position,
-                'application_email'=>$application_email,
-                'leadey__email'=>$leadey__email,
-                'application_address'=>$application_address,
-                'study_leadey_address'=>$study_leadey_address,
+                'application' => $application,
+                'study_leadey' => $study_leadey,
+                'telephone' => $telephone,
+                'leadey_telephone' => $leadey_telephone,
+                'position' => $position,
+                'application_email' => $application_email,
+                'leadey__email' => $leadey__email,
+                'application_address' => $application_address,
+                'study_leadey_address' => $study_leadey_address,
             ];
 
             Yii::$app->db->createCommand()->insert('customer_pa_new', [
@@ -296,6 +334,7 @@ class CustomerPaNewController extends Controller
 
         }
 
-        echo json_encode(['status'=>1,'data'=>$rst]);exit;
+        echo json_encode(['status' => 1, 'data' => $rst]);
+        exit;
     }
 }
