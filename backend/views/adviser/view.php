@@ -1,5 +1,5 @@
 <?php
-
+use yii\helpers\Url;
 use yii\helpers\Html;
 use backend\models\Area;
 use backend\models\Trade;
@@ -257,7 +257,19 @@ $this->params['breadcrumbs'][] = $this->title;
             ]) ?>
 
             <div class="hr"></div>
+            <style type="text/css">
+                @media (min-width: 768px) {
+                    #add_resume_table .table th {
+                        width: 20%;
+                        text-align: center;
+                    }
+
+                }
+            </style>
             <?= \yii\grid\GridView::widget([
+                'options' => [
+                    'id' => 'add_resume_table'
+                ],
                 'dataProvider' => $dataAdviserResume,
                 'summary' => '',
                 'columns' => [
@@ -271,7 +283,30 @@ $this->params['breadcrumbs'][] = $this->title;
                         },
                     ],
                     'create_time',
-//                    ['class' => 'yii\grid\ActionColumn'],
+                    [
+                        'contentOptions' => ['style' => 'overflow:hidden;text-overflow:ellipsis;white-space:inherit'],
+                        'headerOptions' => ['width' => '2%'],
+                        'class' => 'yii\grid\ActionColumn',
+                        'template' => '{update}{delete}',
+                        'buttons' => [
+                            'update' => function ($url, $model, $key) {
+                                return Html::a('<span class="glyphicon glyphicon-pencil"></span>', '#', [
+                                    'class' => 'update-resume',
+                                    'data-toggle' => 'modal',
+                                    'data-target' => '#update-resume',
+                                    'data-company' => $model->company,
+                                    'data-position' => $model->position,
+                                    'data-begin_time' => $model->begin_time,
+                                    'data-end_time' => $model->end_time,
+                                    'style' => 'float:right',]);
+                            },
+                            'delete' => function($url, $model, $key) {
+                                $url = Url::toRoute(['adviser-resume/delete', 'id' => $model->id]);
+                                return Html::a('<span class="glyphicon glyphicon-trash"></span>', $url, ['data-confirm' => 'Are you sure you want to delete this item?', 'title' => 'Delete', 'data-method' => 'post']);
+                            }
+                        ],
+                    ]
+
                 ],
             ]); ?>
 
@@ -286,7 +321,8 @@ $this->params['breadcrumbs'][] = $this->title;
                 }
             </style>
             <?php Modal::begin([
-                'header' => '<h4 class="modal-title" style="1000px">' . '添加简历' . '</h4>',
+                'header' => '<h4 class="modal-title" style="1000px">' . '编辑简历' . '</h4>',
+                'id' => 'update-resume',
                 'toggleButton' => ['label' => '<i class="glyphicon glyphicon-plus"></i>' . '添加简历', 'class' => 'btn btn-primary'],
                 'options' => ['style' => 'height:1000px']
 
@@ -331,7 +367,6 @@ $this->params['breadcrumbs'][] = $this->title;
                         'widgetOptions' => [
                             'type' => \kartik\date\DatePicker::TYPE_COMPONENT_PREPEND,
                             'language' => 'zh-CN',
-                            'id' => 'pay_date',
                             'convertFormat' => true,
                             'pluginOptions' => [
                                 'autoclose' => true,
@@ -349,7 +384,6 @@ $this->params['breadcrumbs'][] = $this->title;
                         'widgetOptions' => [
                             'type' => \kartik\date\DatePicker::TYPE_COMPONENT_PREPEND,
                             'language' => 'zh-CN',
-                            'id' => 'pay_date',
                             'convertFormat' => true,
                             'pluginOptions' => [
                                 'autoclose' => true,
@@ -408,6 +442,30 @@ $this->params['breadcrumbs'][] = $this->title;
 <?php
 $this->registerJs('
         $(document).ready(function(){
+            $(".update-resume").on("click", function() {
+                var company = $(this).data("company");
+                var position = $(this).data("position");
+                var begin_time = $(this).data("begin_time");
+                var end_time = $(this).data("end_time");
+                
+                console.log(begin_time);
+
+                $("#adviserresume-company").val(company);
+                $("#adviserresume-position").val(position);
+                $("#adviserresume-begin_time").val(begin_time);
+
+                var endtime = $("#add_resume").find("tbody > tr").eq(6);
+                if(!end_time){
+                    endtime.hide();
+                    $("#adviserresume-isnow").attr("checked","true");
+                }else {
+                    endtime.show();
+                    $("#adviserresume-end_time").val(end_time)
+                }
+
+            });
+
+
             //save
             $(".modal-save").on("click", function(){
                 var p_id = '.$model->id.';
