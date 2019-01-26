@@ -130,10 +130,13 @@ $trade = new Trade();
     ])->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'mobile_phone')->textInput(['maxlength' => true, 'required' => 'required']) ?>
+    <span class="glyphicon glyphicon-plus add_phone" style="color: #337ab7;font-size: 24px;vertical-align: top;cursor: pointer; "></span>
+
 
     <?= $form->field($model, 'tele_phone')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'email')->textInput(['maxlength' => true]) ?>
+    <span class="glyphicon glyphicon-plus add_mail" style="color: #337ab7;font-size: 24px;vertical-align: top;cursor: pointer; "></span>
 
     <?= $form->field($model, 'wechat')->textInput(['maxlength' => true]) ?>
 
@@ -308,6 +311,35 @@ $this->registerJs(
                 }
             })();
 
+            // 添加输入框
+            function addInput(type){
+                var dom = document.createElement("div");
+                var label = document.createElement("label");
+                var input = document.createElement("input");
+                var help = document.createElement("div");
+
+                $(dom).addClass("form-group");
+                $(label).text("Mobile Phone"+1);
+                $(input).addClass("form-control").attr("type", "text");
+                $(help).addClass("help-block");
+
+                dom.append(label);
+                dom.append(input);
+                dom.append(help);
+
+                $(".add_phone").after(dom);
+
+
+            }
+            var add_phone = $(".add_phone");
+            var add_mail = $(".add_mail");
+            add_phone.on("click", function() {
+                addInput("phone");
+            });
+
+            add_mail.on("click", function() {
+                addInput("phone");
+            });
 
 
         });'
