@@ -616,7 +616,7 @@ $this->registerJs('
                 var id = $(this).attr("data-value"); 
                          
                 if($(this).is(":checked")) {
-                alert("#end_time"+id);
+              
                     $("#end_time"+id).parent("tr").prev("tr").hide();
                 }else {           
                     $("#end_time"+id).parent("tr").prev("tr").hide();
