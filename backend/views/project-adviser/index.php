@@ -140,6 +140,12 @@ $this->params['breadcrumbs'][] = Yii::t('app', '财务');
                 'value' => function ($model) {
                     return $model->adviser->position;
                 },
+                'contentOptions' => function($data){
+                    $arr = [];
+                    $arr['style'] = 'white-space: initial;display: -webkit-box;-webkit-box-orient: vertical;-webkit-line-clamp: 3;overflow: hidden;';
+                    $arr['title'] = $data->adviser->position;
+                    return $arr;
+                }
             ],
             [
                 'label' => Yii::t('app', '专家公司'),
@@ -147,6 +153,11 @@ $this->params['breadcrumbs'][] = Yii::t('app', '财务');
                 'value' => function ($model) {
                     return $model->adviser->company;
                 },
+                'contentOptions' => function($data){
+                    $arr = [];
+                    $arr['style'] = 'white-space: initial;';
+                    return $arr;
+                }
             ],
             [
                 'label' => Yii::t('app', '客户单价'),
@@ -196,9 +207,13 @@ $this->params['breadcrumbs'][] = Yii::t('app', '财务');
             [
                 'label' => Yii::t('app', '备注'),
                 'attribute' => 'remark',
-                'contentOptions' => [
-                    'style' => 'white-space: inherit;'
-                ]
+                'contentOptions' => function($data){
+                    $arr = [];
+                    $arr['title'] = $data->remark;
+                    $arr['style'] = 'max-width: 160px;white-space: initial;display: -webkit-box;-webkit-box-orient: vertical;-webkit-line-clamp: 3;overflow: hidden;';
+                    return $arr;
+                }
+
             ],
             [
                 'label' => Yii::t('app', '专家费率'),
@@ -436,7 +451,9 @@ $("#modal-finance-save").on("click", function() {
   data['adviser_pay'] = $('input[name="adviser_fee"]').val();
   data['referee_pay'] = $('input[name="recommend_fee"]').val();
 
-  data['project_adviser_list'] = array;
+  data['project_adviser_list'] = array.filter(function(item) {
+    return item;
+  });
   $.ajax({
         url: "/project-adviser/update-status",
         dataType: "json",

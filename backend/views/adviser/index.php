@@ -130,8 +130,10 @@ $project = new \backend\models\Project();
                 'contentOptions' => function($data){
                     $arr = [];
                     $arr['title'] = $data->describe;
+                    // $arr['style'] = 'white-space: initial;display: -webkit-box;-webkit-box-orient: vertical;-webkit-line-clamp: 3;overflow: hidden;';
                     return $arr;
                 }
+
             ],
 //            [
 //                'attribute' => 'expertise',

@@ -53,9 +53,9 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             [
                 'attribute' => 'participants',
-                'contentOptions' => [
-                    'style' => 'width: 200px;'
-                ]
+                // 'contentOptions' => [
+                //     'style' => 'max-width: 400px;'
+                // ]
             ],
             [
                 'attribute' => 'status',
@@ -99,9 +99,9 @@ $this->params['breadcrumbs'][] = $this->title;
                     $unique = array_unique($selector);
                     return implode('，', $unique);
                 },
-                'contentOptions' => [
-                    'style' => 'width: 200px;'
-                ]
+                // 'contentOptions' => [
+                //     'style' => 'max-width: 400px;'
+                // ]
             ],
             [
                 'label' => Yii::t('app', '参与研究员'),
