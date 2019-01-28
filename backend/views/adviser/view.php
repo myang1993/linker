@@ -14,6 +14,7 @@ $project = new \backend\models\Project();
 $this->title = $model->name_zh;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Advisers'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
+//print_r($model->getAdviserResume());exit;
 ?>
     <div class="adviser-view view">
         <div class="box highlight">
@@ -287,25 +288,30 @@ $this->params['breadcrumbs'][] = $this->title;
                         'contentOptions' => ['style' => 'overflow:hidden;text-overflow:ellipsis;white-space:inherit'],
                         'headerOptions' => ['width' => '2%'],
                         'class' => 'yii\grid\ActionColumn',
-                        'template' => '{update}{delete}',
+                        'template' => '{update}',
                         'buttons' => [
                             'update' => function ($url, $model, $key) {
                                 return Html::a('<span class="glyphicon glyphicon-pencil"></span>', '#', [
-                                    'class' => 'update-resume',
+                                    'class' => 'updateAdviserResume',
                                     'data-toggle' => 'modal',
-                                    'data-target' => '#update-resume',
-                                    'data-company' => $model->company,
-                                    'data-position' => $model->position,
-                                    'data-begin_time' => $model->begin_time,
-                                    'data-end_time' => $model->end_time,
+                                    'data-id' => $model->id,
+                                    'data-target' => '#update-advisers1',
                                     'style' => 'float:right',]);
                             },
-                            'delete' => function($url, $model, $key) {
-                                $url = Url::toRoute(['adviser-resume/delete', 'id' => $model->id]);
-                                return Html::a('<span class="glyphicon glyphicon-trash"></span>', $url, ['data-confirm' => 'Are you sure you want to delete this item?', 'title' => 'Delete', 'data-method' => 'post']);
-                            }
                         ],
-                    ]
+                    ],
+                    [
+                        'contentOptions' => ['style' => 'overflow:hidden;text-overflow:ellipsis;white-space:inherit'],
+                        'headerOptions' => ['width' => '2%'],
+                        'class' => 'yii\grid\ActionColumn',
+                        'template' => '{delete}',
+                        'buttons' => [
+                            'delete' => function ($url, $model, $key) {
+                                $url = Url::toRoute(['adviser-resume/delete', 'id' => $model->id, 'adviser_id' => $model->adviser_id]);
+                                return Html::a('<span class="glyphicon glyphicon-trash"></span>', $url, ['data-confirm' => 'Are you sure you want to delete this item?', 'title' => 'Delete', 'data-method' => 'post']);
+                            },
+                        ],
+                    ],
 
                 ],
             ]); ?>
@@ -321,8 +327,8 @@ $this->params['breadcrumbs'][] = $this->title;
                 }
             </style>
             <?php Modal::begin([
-                'header' => '<h4 class="modal-title" style="1000px">' . '编辑简历' . '</h4>',
-                'id' => 'update-resume',
+                'header' => '<h4 class="modal-title" style="1000px">' . '添加简历' . '</h4>',
+                'id' => 'add-resume',
                 'toggleButton' => ['label' => '<i class="glyphicon glyphicon-plus"></i>' . '添加简历', 'class' => 'btn btn-primary'],
                 'options' => ['style' => 'height:1000px']
 
@@ -411,6 +417,92 @@ $this->params['breadcrumbs'][] = $this->title;
                 ],
             ]); ?>
             <?php Modal::end(); ?>
+
+        <?php
+        $adviser_name = $model->name_zh;
+        foreach ($model->adviserResume as $index => $adviserResume) {
+            Modal::begin([
+                'header' => '<h4 class="modal-title" style="1000px">' . ' 编辑简历' . '</h4>',
+                'id' => 'update-advisers' . ($adviserResume->id),
+                'options' => ['style' => 'height:1000px']
+
+            ]);
+            echo DetailView::widget([
+                'model' => $adviserResume,
+                'condensed' => true,
+                'hover' => true,
+                'mode' => DetailView::MODE_EDIT,
+                'container' => ['id' => 'add_resume'],
+                'panel' => [
+                    'heading' => '',
+                    'type' => DetailView::TYPE_PRIMARY,
+                ],
+                'attributes' => [
+                    [
+                        'label' => '专家',
+                        'value' => $adviser_name,
+                        'options' => ['id' => 'modal1-boffin-name_en'],
+                        'displayOnly' => true,
+                    ],
+                    [
+                        'attribute' => 'company',
+                        'type' => DetailView::INPUT_TEXT,
+                    ],
+                    [
+                        'attribute' => 'position',
+                        'type' => DetailView::INPUT_TEXT,
+                    ],
+                    [
+                        'attribute' => 'begin_time',
+                        'type' => DetailView::INPUT_DATE,
+                        'widgetOptions' => [
+                            'type' => \kartik\date\DatePicker::TYPE_COMPONENT_PREPEND,
+                            'language' => 'zh-CN',
+                            'convertFormat' => true,
+                            'pluginOptions' => [
+                                'autoclose' => true,
+                                'format' => 'yyyy-MM',
+                                'todayHighlight' => true,
+                                'maxViewMode' => 2,
+                                'minViewMode' => 1
+                            ]
+                        ],
+                        'valueColOptions' => ['style' => 'width:60%']
+                    ],
+                    [
+                        'attribute' => 'end_time',
+                        'type' => DetailView::INPUT_DATE,
+                        'widgetOptions' => [
+                            'type' => \kartik\date\DatePicker::TYPE_COMPONENT_PREPEND,
+                            'language' => 'zh-CN',
+                            'convertFormat' => true,
+                            'pluginOptions' => [
+                                'autoclose' => true,
+                                'format' => 'yyyy-MM',
+                                'todayHighlight' => true,
+                                'todayBtn' => true,
+                                'maxViewMode' => 2,
+                                'minViewMode' => 1
+                            ]
+                        ],
+                        'valueColOptions' => ['style' => 'width:60%']
+                    ],
+                    [
+                        'attribute' => 'isnow',
+                        'label' => false,
+                        'format' => 'raw',
+                        'type' => DetailView::INPUT_CHECKBOX,
+                        'widgetOptions' => [
+                        ],
+                        'valueColOptions' => ['style' => 'width:60%']
+                    ],
+                ],
+                'formOptions' => [
+                    'action' => Url::toRoute(['adviser-resume/update', 'id' => $adviserResume->id]),
+                ],
+            ]);
+            Modal::end();
+        } ?>
 
             <div class="hr"></div>
 
@@ -508,4 +600,16 @@ $this->registerJs('
             });
         })
     ')
+?>
+
+<?php
+
+$js = <<<JS
+$('.updateAdviserResume').click(function(){
+    var index = $(this).attr('data-id');
+    $(this).attr('data-target','#update-advisers'+index);
+});
+
+JS;
+$this->registerJs($js);
 ?>

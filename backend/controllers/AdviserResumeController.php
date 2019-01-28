@@ -88,7 +88,7 @@ class AdviserResumeController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['adviser/view', 'id' => $model->adviser_id]);
         }
 
         return $this->render('update', [
@@ -103,11 +103,12 @@ class AdviserResumeController extends Controller
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionDelete($id)
+    public function actionDelete($id, $adviser_id)
     {
+        $post = Yii::$app->request->queryParams;
         $this->findModel($id)->delete();
 
-        return $this->redirect(['index']);
+        return $this->redirect(['adviser/view', 'id' => $adviser_id]);
     }
 
     /**
