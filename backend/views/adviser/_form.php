@@ -128,13 +128,22 @@ $trade = new Trade();
         ]
     ])->textInput(['maxlength' => true]) ?>
 
-    <?php if (!empty($mobile_phone)) { ?>
-        <?php foreach ($mobile_phone as $index => $mp) { ?>
-            <input type="text" name="mobile_phone[]" value="<?php echo $mp['info']; ?>">
+    <div class="form-group">
+        <?php if (!empty($mobile_phone)) { ?>
+            <?php foreach ($mobile_phone as $index => $mp) { ?>
+                <div class="form-group">
+                    <label>Mobile phone<?php echo $index ?></label>
+                    <input type="text" class="form-control phone" name="mobile_phone[]" value="<?php echo $mp['info']; ?>">
+                </div>
+            <?php } ?>
+        <?php } else { ?>
+            <div class="form-group">
+                <label>Mobile phone</label>
+                <input type="text" class="form-control" name="mobile_phone[]">
+            </div>
         <?php } ?>
-    <?php } else { ?>
-        <input type="text" name="mobile_phone[]">
-    <?php } ?>
+    </div>
+
     <span class="glyphicon glyphicon-plus add_phone" style="color: #337ab7;font-size: 24px;vertical-align: top;cursor: pointer; "></span>
 
 
@@ -142,11 +151,20 @@ $trade = new Trade();
 
     <?php if (!empty($email)) { ?>
         <?php foreach ($email as $index => $mp) { ?>
-            <input type="text" name="email[]" value="<?php echo $mp['info']; ?>">
+            <div class="form-group">
+                <label>Email<?php echo $index ?></label>
+                <input type="text" class="form-control mail" name="email[]" value="<?php echo $mp['info']; ?>">
+            </div>
         <?php } ?>
     <?php } else { ?>
-        <input type="text" name="email[]">
+        <div class="form-group">
+            <label>Email</label>
+            <input type="text" class="form-control" name="email[]">
+        </div>
     <?php } ?>
+
+
+
     <span class="glyphicon glyphicon-plus add_mail" style="color: #337ab7;font-size: 24px;vertical-align: top;cursor: pointer; "></span>
 
     <?= $form->field($model, 'wechat')->textInput(['maxlength' => true]) ?>
@@ -322,6 +340,11 @@ $this->registerJs(
                 }
             })();
 
+            var add_phone = $(".add_phone");
+            var add_mail = $(".add_mail");
+            var phone_index = '.count($mobile_phone).';
+            var mail_index = '.count($email).';
+            console.log("-------", phone_index, mail_index);
             // 添加输入框
             function addInput(type){
                 var dom = document.createElement("div");
@@ -332,7 +355,9 @@ $this->registerJs(
                 $(dom).addClass("form-group");
 
                 var tmp = type == 2 ? "Email" : "Mobile Phone";
-                $(label).text(tmp+1);
+                var len = type == 2 ? mail_index++ : phone_index++;
+                $(label).text(tmp+len);
+
                 var name = type == 2 ? "mail" : "phone";
                 $(input).addClass("form-control "+ name).attr("type", "text");
                 $(help).addClass("help-block");
@@ -340,8 +365,11 @@ $this->registerJs(
                 dom.append(label);
                 dom.append(input);
                 dom.append(help);
-
-                $(".add_phone").after(dom);
+                if(type == 2){
+                    add_mail.after(dom);
+                }else {
+                    add_phone.after(dom);
+                }
 
             }
             var add_phone = $(".add_phone");
@@ -353,11 +381,6 @@ $this->registerJs(
             add_mail.on("click", function() {
                 addInput(2);
             });
-            
-
-            // 提交
-            
-
 
         });'
 );
