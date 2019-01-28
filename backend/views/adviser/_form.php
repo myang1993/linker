@@ -13,12 +13,10 @@ use yii\web\JsExpression;
 
 $admin = new Admin();
 $trade = new Trade();
-$adviser_contact = (new \app\models\AdviserContact())->getListByAdviser($model->id);
 
 ?>
 
 <div class="adviser-form cu">
-
     <?php $form = ActiveForm::begin([
 
         'options' => [
@@ -130,17 +128,19 @@ $adviser_contact = (new \app\models\AdviserContact())->getListByAdviser($model->
         ]
     ])->textInput(['maxlength' => true]) ?>
 
-    <?php foreach ($model->projectAdvisers as $index => $projectAdviser) {
-            
+    <?php foreach ($mobile_phone as $index => $mp) {
+            $form->field($model, 'mobile_phone'.$index)->textInput(['maxlength' => true, 'required' => 'required']);
         }
     ?>
-    <?= $form->field($model, 'mobile_phone')->textInput(['maxlength' => true, 'required' => 'required']) ?>
     <span class="glyphicon glyphicon-plus add_phone" style="color: #337ab7;font-size: 24px;vertical-align: top;cursor: pointer; "></span>
 
 
     <?= $form->field($model, 'tele_phone')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'email')->textInput(['maxlength' => true]) ?>
+    <?php foreach ($email as $index => $mp) {
+        $form->field($model, 'email')->textInput(['maxlength' => true]);
+        }
+    ?>
     <span class="glyphicon glyphicon-plus add_mail" style="color: #337ab7;font-size: 24px;vertical-align: top;cursor: pointer; "></span>
 
     <?= $form->field($model, 'wechat')->textInput(['maxlength' => true]) ?>
