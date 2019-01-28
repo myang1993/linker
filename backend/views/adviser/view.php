@@ -444,7 +444,6 @@ $this->params['breadcrumbs'][] = $this->title;
                 'condensed' => true,
                 'hover' => true,
                 'mode' => DetailView::MODE_EDIT,
-                'container' => ['id' => 'add_resume'],
                 'panel' => [
                     'heading' => '',
                     'type' => DetailView::TYPE_PRIMARY,
@@ -508,7 +507,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         'type' => DetailView::INPUT_CHECKBOX,
                         'options' => [
                             'class' => 'isnow',
-                            'data-tmp' => $adviserResume->end_time.'',
+                            'data-value' => $adviserResume->end_time.'',
                         ],
                         'widgetOptions' => [
                         ],
@@ -619,12 +618,10 @@ $this->registerJs('
                 }
             });
 
-
             // 编辑
             $(".isnow").each(function(){
-                console.log(!!$(this).data("tmp"));
-                
-                if(!$(this).data("tmp")) {
+                console.log(!!$(this).data("value"));
+                if(!$(this).data("value")) {
                     console.log($(this).parents("tr"));
                     $(this).parents("tr").prev().hide();
                     $(this).attr("checked", "true");
@@ -642,8 +639,6 @@ $this->registerJs('
                 });
 
             });
-    
-
         })
     ')
 ?>
