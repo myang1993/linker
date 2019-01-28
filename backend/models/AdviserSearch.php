@@ -18,6 +18,7 @@ class AdviserSearch extends Adviser
     public $trade_name;
     public $child_trade_name;
     public $mode; //1.模糊匹配
+
     /**
      * {@inheritdoc}
      */

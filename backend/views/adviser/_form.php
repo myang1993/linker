@@ -13,6 +13,7 @@ use yii\web\JsExpression;
 
 $admin = new Admin();
 $trade = new Trade();
+$adviser_contact = (new \app\models\AdviserContact())->getListByAdviser($model->id);
 
 ?>
 
