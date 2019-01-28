@@ -4,6 +4,7 @@ namespace backend\controllers;
 
 use app\models\AdviserComments;
 use app\models\AdviserCommentsSearch;
+use app\models\AdviserContact;
 use app\models\AdviserResumeSearch;
 use backend\models\ProjectAdviser;
 use Yii;
@@ -125,10 +126,14 @@ class AdviserController extends Controller
         $dataProvider = $searchModel->search(['AdviserCommentsSearch'=>['adviser_id'=>$id]]);
         $adviserResumeSearch = new AdviserResumeSearch();
         $dataAdviserResume = $adviserResumeSearch->search(['AdviserResumeSearch' => ['adviser_id' => $id]]);
+        $mobile_phone = AdviserContact::find()->select('info')->where(['adviser_id' => $id, 'type' => 'phone'])->asArray()->all();
+        $email = AdviserContact::find()->select('info')->where(['adviser_id' => $id, 'type' => 'email'])->asArray()->all();
 
         return $this->render('view', [
             'model' => $this->findModel($id),
             'dataProvider' => $dataProvider,
+            'mobile_phone' => $mobile_phone,
+            'email' => $email,
             'dataAdviserResume' => $dataAdviserResume,
         ]);
     }
@@ -147,8 +152,25 @@ class AdviserController extends Controller
         //     Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
         //     return \yii\bootstrap\ActiveForm::validate($model);
         // }
-
+        $params = Yii::$app->request->post();
+        $adviser_contact = new AdviserContact();
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            if (isset($params['mobile_phone'])) {
+                foreach ($params['mobile_phone'] as $mobile_phone) {
+                    $adviser_contact->adviser_id = $model->id;
+                    $adviser_contact->info = $mobile_phone;
+                    $adviser_contact->type = 'phone';
+                    $adviser_contact->save();
+                }
+            }
+            if (isset($params['email'])) {
+                foreach ($params['email'] as $email) {
+                    $adviser_contact->adviser_id = $model->id;
+                    $adviser_contact->info = $email;
+                    $adviser_contact->type = 'email';
+                    $adviser_contact->save();
+                }
+            }
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
@@ -174,16 +196,38 @@ class AdviserController extends Controller
         //     Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
         //     return \yii\bootstrap\ActiveForm::validate($model);
         // }
-
+        $params = Yii::$app->request->post();
+        $adviser_contact = new AdviserContact();
+        $mobile_phone = AdviserContact::find()->select('info')->where(['adviser_id' => $id, 'type' => 'phone'])->asArray()->all();
+        $email = AdviserContact::find()->select('info')->where(['adviser_id' => $id, 'type' => 'email'])->asArray()->all();
         if ($model->load(Yii::$app->request->post())) {
             $model->setAttribute('update_time', time());
             if ($model->save()) {
+                AdviserContact::deleteAll(['adviser_id' => $id]);
+                if (isset($params['mobile_phone'])) {
+                    foreach ($params['mobile_phone'] as $mobile_phone) {
+                        $adviser_contact->adviser_id = $model->id;
+                        $adviser_contact->info = $mobile_phone;
+                        $adviser_contact->type = 'phone';
+                        $adviser_contact->save();
+                    }
+                }
+                if (isset($params['email'])) {
+                    foreach ($params['email'] as $email) {
+                        $adviser_contact->adviser_id = $model->id;
+                        $adviser_contact->info = $email;
+                        $adviser_contact->type = 'email';
+                        $adviser_contact->save();
+                    }
+                }
                 return $this->redirect(['view', 'id' => $model->id]);
             }
         }
 
         return $this->render('update', [
             'model' => $model,
+            'mobile_phone' => $mobile_phone,
+            'email' => $email,
             'area' => $area,
         ]);
     }
