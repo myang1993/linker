@@ -144,10 +144,11 @@ $trade = new Trade();
     <?php if (!empty($mobile_phone)) { ?>
         <?php foreach ($mobile_phone as $index => $mp) { ?>
             <div class="form-group">
-                <label>Mobile phone<?php echo $index ?></label>
+                <label>Mobile phone<?php echo $index != 0 ? $index : ''?></label>
                 <input type="text" class="form-control phone" name="mobile_phone[]" value="<?php echo $mp['info']; ?>">
-                <span class="glyphicon glyphicon-remove edit_icon remove_input" ></span>
+                <span class="glyphicon glyphicon-remove edit_icon remove_input <?php echo $index == 0 ? 'hide' : '' ?>" ></span>
             </div>
+            <span class="glyphicon glyphicon-plus edit_icon add_phone <?php echo $index == 0 ? '' : 'hide' ?>"></span>
         <?php } ?>
     <?php } else { ?>
         <div class="form-group">
@@ -156,7 +157,6 @@ $trade = new Trade();
         </div>
     <?php } ?>
 
-    <span class="glyphicon glyphicon-plus edit_icon add_phone" ></span>
 
     <?= $form->field($model, 'tele_phone')->textInput(['maxlength' => true]) ?>
 
@@ -165,8 +165,9 @@ $trade = new Trade();
             <div class="form-group">
                 <label>Email<?php echo $index ?></label>
                 <input type="text" class="form-control mail" name="email[]" value="<?php echo $mp['info']; ?>">
-                <span class="glyphicon glyphicon-remove edit_icon remove_input" ></span>
+                <span class="glyphicon glyphicon-remove edit_icon remove_input <?php echo $index == 0 ? 'hide' : '' ?>" ></span>
             </div>
+            <span class="glyphicon glyphicon-plus edit_icon add_mail <?php echo $index == 0 ? '' : 'hide' ?>"></span>
         <?php } ?>
     <?php } else { ?>
         <div class="form-group">
@@ -175,7 +176,6 @@ $trade = new Trade();
         </div>
     <?php } ?>
 
-    <span class="glyphicon glyphicon-plus edit_icon add_mail" style="color: #337ab7;font-size: 24px;vertical-align: top;cursor: pointer; "></span>
 
     <?= $form->field($model, 'wechat')->textInput(['maxlength' => true]) ?>
 

@@ -415,7 +415,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         'valueColOptions' => ['style' => 'width:60%']
                     ],
                     [
-                        'attribute'=>'isnow', 
+                        'attribute'=>'isnow',
                         'label'=>false,
                         'format'=>'raw',
                         'type'=>DetailView::INPUT_CHECKBOX,
@@ -467,6 +467,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     [
                         'attribute' => 'begin_time',
                         'type' => DetailView::INPUT_DATE,
+                        'options' => ['id'=>'model-update-begin_time'.$index],
                         'widgetOptions' => [
                             'type' => \kartik\date\DatePicker::TYPE_COMPONENT_PREPEND,
                             'language' => 'zh-CN',
@@ -484,6 +485,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     [
                         'attribute' => 'end_time',
                         'type' => DetailView::INPUT_DATE,
+                        'options' => ['id'=>'model-update-end_time'.$index],
                         'widgetOptions' => [
                             'type' => \kartik\date\DatePicker::TYPE_COMPONENT_PREPEND,
                             'language' => 'zh-CN',
@@ -504,6 +506,10 @@ $this->params['breadcrumbs'][] = $this->title;
                         'label' => false,
                         'format' => 'raw',
                         'type' => DetailView::INPUT_CHECKBOX,
+                        'options' => [
+                            'class' => 'isnow',
+                            'data-tmp' => $adviserResume->end_time.'',
+                        ],
                         'widgetOptions' => [
                         ],
                         'valueColOptions' => ['style' => 'width:60%']
@@ -560,6 +566,8 @@ $this->registerJs('
 
                 var endtime = $("#add_resume").find("tbody > tr").eq(6);
                 if(!end_time){
+
+                    alert(1);
                     endtime.hide();
                     $("#adviserresume-isnow").attr("checked","true");
                 }else {
@@ -610,6 +618,32 @@ $this->registerJs('
                     endtime.show();
                 }
             });
+
+
+            // 编辑
+            $(".isnow").each(function(){
+                console.log(!!$(this).data("tmp"));
+                
+                if(!$(this).data("tmp")) {
+                    console.log($(this).parents("tr"));
+                    $(this).parents("tr").prev().hide();
+                    $(this).attr("checked", "true");
+                }else {
+                    $(this).parents("tr").prev().show();
+                    $(this).parents("tr").hide();
+                }
+
+                $(this).change(function() {
+                    if($(this).is(":checked")) {
+                        $(this).parents("tr").prev().hide();
+                    }else {
+                        $(this).parents("tr").prev().show();
+                    }
+                });
+
+            });
+    
+
         })
     ')
 ?>
