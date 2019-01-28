@@ -324,8 +324,11 @@ $this->registerJs(
                 var help = document.createElement("div");
 
                 $(dom).addClass("form-group");
-                $(label).text("Mobile Phone"+1);
-                $(input).addClass("form-control").attr("type", "text");
+
+                var tmp = type == 2 ? "Email" : "Mobile Phone";
+                $(label).text(tmp+1);
+                var name = type == 2 ? "mail" : "phone";
+                $(input).addClass("form-control "+ name).attr("type", "text");
                 $(help).addClass("help-block");
 
                 dom.append(label);
@@ -334,17 +337,20 @@ $this->registerJs(
 
                 $(".add_phone").after(dom);
 
-
             }
             var add_phone = $(".add_phone");
             var add_mail = $(".add_mail");
             add_phone.on("click", function() {
-                addInput("phone");
+                addInput(1);
             });
 
             add_mail.on("click", function() {
-                addInput("phone");
+                addInput(2);
             });
+            
+
+            // 提交
+            
 
 
         });'
