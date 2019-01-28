@@ -128,19 +128,25 @@ $trade = new Trade();
         ]
     ])->textInput(['maxlength' => true]) ?>
 
-    <?php foreach ($mobile_phone as $index => $mp) {
-            $form->field($model, 'mobile_phone'.$index)->textInput(['maxlength' => true, 'required' => 'required']);
-        }
-    ?>
+    <?php if (!empty($mobile_phone)) { ?>
+        <?php foreach ($mobile_phone as $index => $mp) { ?>
+            <input type="text" name="mobile_phone[]" value="<?php echo $mp['info']; ?>">
+        <?php } ?>
+    <?php } else { ?>
+        <input type="text" name="mobile_phone[]">
+    <?php } ?>
     <span class="glyphicon glyphicon-plus add_phone" style="color: #337ab7;font-size: 24px;vertical-align: top;cursor: pointer; "></span>
 
 
     <?= $form->field($model, 'tele_phone')->textInput(['maxlength' => true]) ?>
 
-    <?php foreach ($email as $index => $mp) {
-        $form->field($model, 'email')->textInput(['maxlength' => true]);
-        }
-    ?>
+    <?php if (!empty($email)) { ?>
+        <?php foreach ($email as $index => $mp) { ?>
+            <input type="text" name="email[]" value="<?php echo $mp['info']; ?>">
+        <?php } ?>
+    <?php } else { ?>
+        <input type="text" name="email[]">
+    <?php } ?>
     <span class="glyphicon glyphicon-plus add_mail" style="color: #337ab7;font-size: 24px;vertical-align: top;cursor: pointer; "></span>
 
     <?= $form->field($model, 'wechat')->textInput(['maxlength' => true]) ?>
