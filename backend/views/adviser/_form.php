@@ -129,6 +129,10 @@ $trade = new Trade();
         ]
     ])->textInput(['maxlength' => true]) ?>
 
+    <?php foreach ($model->projectAdvisers as $index => $projectAdviser) {
+            
+        }
+    ?>
     <?= $form->field($model, 'mobile_phone')->textInput(['maxlength' => true, 'required' => 'required']) ?>
     <span class="glyphicon glyphicon-plus add_phone" style="color: #337ab7;font-size: 24px;vertical-align: top;cursor: pointer; "></span>
 
