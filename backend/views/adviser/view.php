@@ -432,7 +432,6 @@ $this->params['breadcrumbs'][] = $this->title;
                 'condensed' => true,
                 'hover' => true,
                 'mode' => DetailView::MODE_EDIT,
-                'container' => ['id' => 'add_resume'],
                 'panel' => [
                     'heading' => '',
                     'type' => DetailView::TYPE_PRIMARY,
@@ -455,6 +454,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     [
                         'attribute' => 'begin_time',
                         'type' => DetailView::INPUT_DATE,
+                        'options' => ['id' => 'begin_time' . $model->id],
                         'widgetOptions' => [
                             'type' => \kartik\date\DatePicker::TYPE_COMPONENT_PREPEND,
                             'language' => 'zh-CN',
@@ -472,6 +472,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     [
                         'attribute' => 'end_time',
                         'type' => DetailView::INPUT_DATE,
+                        'options' => ['id' => 'end_time' . $model->id],
                         'widgetOptions' => [
                             'type' => \kartik\date\DatePicker::TYPE_COMPONENT_PREPEND,
                             'language' => 'zh-CN',
@@ -492,6 +493,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         'label' => false,
                         'format' => 'raw',
                         'type' => DetailView::INPUT_CHECKBOX,
+                        'options' => ['id' => 'adviserresume-isnow' . $model->id, 'class' => 'adviserresume-isnow', 'data-value' => $model->id],
                         'widgetOptions' => [
                         ],
                         'valueColOptions' => ['style' => 'width:60%']
@@ -596,6 +598,16 @@ $this->registerJs('
                     endtime.hide();
                 }else {
                     endtime.show();
+                }
+            });
+            $(".adviserresume-isnow").change(function(){ 
+                var id = $(this).attr("data-value"); 
+                         
+                if($(this).is(":checked")) {
+                alert("#end_time"+id);
+                    $("#end_time"+id).parent("tr").prev("tr").hide();
+                }else {           
+                    $("#end_time"+id).parent("tr").prev("tr").hide();
                 }
             });
         })
