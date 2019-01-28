@@ -124,7 +124,13 @@ $this->params['breadcrumbs'][] = $this->title;
                 </div>
                 <div class="form-group">
                     <label class="control-label text-center">手机:</label>
-                      <p class="form-control-static"><?php echo $model->mobile_phone ?></p>
+                    <p class="form-control-static">
+                        <?php if (!empty($mobile_phone)) { ?>
+                            <?php foreach ($mobile_phone as $index => $mp) { ?>
+                                <?php echo $mp['info']; ?>,
+                            <?php } ?>
+                        <?php } ?>
+                    </p>
                 </div>
                 <div class="form-group">
                     <label class=" control-label text-center">座机:</label>
@@ -132,7 +138,13 @@ $this->params['breadcrumbs'][] = $this->title;
                 </div>
                 <div class="form-group">
                     <label class=" control-label text-center">邮箱:</label>
-                      <p class="form-control-static"><?php echo $model->email ?></p>
+                      <p class="form-control-static">
+                        <?php if (!empty($email)) { ?>
+                            <?php foreach ($email as $index => $mp) { ?>
+                                <?php echo $mp['info']; ?>,
+                            <?php } ?>
+                        <?php } ?>
+                      </p>
                 </div>
                 <div class="form-group">
                     <label class="control-label text-center">微信:</label>
