@@ -17,10 +17,23 @@ $trade = new Trade();
 ?>
 
 <div class="adviser-form cu">
+
+<style type="text/css">
+    .update-adviser-form span.edit_icon {
+        color: #337ab7;
+        font-size: 24px;
+        vertical-align: top;
+        cursor: pointer; "
+    }
+
+
+</style>
+
     <?php $form = ActiveForm::begin([
 
         'options' => [
-            'class' => 'form-inline form',
+            'class' => 'form-inline form update-adviser-form',
+            'id' => 'update-adviser-form'
         ],
 
         'fieldConfig' => [  // 为每一个input 设置
@@ -128,24 +141,22 @@ $trade = new Trade();
         ]
     ])->textInput(['maxlength' => true]) ?>
 
-    <div class="form-group">
-        <?php if (!empty($mobile_phone)) { ?>
-            <?php foreach ($mobile_phone as $index => $mp) { ?>
-                <div class="form-group">
-                    <label>Mobile phone<?php echo $index ?></label>
-                    <input type="text" class="form-control phone" name="mobile_phone[]" value="<?php echo $mp['info']; ?>">
-                </div>
-            <?php } ?>
-        <?php } else { ?>
+    <?php if (!empty($mobile_phone)) { ?>
+        <?php foreach ($mobile_phone as $index => $mp) { ?>
             <div class="form-group">
-                <label>Mobile phone</label>
-                <input type="text" class="form-control" name="mobile_phone[]">
+                <label>Mobile phone<?php echo $index ?></label>
+                <input type="text" class="form-control phone" name="mobile_phone[]" value="<?php echo $mp['info']; ?>">
+                <span class="glyphicon glyphicon-remove edit_icon remove_input" ></span>
             </div>
         <?php } ?>
-    </div>
+    <?php } else { ?>
+        <div class="form-group">
+            <label>Mobile phone</label>
+            <input type="text" class="form-control" name="mobile_phone[]">
+        </div>
+    <?php } ?>
 
-    <span class="glyphicon glyphicon-plus add_phone" style="color: #337ab7;font-size: 24px;vertical-align: top;cursor: pointer; "></span>
-
+    <span class="glyphicon glyphicon-plus edit_icon add_phone" ></span>
 
     <?= $form->field($model, 'tele_phone')->textInput(['maxlength' => true]) ?>
 
@@ -154,6 +165,7 @@ $trade = new Trade();
             <div class="form-group">
                 <label>Email<?php echo $index ?></label>
                 <input type="text" class="form-control mail" name="email[]" value="<?php echo $mp['info']; ?>">
+                <span class="glyphicon glyphicon-remove edit_icon remove_input" ></span>
             </div>
         <?php } ?>
     <?php } else { ?>
@@ -163,9 +175,7 @@ $trade = new Trade();
         </div>
     <?php } ?>
 
-
-
-    <span class="glyphicon glyphicon-plus add_mail" style="color: #337ab7;font-size: 24px;vertical-align: top;cursor: pointer; "></span>
+    <span class="glyphicon glyphicon-plus edit_icon add_mail" style="color: #337ab7;font-size: 24px;vertical-align: top;cursor: pointer; "></span>
 
     <?= $form->field($model, 'wechat')->textInput(['maxlength' => true]) ?>
 
@@ -342,16 +352,18 @@ $this->registerJs(
 
             var add_phone = $(".add_phone");
             var add_mail = $(".add_mail");
+            var remove_input = $(".remove_input");
+            console.log(remove_input);
             var phone_index = '.count($mobile_phone).';
             var mail_index = '.count($email).';
-            console.log("-------", phone_index, mail_index);
+
             // 添加输入框
             function addInput(type){
                 var dom = document.createElement("div");
                 var label = document.createElement("label");
                 var input = document.createElement("input");
                 var help = document.createElement("div");
-
+                var span = document.createElement("span");
                 $(dom).addClass("form-group");
 
                 var tmp = type == 2 ? "Email" : "Mobile Phone";
@@ -360,10 +372,19 @@ $this->registerJs(
 
                 var name = type == 2 ? "mail" : "phone";
                 $(input).addClass("form-control "+ name).attr("type", "text");
+
+                if(type == 2) {
+                    $(input).attr("name", "email[]");
+                }else {
+                    $(input).attr("name", "mobile_phone[]");
+                }
+
                 $(help).addClass("help-block");
+                $(span).addClass("glyphicon glyphicon-remove edit_icon remove_input");
 
                 dom.append(label);
                 dom.append(input);
+                dom.append(span);
                 dom.append(help);
                 if(type == 2){
                     add_mail.after(dom);
@@ -372,14 +393,19 @@ $this->registerJs(
                 }
 
             }
-            var add_phone = $(".add_phone");
-            var add_mail = $(".add_mail");
             add_phone.on("click", function() {
                 addInput(1);
             });
 
             add_mail.on("click", function() {
                 addInput(2);
+            });
+
+            $("#update-adviser-form").on("click", function(e) {
+                if(e.target.className.indexOf("remove_input") > 0) {
+                    var dom = $(e.target);
+                    dom.parent().remove();
+                }
             });
 
         });'
