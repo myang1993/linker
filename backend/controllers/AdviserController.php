@@ -153,10 +153,10 @@ class AdviserController extends Controller
         //     return \yii\bootstrap\ActiveForm::validate($model);
         // }
         $params = Yii::$app->request->post();
-        $adviser_contact = new AdviserContact();
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             if (isset($params['mobile_phone'])) {
                 foreach ($params['mobile_phone'] as $mobile_phone) {
+                    $adviser_contact = new AdviserContact();
                     $adviser_contact->adviser_id = $model->id;
                     $adviser_contact->info = $mobile_phone;
                     $adviser_contact->type = 'phone';
@@ -165,6 +165,7 @@ class AdviserController extends Controller
             }
             if (isset($params['email'])) {
                 foreach ($params['email'] as $email) {
+                    $adviser_contact = new AdviserContact();
                     $adviser_contact->adviser_id = $model->id;
                     $adviser_contact->info = $email;
                     $adviser_contact->type = 'email';
