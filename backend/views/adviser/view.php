@@ -620,14 +620,12 @@ $this->registerJs('
 
             // 编辑
             $(".isnow").each(function(){
-                console.log(!!$(this).data("value"));
                 if(!$(this).data("value")) {
-                    console.log($(this).parents("tr"));
                     $(this).parents("tr").prev().hide();
                     $(this).attr("checked", "true");
                 }else {
                     $(this).parents("tr").prev().show();
-                    $(this).parents("tr").hide();
+                    // $(this).parents("tr").hide();
                 }
 
                 $(this).change(function() {

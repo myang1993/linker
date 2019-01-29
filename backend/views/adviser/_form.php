@@ -144,7 +144,7 @@ $trade = new Trade();
     <?php if (!empty($mobile_phone)) { ?>
         <?php foreach ($mobile_phone as $index => $mp) { ?>
             <div class="form-group">
-                <label>Mobile phone<?php echo $index != 0 ? $index : ''?></label>
+                <label>手机<?php echo $index != 0 ? $index : ''?></label>
                 <input type="text" class="form-control phone" name="mobile_phone[]" value="<?php echo $mp['info']; ?>">
                 <span class="glyphicon glyphicon-remove edit_icon remove_input <?php echo $index == 0 ? 'hide' : '' ?>" ></span>
             </div>
@@ -152,9 +152,10 @@ $trade = new Trade();
         <?php } ?>
     <?php } else { ?>
         <div class="form-group">
-            <label>Mobile phone</label>
+            <label>手机</label>
             <input type="text" class="form-control" name="mobile_phone[]">
         </div>
+        <span class="glyphicon glyphicon-plus edit_icon add_phone "></span>
     <?php } ?>
 
 
@@ -163,7 +164,7 @@ $trade = new Trade();
     <?php if (!empty($email)) { ?>
         <?php foreach ($email as $index => $mp) { ?>
             <div class="form-group">
-                <label>Email<?php echo $index ?></label>
+                <label>邮箱<?php echo $index != 0 ? $index : '' ?></label>
                 <input type="text" class="form-control mail" name="email[]" value="<?php echo $mp['info']; ?>">
                 <span class="glyphicon glyphicon-remove edit_icon remove_input <?php echo $index == 0 ? 'hide' : '' ?>" ></span>
             </div>
@@ -171,9 +172,10 @@ $trade = new Trade();
         <?php } ?>
     <?php } else { ?>
         <div class="form-group">
-            <label>Email</label>
+            <label>邮箱</label>
             <input type="text" class="form-control" name="email[]">
         </div>
+        <span class="glyphicon glyphicon-plus edit_icon add_mail"></span>
     <?php } ?>
 
 
@@ -366,7 +368,7 @@ $this->registerJs(
                 var span = document.createElement("span");
                 $(dom).addClass("form-group");
 
-                var tmp = type == 2 ? "Email" : "Mobile Phone";
+                var tmp = type == 2 ? "邮箱" : "手机";
                 var len = type == 2 ? mail_index++ : phone_index++;
                 $(label).text(tmp+len);
 
