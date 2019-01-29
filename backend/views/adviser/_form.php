@@ -356,8 +356,8 @@ $this->registerJs(
             var add_mail = $(".add_mail");
             var remove_input = $(".remove_input");
             console.log(remove_input);
-            var phone_index = '.count($mobile_phone).';
-            var mail_index = '.count($email).';
+            var phone_index = '.(empty($mobile_phone) ? 0 : count($mobile_phone)).';
+            var mail_index = '.(empty($email) ? 0 : count($email)).';
 
             // 添加输入框
             function addInput(type){
